@@ -1,0 +1,69 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+h1{
+    text-align: center;
+    margin: 50px auto;
+    font-size: 40px;
+}
+
+div{
+    margin: 0px auto;
+    border: 1px solid #D2D2D2;
+    border-radius: 6px;
+}
+
+button. {
+    cursor: pointer;
+    border: 0;
+    background-color: transparent;
+
+    /* text-decoration: underline; */
+    /* 밑줄 */
+}
+
+button:hover {
+    text-decoration: underline;
+}
+
+body{
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+}
+
+.login-wrapper{
+    width: 400px;
+    height: 350px;
+    padding: 40px;
+    box-sizing: border-box;
+    
+}
+
+.login-wrapper > h2{
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+#login-form > input{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #f8f8f8f0;
+}
+#login-form > input::placeholder{
+    color: #D2D2D2;
+}
+#login-form > input[type="submit"]{
+    color: #fff;
+    font-size: 16px;
+    background-color: #000000;
+    margin-top: 20px;
+}
+
