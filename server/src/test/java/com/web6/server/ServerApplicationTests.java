@@ -1,10 +1,10 @@
-package com.web6.web6team;
+package com.web6.server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Web6teamApplicationTests {
+class ServerApplicationTests {
 
 	@Test
 	void contextLoads() {

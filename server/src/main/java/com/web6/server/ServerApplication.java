@@ -1,13 +1,13 @@
-package com.web6.web6team;
+package com.web6.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Web6teamApplication {
+public class ServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Web6teamApplication.class, args);
+		SpringApplication.run(ServerApplication.class, args);
 	}
 
 }
