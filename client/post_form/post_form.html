@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 작성하기</title>
+    <link rel="stylesheet" href="post_form.css">
+</head>
+
+<body>
+    <h1 class="web-title">NET VIEW</h1><hr>
+
+    <div class="container">
+        <h4>리뷰를 작성해주세요.</h4>
+        <form>
+            <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5">
+                <label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1">★</label>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="title" name="title" placeholder="제목을 입력하세요." required>
+            </div>
+            <div class="form-group">
+                <textarea class="in_content" name="content" placeholder="내용을 입력하세요." rows="5" maxlength="500" required></textarea>
+                <div id="counter">500/500자</div>
+            </div>
+
+            <button type="submit" class="review-submit-button">등록하기</button>
+
+        </form>
+    </div>
+
+    <script src="post_form.js"></script>
+</body>
+
+</html>

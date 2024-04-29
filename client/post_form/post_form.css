@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+}
+
+.container {
+    max-width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    cursor: pointer;
+    padding: 20px;
+    margin:0px 40%
+}
+
+hr {
+    height: 1px; /* 높이 조절 */
+    border: none; /* 기본 테두리 제거 */
+    background-color: #b3b3b3; /* 배경색 지정 */
+}
+
+h4 {
+    text-align: center;
+    font-size: 20px;
+    margin: 10px auto 10px 1px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.in_content {
+    /* padding: 안쪽 여백 */
+    /* margin: 바깥쪽 여백 */
+
+    box-sizing: border-box;
+    display: inline-block;
+
+    width: 102.3%;
+    background: #F3F4F8;
+    border: 0;
+    height: 200px;
+    font-size: 13px;
+    font-family: sans-serif;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #363636;
+}
+
+.rating {
+    display: flex;
+    unicode-bidi: bidi-override;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+
+}
+
+.rating>input {
+    display: none;
+}
+
+.rating>label {
+    display: inline-block;
+    padding: 5px;
+    font-size: 40px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.rating>input:checked~label,
+.rating>input:checked~label:hover,
+.rating>label:hover~input:checked~label {
+    color: #ffd700;
+}
+
+/* 글자수 */
+.form-group {
+    position: relative;
+    /* 부모 요소에 position: relative; 설정 */
+}
+
+#counter {
+    position: absolute;
+    bottom: 15px;
+    right: 1px;
+    color: #888;
+    font-size: 15px;
+}
