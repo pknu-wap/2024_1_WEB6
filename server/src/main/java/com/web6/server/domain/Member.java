@@ -24,7 +24,7 @@ public class Member {
     @Column(name = "LOGIN_ID", nullable = false, length = 50)
     private String loginId;
 
-    @Column(name = "PASSWORD", nullable = false, length = 20)
+    @Column(name = "PASSWORD", nullable = false, length = 1000)
     private String password;
 
     // Constructors, getters and setters
