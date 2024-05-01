@@ -13,3 +13,8 @@ spring:
         format_sql: ture
         show_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+server:
+  servlet:
+    session:
+      timeout: 90m

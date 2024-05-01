@@ -21,21 +21,29 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/login", "/loginProc","/sign-up", "/api/members/sign-up").permitAll()
+                        .requestMatchers("/", "/login", "/api/members/login","/sign-up", "/api/members/sign-up").permitAll()
                         //.requestMatchers("/mypage/**").hasRole("USER") //USER라는 role만 접근허용
                         .anyRequest().authenticated() //로그인한 사용자만 허용
                 );
-        
+
         http
                 .formLogin((auth) -> auth
                         .loginPage("/login")
-                        .loginProcessingUrl("/loginProc") // /loginProc는 login.mustache에서 로그인 정보를 받아올 경로 => 나중에 수정
-                        .failureUrl("/sign-up") //로그인 실패 시 리다이렉트할 URL 지정
+                        .loginProcessingUrl("/api/members/login")
+                        .failureUrl("/sign-up") //회원가입 실패 시 리다이렉트할 URL 지정
                         .permitAll()
                 );
 
         http
                 .csrf((auth) -> auth.disable()); //추후 enable로 수정
+        
+        http
+                .sessionManagement((auth) -> auth
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(true)); //true면 초과시 새로운 로그인 차단, false면 초과시 기존 세션 하나 삭제
+        
+        http.sessionManagement((auth) -> auth
+                .sessionFixation().changeSessionId()); //세션 고정 보호
 
 
         return http.build();
