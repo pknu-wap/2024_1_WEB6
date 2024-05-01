@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: ${url}
-    username: ${username}
-    password: ${password}
-    driver-class-name: ${driver-class-name}
+    url: "jdbc:mysql://localhost:3306/netview"
+    username: "root"
+    password: ""
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
