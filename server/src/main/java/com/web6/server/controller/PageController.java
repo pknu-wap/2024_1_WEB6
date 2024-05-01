@@ -20,12 +20,6 @@ public class PageController {
         return "signUp";
     }
 
-    /*
-    필드방식
-    @Autowired
-    private JoinService joinService;
-    */
-
     private final SignUpService signUpService;
 
     @Autowired

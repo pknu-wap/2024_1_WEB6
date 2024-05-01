@@ -21,16 +21,16 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/login", "/loginProc","/sign-up", "/api/members/sign-up").permitAll()
+                        .requestMatchers("/", "/login", "/api/members/login","/sign-up", "/api/members/sign-up").permitAll()
                         //.requestMatchers("/mypage/**").hasRole("USER") //USER라는 role만 접근허용
                         .anyRequest().authenticated() //로그인한 사용자만 허용
                 );
-        
+
         http
                 .formLogin((auth) -> auth
                         .loginPage("/login")
-                        .loginProcessingUrl("/loginProc") // /loginProc는 login.mustache에서 로그인 정보를 받아올 경로 => 나중에 수정
-                        .failureUrl("/sign-up") //로그인 실패 시 리다이렉트할 URL 지정
+                        .loginProcessingUrl("/api/members/login")
+                        .failureUrl("/sign-up") //회원가입 실패 시 리다이렉트할 URL 지정
                         .permitAll()
                 );
 
