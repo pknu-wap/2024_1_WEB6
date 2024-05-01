@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="mypage.css">
+
     <title>마이페이지</title>
 </head>
 
@@ -15,9 +16,13 @@
 
     <div class="mypage-main">
         <div class="profile-card">
-            <img class="profile-image"
-                src="https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-green-simple-solid-color-background-image_557101.jpg"
-                alt="Profile Picture">
+            <div class="user-profile-image">
+                <img class="profile-image" src="https://www.studiopeople.kr/common/img/default_profile.png"
+                    alt="Profile Picture">
+                <img class="edit-profile-image" src="https://i.ibb.co/yy0V1Zr/gear.png" alt="Edit Profile"
+                    onclick="editProfile()">
+            </div>
+
 
             <div class="profile-info">
                 <span class="username">사용자 닉네임</span>
@@ -28,24 +33,80 @@
                 </div>
             </div>
         </div>
-
         <hr>
+
+
         <div class="review-container">
             <div class="img-wrap">
-                <article><img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg"></article>
-                <article><img src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/c29bba8bec43a8139e0ccdee738bcbd0.jpg"></article>
-                <article><img src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/ae1d466087a6dfb562eb187f79d27fb7.jpg"></article>
-                <article><img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jt1GlLLvkWL2m83VX8I1qsDR187.jpg"></article>
-                <article><img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jpD6z9fgNe7OqsHoDeAWQWoULde.jpg"></article>
-                <article><img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bzpAD4rd40zZYoh6Lqzrz1O1xh4.jpg"></article>
-                <article><img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg"></article>
-                <article><img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wrCwH6WOvXQvVuqcKNUrLDCDxdw.jpg"></article>
+                <div class="">
+                    <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg">
+                    <div class="review-title">
+                        <p>Movie Title</p>
+                        <p>★4.5</p>
+                    </div>
+                </div>
+
+                <div class="">
+                    <img src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/c29bba8bec43a8139e0ccdee738bcbd0.jpg">
+                    <div class="review-title">
+                        <p>Movie Title</p>
+                        <p>★4.5</p>
+                    </div>
+                </div>
+                
+                <div class="">
+                    <img src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/ae1d466087a6dfb562eb187f79d27fb7.jpg">
+                    <div class="review-title">
+                        <p>Movie Title</p>
+                        <p>★4.5</p>
+                    </div>
+                </div>
+
+                <div class="">
+                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jt1GlLLvkWL2m83VX8I1qsDR187.jpg">
+                    <div class="review-title">
+                        <p>Movie Title</p>
+                        <p>★4.5</p>
+                    </div>
+                </div>
+
+                <div class="">
+                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jpD6z9fgNe7OqsHoDeAWQWoULde.jpg">
+                    <div class="review-title">
+                        <p>Movie Title</p>
+                        <p>★4.5</p>
+                    </div>
+                </div>
+
+                <div class="">
+                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bzpAD4rd40zZYoh6Lqzrz1O1xh4.jpg">
+                    <div class="review-title">
+                        <p>Movie Title</p>
+                        <p>★4.5</p>
+                    </div>
+                </div>
+
+                <div class="">
+                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg">
+                    <div class="review-title">
+                        <p>Movie Title</p>
+                        <p>★4.5</p>
+                    </div>
+                </div>
+
+                <div class="">
+                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wrCwH6WOvXQvVuqcKNUrLDCDxdw.jpg">
+                    <div class="review-title">
+                        <p>Movie Title</p>
+                        <p>★4.5</p>
+                    </div>
+                </div>
             </div>
 
         </div>
     </div>
 
-    <script src="mapage.js"></script>
+    <script src="mypage.js"></script>
 </body>
 
 </html>

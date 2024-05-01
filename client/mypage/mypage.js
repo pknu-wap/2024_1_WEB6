@@ -1,14 +1,16 @@
 // 클릭 이벤트 핸들러 등록
 var elements = document.getElementsByClassName('web-title');
 
-
+// 타이틀 클릭 시 메인 페이지로 이동
 elements[0].onclick = function () {
-    // 메인 페이지의 URL로 변경
     window.location.href = 'https://www.google.com';
 };
 
-
-
+// 프로필 수정 페이지로 이동
+function editProfile() {
+    var editProfileUrl = "https://www.naver.com/";
+    window.open(editProfileUrl, "_blank");
+}
 
 
 
