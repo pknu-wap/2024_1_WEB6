@@ -3,7 +3,9 @@ package com.web6.server.controller;
 import com.web6.server.dto.MemberDTO;
 import com.web6.server.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -11,7 +13,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PageController {
 
     @GetMapping("/")
-    public String mainP() {
+    public String mainP(Model model) {
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        /* role 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+        String role = auth.getAuthority();
+        */
+
+        model.addAttribute("loginId", id);
+        //model.addAttribute("role", role);
         return "main";
     }
 
