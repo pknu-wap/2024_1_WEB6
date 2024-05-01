@@ -1,7 +1,4 @@
 package com.web6.server.domain;
-import jakarta.persistence.*;
-
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

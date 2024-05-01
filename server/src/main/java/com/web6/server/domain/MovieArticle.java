@@ -1,11 +1,7 @@
 package com.web6.server.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "MovieArticle")
@@ -14,6 +10,24 @@ public class MovieArticle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
+
+    @OneToMany(mappedBy = "movieArticle")
+    private Set<TitleTag> titleTags;
+
+    @OneToMany(mappedBy = "movieArticle")
+    private Set<GenreTag> genreTags;
+
+    @OneToMany(mappedBy = "movieArticle")
+    private Set<ActorTag> actorTags;
+
+    @OneToMany(mappedBy = "movieArticle")
+    private Set<DirectorTag> directorTags;
+
+    @OneToMany(mappedBy = "movieArticle")
+    private Set<CountryTag> countryTags;
+
+    @OneToMany(mappedBy = "movieArticle")
+    private Set<KeyWordTag> keyWordTags;
 
     // Constructors, getters and setters
     public MovieArticle() {
@@ -26,4 +40,6 @@ public class MovieArticle {
     public void setId(Long id) {
         this.id = id;
     }
+
+    // Add getters and setters for the tag sets
 }
