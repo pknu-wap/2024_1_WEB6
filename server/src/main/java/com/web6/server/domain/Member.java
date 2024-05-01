@@ -18,10 +18,10 @@ public class Member {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "NICKNAME", nullable = false, length = 10)
+    @Column(name = "NICKNAME", nullable = false, length = 10, unique = true)
     private String nickname;
 
-    @Column(name = "LOGIN_ID", nullable = false, length = 50)
+    @Column(name = "LOGIN_ID", nullable = false, length = 50, unique = true)
     private String loginId;
 
     @Column(name = "PASSWORD", nullable = false, length = 1000)
