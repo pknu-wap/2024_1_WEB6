@@ -35,6 +35,12 @@ public class SecurityConfig {
                 );
 
         http
+                .logout((auth) -> auth
+                        .logoutUrl("/api/members/logout")
+                        .logoutSuccessUrl("/")
+                );
+
+        http
                 .csrf((auth) -> auth.disable()); //추후 enable로 수정
         
         http
