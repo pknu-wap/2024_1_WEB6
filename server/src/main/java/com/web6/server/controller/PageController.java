@@ -55,5 +55,11 @@ public class PageController {
     public String LoginP() {
         return "login";
     }
-    
+
+    /*@GetMapping("/logout")
+    public String LogoutProcess()
+    {
+        return "redirect:/login";
+    }*/
+
 }
