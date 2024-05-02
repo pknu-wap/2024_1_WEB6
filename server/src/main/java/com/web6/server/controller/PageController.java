@@ -1,5 +1,7 @@
 package com.web6.server.controller;
 
+import com.web6.server.domain.Member;
+import com.web6.server.domain.repository.MemberRepository;
 import com.web6.server.dto.MemberDTO;
 import com.web6.server.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class PageController {
+
+    private final MemberRepository memberRepository;
+    private final SignUpService signUpService;
+
+    @Autowired
+    public PageController (SignUpService signUpService, MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+        this.signUpService = signUpService;
+    }
 
     @GetMapping("/")
     public String mainP(Model model) {
@@ -25,7 +36,19 @@ public class PageController {
         String role = auth.getAuthority();
         */
 
-        model.addAttribute("loginId", id);
+        /*
+        * 로그인 상태 표시를 위해 임시로 memberRepository에 접근해서 nickname을 받아옴
+        */
+        String message;
+        if (!id.equals("anonymousUser")) {
+            Member member = memberRepository.findByLoginId(id);
+            String nickname = member.getNickname();
+            message =  "Currently logged in as " + nickname;
+        } else {
+            message = "Not logged in";
+        }
+
+        model.addAttribute("loginMessage", message);
         //model.addAttribute("role", role);
         return "main";
     }
@@ -33,13 +56,6 @@ public class PageController {
     @GetMapping("/sign-up")
     public String SignUpP() {
         return "signUp";
-    }
-
-    private final SignUpService signUpService;
-
-    @Autowired
-    public PageController(SignUpService signUpService) {
-        this.signUpService = signUpService;
     }
     
     @PostMapping("/api/members/sign-up")

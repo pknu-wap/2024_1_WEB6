@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .formLogin((auth) -> auth
                         .loginPage("/login")
                         .loginProcessingUrl("/api/members/login")
-                        .failureUrl("/sign-up") //회원가입 실패 시 리다이렉트할 URL 지정
+                        .failureUrl("/login") //로그인 실패 시 리다이렉트할 URL 지정
                         .permitAll()
                 );
 
