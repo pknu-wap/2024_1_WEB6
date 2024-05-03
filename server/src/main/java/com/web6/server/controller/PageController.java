@@ -4,12 +4,15 @@ import com.web6.server.domain.Member;
 import com.web6.server.domain.repository.MemberRepository;
 import com.web6.server.dto.MemberDTO;
 import com.web6.server.service.SignUpService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class PageController {
@@ -60,6 +63,15 @@ public class PageController {
     
     @PostMapping("/api/members/sign-up")
     public String SignUpProcess(MemberDTO memberDTO) {
+
+        /*
+        * 중간발표 대비
+        */
+        //유효성 검사 결과 확인
+        /*if (bindingResult.hasErrors()) {
+            //유효성 검사 실패 시, 다시 회원가입 페이지로 이동
+            return "redirect:/sign-up";
+        }*/
 
         boolean isSignUpSuccessful = signUpService.signUpProcess(memberDTO);
         //회원가입 실패시, 다시 회원가입 페이지로 이동하고, 성공시에만 로그인 페이지로 이동

@@ -21,8 +21,9 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/login", "/api/members/login","/sign-up", "/api/members/sign-up").permitAll()
+                        .requestMatchers("/").permitAll()
                         //.requestMatchers("/mypage/**").hasRole("USER") //USER라는 role만 접근허용
+                        .requestMatchers("/login", "/api/members/login","/sign-up", "/api/members/sign-up").anonymous()
                         .anyRequest().authenticated() //로그인한 사용자만 허용
                 );
 
