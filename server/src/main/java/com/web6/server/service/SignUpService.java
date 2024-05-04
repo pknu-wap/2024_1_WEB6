@@ -25,11 +25,9 @@ public class SignUpService {
     public boolean signUpProcess(MemberDTO memberDTO) {
 
         //db에 이미 동일한 loginId를 가진 회원이 존재하는지 검사
-        //boolean isMember = memberRepository.existsByLoginId(memberDTO.getLoginId());
         if (memberRepository.existsByLoginId(memberDTO.getLoginId())) { return false; }
 
         //db에 이미 동일한 nickname을 가진 회원이 존재하는지 검사
-        //boolean isNicknameExit = memberRepository.existsByNickname(memberDTO.getNickname());
         if(memberRepository.existsByNickname(memberDTO.getNickname())) { return false; }
 
         //memberDTO를 entity로 변환 후 데이터베이스에 넣기

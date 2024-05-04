@@ -84,10 +84,5 @@ public class PageController {
         return "login";
     }
 
-    /*@GetMapping("/logout")
-    public String LogoutProcess()
-    {
-        return "redirect:/login";
-    }*/
 
 }

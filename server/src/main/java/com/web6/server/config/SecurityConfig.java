@@ -32,7 +32,6 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/api/members/login")
                         .failureUrl("/login") //로그인 실패 시 리다이렉트할 URL 지정
-                        .permitAll()
                 );
 
         http
