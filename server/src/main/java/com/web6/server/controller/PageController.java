@@ -64,6 +64,7 @@ public class PageController {
     
     @PostMapping("/api/members/sign-up")
     public String SignUpProcess(@Valid MemberDTO memberDTO, Errors errors, Model model) {
+        //회원가입 실패시, 다시 회원가입 페이지로 이동하고, 성공시에만 로그인 페이지로 이동
 
         //유효성 검사
         if (errors.hasErrors()) {
@@ -79,10 +80,19 @@ public class PageController {
             return "signUp";
         }
 
-        boolean isSignUpSuccessful = signUpService.signUpProcess(memberDTO);
-        //회원가입 실패시, 다시 회원가입 페이지로 이동하고, 성공시에만 로그인 페이지로 이동
-        if(isSignUpSuccessful) { return "redirect:/login"; }
-        else { return "redirect:/sign-up"; }
+        //중복 검사
+        String duplicatedResult = signUpService.duplicateHandling(memberDTO);
+        if(!duplicatedResult.isEmpty()) {
+            //회원가입 실패 시 입력 데이터 값 유지
+            model.addAttribute("memberDTO", memberDTO);
+            model.addAttribute("duplicate", duplicatedResult);
+
+            return "signUp";
+        }
+        else {
+            signUpService.signUpProcess(memberDTO);
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/login")

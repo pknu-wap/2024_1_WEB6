@@ -19,6 +19,8 @@ Sign-Up
     <input type="password" name="password" value="{{#memberDTO}}{{memberDTO.password}}{{/memberDTO}}" placeholder="Password"/>
     {{#valid_password}} <span style="color: red; font-weight: bold;">{{valid_password}}</span> {{/valid_password}}
 
+    {{#duplicate}} <span style="color: red; font-weight: bold;">{{duplicate}}</span> {{/duplicate}}
+
     <input type="submit" value="Join"/>
 </form>
 
