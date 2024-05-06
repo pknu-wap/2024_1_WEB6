@@ -9,10 +9,16 @@
 <body>
 
 Sign-Up
-<form action="/api/members/sign-up" method="post" name="SignUpForm">
-    <input type="text" name="nickname" placeholder="Nickname"/>
-    <input type="email" name="loginId" placeholder="Email"/>
-    <input type="password" name="password" placeholder="Password"/>
+<form action="/api/members/sign-up" method="post" name="SignUpForm" modelAttribute="memberDTO">
+    <input type="text" name="nickname" value="{{#memberDTO}}{{memberDTO.nickname}}{{/memberDTO}}" placeholder="Nickname"/>
+    {{#valid_nickname}} <span style="color: red; font-weight: bold;">{{valid_nickname}}</span> {{/valid_nickname}}
+
+    <input type="email" name="loginId" value="{{#memberDTO}}{{memberDTO.loginId}}{{/memberDTO}}" placeholder="Email"/>
+    {{#valid_loginId}} <span style="color: red; font-weight: bold;">{{valid_loginId}}</span> {{/valid_loginId}}
+
+    <input type="password" name="password" value="{{#memberDTO}}{{memberDTO.password}}{{/memberDTO}}" placeholder="Password"/>
+    {{#valid_password}} <span style="color: red; font-weight: bold;">{{valid_password}}</span> {{/valid_password}}
+
     <input type="submit" value="Join"/>
 </form>
 

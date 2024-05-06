@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Map;
 
 @Controller
 public class PageController {
@@ -62,16 +63,21 @@ public class PageController {
     }
     
     @PostMapping("/api/members/sign-up")
-    public String SignUpProcess(MemberDTO memberDTO) {
+    public String SignUpProcess(@Valid MemberDTO memberDTO, Errors errors, Model model) {
 
-        /*
-        * 중간발표 대비
-        */
-        //유효성 검사 결과 확인
-        /*if (bindingResult.hasErrors()) {
+        //유효성 검사
+        if (errors.hasErrors()) {
+            //회원가입 실패 시 입력 데이터 값 유지
+            model.addAttribute("memberDTO", memberDTO);
+
+            //유효성 검사 통과 못한 필드와 메시지
+            Map<String, String> validatorResult = signUpService.validateHandling(errors);
+            for(String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
             //유효성 검사 실패 시, 다시 회원가입 페이지로 이동
-            return "redirect:/sign-up";
-        }*/
+            return "signUp";
+        }
 
         boolean isSignUpSuccessful = signUpService.signUpProcess(memberDTO);
         //회원가입 실패시, 다시 회원가입 페이지로 이동하고, 성공시에만 로그인 페이지로 이동
