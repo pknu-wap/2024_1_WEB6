@@ -21,8 +21,9 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/login", "/api/members/login","/sign-up", "/api/members/sign-up").permitAll()
+                        .requestMatchers("/").permitAll()
                         //.requestMatchers("/mypage/**").hasRole("USER") //USER라는 role만 접근허용
+                        .requestMatchers("/login", "/api/members/login", "/loginError","/sign-up", "/api/members/sign-up").anonymous()
                         .anyRequest().authenticated() //로그인한 사용자만 허용
                 );
 
@@ -30,8 +31,8 @@ public class SecurityConfig {
                 .formLogin((auth) -> auth
                         .loginPage("/login")
                         .loginProcessingUrl("/api/members/login")
-                        .failureUrl("/sign-up") //회원가입 실패 시 리다이렉트할 URL 지정
-                        .permitAll()
+                        .failureForwardUrl("/loginError")
+                        .defaultSuccessUrl("/")
                 );
 
         http
