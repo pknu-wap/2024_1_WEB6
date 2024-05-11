@@ -100,5 +100,11 @@ public class PageController {
         return "login";
     }
 
+    @PostMapping("/loginError")
+    public String loginerror(Model model){
+        model.addAttribute("errorMessage", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해 주세요.");
+        return "login";
+    }
+
 
 }
