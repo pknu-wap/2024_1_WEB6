@@ -37,4 +37,4 @@ out/
 .vscode/
 
 # Ignore application.yml files for storing sensitive information like database connection info
-**/application.yml
+**/application.yaml
