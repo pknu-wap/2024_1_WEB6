@@ -47,13 +47,13 @@ public class PageController {
 
         boolean isSignUpSuccessful = signUpService.signUpProcess(memberDTO);
         //회원가입 실패시, 다시 회원가입 페이지로 이동하고, 성공시에만 로그인 페이지로 이동
-        if(isSignUpSuccessful) { return "redirect:/login"; }
+        if(isSignUpSuccessful) { return "redirect:/login-page"; }
         else { return "redirect:/sign-up"; }
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login-page")
     public String LoginP() {
-        return "login";
+        return "loginPage";
     }
 
     /*@GetMapping("/logout")
