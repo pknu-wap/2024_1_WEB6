@@ -1,4 +1,4 @@
-package com.web6.server.domain.repository;
+package com.web6.server.repository;
 
 import com.web6.server.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

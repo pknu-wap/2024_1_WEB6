@@ -1,7 +1,7 @@
 package com.web6.server.service;
 
 import com.web6.server.domain.Member;
-import com.web6.server.domain.repository.MemberRepository;
+import com.web6.server.repository.MemberRepository;
 import com.web6.server.dto.MemberDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
