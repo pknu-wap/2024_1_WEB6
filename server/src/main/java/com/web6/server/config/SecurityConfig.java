@@ -23,6 +23,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/", "/login", "/api/members/login","/sign-up", "/api/members/sign-up").permitAll()
                         //.requestMatchers("/mypage/**").hasRole("USER") //USER라는 role만 접근허용
+                        .requestMatchers(("/hello")).permitAll()       //hello 경로에 대해 모든 사용자에게 접근 허용
+                        .requestMatchers(("/testOpenAPI")).permitAll() //testOpenAPI 경로에 대해 모든 사용자에게 접근 허용
+                        .requestMatchers(("/movie/findAll")).permitAll() //movie.findAll 경로에 대해 모든 사용자 접근 허용
                         .anyRequest().authenticated() //로그인한 사용자만 허용
                 );
 
@@ -42,14 +45,16 @@ public class SecurityConfig {
 
         http
                 .csrf((auth) -> auth.disable()); //추후 enable로 수정
-        
+
         http
                 .sessionManagement((auth) -> auth
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(true)); //true면 초과시 새로운 로그인 차단, false면 초과시 기존 세션 하나 삭제
-        
+
         http.sessionManagement((auth) -> auth
                 .sessionFixation().changeSessionId()); //세션 고정 보호
+
+
 
 
         return http.build();

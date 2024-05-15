@@ -14,7 +14,16 @@ spring:
         show_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
 
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+
 server:
   servlet:
     session:
       timeout: 90m
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
