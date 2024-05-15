@@ -91,19 +91,19 @@ public class SignUpController {
         }
         else {
             signUpService.signUpProcess(memberDTO);
-            return "redirect:/login";
+            return "redirect:/login-page";
         }
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login-page")
     public String LoginP() {
-        return "login";
+        return "loginPage";
     }
 
     @PostMapping("/loginError")
     public String loginerror(Model model){
         model.addAttribute("errorMessage", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해 주세요.");
-        return "login";
+        return "loginPage";
     }
 
 

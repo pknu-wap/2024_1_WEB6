@@ -1,3 +1,4 @@
+// 일반 회원가입
 package com.web6.server.service;
 
 import com.web6.server.domain.Member;
