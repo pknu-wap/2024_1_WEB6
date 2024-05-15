@@ -52,14 +52,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/").permitAll()
                         //.requestMatchers("/mypage/**").hasRole("USER") //USER라는 role만 접근허용
-                        .requestMatchers("/login-page", "/api/members/login", "/loginError","/sign-up", "/api/members/sign-up").anonymous()
+                        .requestMatchers("/login-page", "/api/members/login-page", "/loginError","/sign-up", "/api/members/sign-up").anonymous()
                         .anyRequest().authenticated() //로그인한 사용자만 허용
                 );
 
         http
                 .formLogin((auth) -> auth
                         .loginPage("/login-page")
-                        .loginProcessingUrl("/api/members/login")
+                        .loginProcessingUrl("/api/members/login-page")
                         .failureForwardUrl("/loginError")
                         .defaultSuccessUrl("/")
                 );

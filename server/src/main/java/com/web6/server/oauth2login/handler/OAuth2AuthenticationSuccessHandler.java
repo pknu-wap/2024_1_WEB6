@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.web6.server.domain.Member;
 import com.web6.server.dto.MemberDTO;
-import com.web6.server.domain.repository.MemberRepository;
+import com.web6.server.repository.MemberRepository;
 import com.web6.server.jwt.TokenProvider;
 import com.web6.server.oauth2login.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.web6.server.oauth2login.service.OAuth2UserPrincipal;
