@@ -2,6 +2,7 @@ package com.web6.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,6 +40,7 @@ public class SecurityConfig {
                 .logout((auth) -> auth
                         .logoutUrl("/api/members/logout")
                         .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true) //로그아웃 후 세션 무효화
                 );
 
         http
@@ -55,4 +57,9 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    /*@Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManager.class);
+    }*/
 }

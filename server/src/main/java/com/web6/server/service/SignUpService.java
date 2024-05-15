@@ -1,7 +1,7 @@
 package com.web6.server.service;
 
 import com.web6.server.domain.Member;
-import com.web6.server.domain.repository.MemberRepository;
+import com.web6.server.repository.MemberRepository;
 import com.web6.server.dto.MemberDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

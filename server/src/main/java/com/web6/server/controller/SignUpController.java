@@ -1,7 +1,7 @@
 package com.web6.server.controller;
 
 import com.web6.server.domain.Member;
-import com.web6.server.domain.repository.MemberRepository;
+import com.web6.server.repository.MemberRepository;
 import com.web6.server.dto.MemberDTO;
 import com.web6.server.service.SignUpService;
 import jakarta.validation.Valid;
@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Map;
 
 @Controller
-public class PageController {
+public class SignUpController {
 
     private final MemberRepository memberRepository;
     private final SignUpService signUpService;
 
     @Autowired
-    public PageController (SignUpService signUpService, MemberRepository memberRepository) {
+    public SignUpController(SignUpService signUpService, MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
         this.signUpService = signUpService;
     }
 
     @GetMapping("/")
-    public String mainP(Model model) {
+    public String MainP(Model model) {
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
 
         /* role 가져오기
