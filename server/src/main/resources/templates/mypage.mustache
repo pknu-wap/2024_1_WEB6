@@ -1,0 +1,54 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyPage</title>
+    <style>
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>MyPage</h2>
+    <form action="/api/mypage" method="post" name="MyPageForm" modelAttribute="memberEditDTO">
+        <div>
+            <label for="nickname">Nickname:</label>
+            <input type="text" name="nickname" value="{{#currentMember}}{{currentMember.nickname}}{{/currentMember}}" placeholder="Nickname"/>
+            {{#valid_nickname}} <span class="error-message">{{valid_nickname}}</span> {{/valid_nickname}}
+            {{#duplicate}} <span class="error-message">{{duplicate}}</span> {{/duplicate}}
+        </div>
+        <div>
+            <label for="loginId">Email:</label>
+            <input type="email" name="loginId" value="{{#currentMember}}{{currentMember.loginId}}{{/currentMember}}" placeholder="Email" readonly/>
+        </div>
+        <h3>비밀번호 변경</h3>
+        <div>
+            <label for="currentPassword">Current Password:</label>
+            <input type="password" name="currentPassword" value="{{#editMember}}{{editMember.currentPassword}}{{/editMember}}" placeholder="Current Password"/>
+            {{#errorMessage}} <span class="error-message">{{errorMessage}}</span> {{/errorMessage}}
+        </div>
+        <div>
+            <label for="newPassword">New Password:</label>
+            <input type="password" name="newPassword" value="{{#editMember}}{{editMember.newPassword}}{{/editMember}}" placeholder="New Password"/>
+            {{#valid_password}} <span class="error-message">{{valid_password}}</span> {{/valid_password}}
+        </div>
+        <div>
+            <label for="confirmPassword">Confirm New Password:</label>
+            <input type="password" name="confirmPassword" placeholder="Confirm New Password"/>
+            {{#confirm_password}} <span class="error-message">{{confirm_password}}</span> {{/confirm_password}}
+        </div>
+        <input type="submit" value="Save"/>
+    </form>
+</div>
+
+</body>
+</html>

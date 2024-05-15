@@ -9,6 +9,7 @@ import com.web6.server.oauth2login.handler.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -47,32 +48,60 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(AbstractHttpConfigurer::disable)
-                .headers(headersConfigurer -> headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // For H2 DB
-                .formLogin(AbstractHttpConfigurer::disable)
-                .formLogin(auth -> auth
-                        .loginPage("/login-page") // 로그인 페이지의 URL 지정
-                        .loginProcessingUrl("/api/members/login-page") // 로그인 처리 URL 지정
-                        .failureUrl("/login-page") // 로그인 실패 시 리다이렉트할 URL 지정
-                        .permitAll() // 로그인 페이지에 모든 사용자에게 접근 허용
-                )
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
-                )
-
-
-                .httpBasic(AbstractHttpConfigurer::disable)
-
-                .sessionManagement(sessions -> sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2Login(configure ->
-                        configure
-                                .authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
-                                .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
-                                .successHandler(oAuth2AuthenticationSuccessHandler)
-                                .failureHandler(oAuth2AuthenticationFailureHandler)
+        http
+                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers("/").permitAll()
+                        //.requestMatchers("/mypage/**").hasRole("USER") //USER라는 role만 접근허용
+                        .requestMatchers("/login-page", "/api/members/login", "/loginError","/sign-up", "/api/members/sign-up").anonymous()
+                        .anyRequest().authenticated() //로그인한 사용자만 허용
                 );
+
+        http
+                .formLogin((auth) -> auth
+                        .loginPage("/login-page")
+                        .loginProcessingUrl("/api/members/login")
+                        .failureForwardUrl("/loginError")
+                        .defaultSuccessUrl("/")
+                );
+
+//        http.httpBasic(AbstractHttpConfigurer::disable)
+
+
+        http
+                .logout((auth) -> auth
+                        .logoutUrl("/api/members/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true) //로그아웃 후 세션 무효화
+                );
+
+
+        http
+                .csrf((auth) -> auth.disable()); //추후 enable로 수정
+        
+        http
+                .sessionManagement((auth) -> auth
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(true)); //true면 초과시 새로운 로그인 차단, false면 초과시 기존 세션 하나 삭제
+        
+        http.sessionManagement((auth) -> auth
+                .sessionFixation().changeSessionId()); //세션 고정 보호
+
+        //소셜로그인
+        http    .sessionManagement(sessions -> sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .oauth2Login(configure ->
+                            configure
+                                    .authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
+                                    .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
+                                    .successHandler(oAuth2AuthenticationSuccessHandler)
+                                    .failureHandler(oAuth2AuthenticationFailureHandler)
+                    );
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
+    /*@Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManager.class);
+    }*/
 }
