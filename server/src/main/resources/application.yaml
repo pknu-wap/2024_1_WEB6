@@ -2,7 +2,7 @@ spring:
   datasource:
     url: "jdbc:mysql://localhost:3306/netview"
     username: "root"
-    password: ""
+    password: "1234"
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -27,3 +27,4 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+  port: 7070
