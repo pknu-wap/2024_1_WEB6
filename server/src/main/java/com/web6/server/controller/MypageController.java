@@ -82,9 +82,9 @@ public class MypageController {
                 model.addAttribute("confirm_password", "새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
                 return "mypage";
             }
+            memberService.updatePassword(editDTO.getLoginId(), editDTO.getNewPassword());
         }
         memberService.updateNickname(editDTO.getLoginId(), editDTO.getNickname());
-        memberService.updatePassword(editDTO.getLoginId(), editDTO.getNewPassword());
 
         /*
         * 변경된 세션 등록
@@ -96,9 +96,8 @@ public class MypageController {
 
 
 
-        return "redirect:/mypage"; //실패든, 성공이든 mypage로 이동
-        //리다이렉트하면 필드가 빈값은 아니지만, 이전 세션 값 적용됨 -> 계속 리다이렉트로 쓸 거면, 세션에 저장된 값을 set 해주거나, 세션 다시 받아오기 등등 해결방법 모색
-        //반면에, 그냥 페이지 이동이면, 필드가 빈값으로 뜸. 왤까 -> model 써서 다시 필드 채우던가 음
+        return "/api/members/logout"; //실패든, 성공이든 mypage로 이동
+        //성공하면, 새로운 세션을 받아오기 위해, 강제로 로그아웃 시킴
     }
 
 
