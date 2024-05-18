@@ -96,7 +96,7 @@ public class MypageController {
 
 
 
-        return "/api/members/logout"; //실패든, 성공이든 mypage로 이동
+        return "/api/members/logout-page"; //실패든, 성공이든 mypage로 이동
         //성공하면, 새로운 세션을 받아오기 위해, 강제로 로그아웃 시킴
     }
 
