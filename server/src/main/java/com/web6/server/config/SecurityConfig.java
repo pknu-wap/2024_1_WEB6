@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .formLogin((auth) -> auth
                         .loginPage("/login-page")
                         .loginProcessingUrl("/api/members/login-page")
-                        .failureUrl("/loginError")
+                        .failureForwardUrl("/loginError")
                         .defaultSuccessUrl("/", true)
                 );
 
