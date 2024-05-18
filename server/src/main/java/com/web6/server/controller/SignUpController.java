@@ -2,11 +2,14 @@ package com.web6.server.controller;
 
 import com.web6.server.domain.Member;
 import com.web6.server.repository.MemberRepository;
+import com.web6.server.oauth2login.user.KakaoOAuth2UserUnlink;
 import com.web6.server.dto.MemberDTO;
 import com.web6.server.service.SignUpService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -27,33 +30,42 @@ public class SignUpController {
         this.signUpService = signUpService;
     }
 
+    @Autowired
+    private KakaoOAuth2UserUnlink kakaoOAuth2UserUnlink;
+
     @GetMapping("/")
     public String MainP(Model model) {
-        String id = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        /* role 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
 
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
-        GrantedAuthority auth = iter.next();
-        String role = auth.getAuthority();
-        */
-
-        /*
-        * 로그인 상태 표시를 위해 임시로 memberRepository에 접근해서 nickname을 받아옴
-        */
         String message;
         if (!id.equals("anonymousUser")) {
-            Member member = memberRepository.findByLoginId(id);
-            String nickname = member.getNickname();
-            message =  "Currently logged in as " + nickname;
+            String nickname = null;
+
+            if (authentication.getPrincipal() instanceof OAuth2User) {
+                OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+                String email = (String) oAuth2User.getAttributes().get("email");
+                Member member = memberRepository.findByLoginId(email);
+                if (member != null) {
+                    nickname = member.getNickname();
+                }
+            } else {
+                Member member = memberRepository.findByLoginId(id);
+                if (member != null) {
+                    nickname = member.getNickname();
+                }
+            }
+
+            if (nickname != null) {
+                message = "Currently logged in as " + nickname;
+            } else {
+                message = "Not logged in";
+            }
         } else {
             message = "Not logged in";
         }
 
         model.addAttribute("loginMessage", message);
-        //model.addAttribute("role", role);
         return "main";
     }
 
@@ -61,35 +73,26 @@ public class SignUpController {
     public String SignUpP() {
         return "signUp";
     }
-    
+
     @PostMapping("/api/members/sign-up")
     public String SignUpProcess(@Valid MemberDTO memberDTO, Errors errors, Model model) {
-        //회원가입 실패시, 다시 회원가입 페이지로 이동하고, 성공시에만 로그인 페이지로 이동
-
-        //유효성 검사
         if (errors.hasErrors()) {
-            //회원가입 실패 시 입력 데이터 값 유지
             model.addAttribute("memberDTO", memberDTO);
 
-            //유효성 검사 통과 못한 필드와 메시지
             Map<String, String> validatorResult = signUpService.validateHandling(errors);
             for(String key : validatorResult.keySet()) {
                 model.addAttribute(key, validatorResult.get(key));
             }
-            //유효성 검사 실패 시, 다시 회원가입 페이지로 이동
             return "signUp";
         }
 
-        //중복 검사
         String duplicatedResult = signUpService.duplicateHandling(memberDTO);
         if(!duplicatedResult.isEmpty()) {
-            //회원가입 실패 시 입력 데이터 값 유지
             model.addAttribute("memberDTO", memberDTO);
             model.addAttribute("duplicate", duplicatedResult);
 
             return "signUp";
-        }
-        else {
+        } else {
             signUpService.signUpProcess(memberDTO);
             return "redirect:/login-page";
         }
@@ -106,5 +109,9 @@ public class SignUpController {
         return "loginPage";
     }
 
+    @GetMapping("/logout-page")
+    public String logoutPage() {
+        return "logoutPage"; // 일반 로그아웃 페이지의 뷰 이름 반환
+    }
 
 }

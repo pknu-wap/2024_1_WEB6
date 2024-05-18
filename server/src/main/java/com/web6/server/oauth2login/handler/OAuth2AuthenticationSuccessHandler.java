@@ -2,9 +2,6 @@
 
 package com.web6.server.oauth2login.handler;
 
-import com.web6.server.oauth2login.user.KakaoOAuth2UserUnlink;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.web6.server.domain.Member;
 import com.web6.server.dto.MemberDTO;
@@ -21,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +38,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
-//    private static final Logger logger = LoggerFactory.getLogger(OAuth2AuthenticationSuccessHandler.class);
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -86,13 +83,10 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             //db에 이미 동일한 loginId를 가진 회원이 존재하는지 검사
             if (existingMember != null) {
                 existingMember.setKakaoId(principal.getUserInfo().getId()); //카카오 Id 값을 받아옴
+                memberRepository.save(existingMember);
                 existingMember.setAccessToken(principal.getUserInfo().getAccessToken()); //액세스 토큰을 받아옴
                 existingMember.setRefreshToken(tokenProvider.createToken(authentication)); //리프레쉬 토큰을 생성함
-                memberRepository.save(existingMember);
                 return UriComponentsBuilder.fromUriString(targetUrl)
-                        // TODO : 나중에 지우기 (URI에 노출됨)
-                        .queryParam("access_token", existingMember.getAccessToken())
-                        .queryParam("refresh_token", existingMember.getRefreshToken())
                         .build().toUriString();
             } else {
                 // 기존 member 테이블의 LOGIN_ID와 email이 불일치하는 경우 -> 새로 회원가입 해야 함 (일반 회원가입으로 이동?)
@@ -100,33 +94,26 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                         .build().toUriString();
             }
 
-        } else if ("unlink".equalsIgnoreCase(mode)) { // 로그아웃
+        } else if ("unlink".equalsIgnoreCase(mode)) {
+        // 로그아웃 처리
+        String accessToken = principal.getUserInfo().getAccessToken();
+        OAuth2Provider provider = principal.getUserInfo().getProvider();
 
-            String accessToken = principal.getUserInfo().getAccessToken();
-            String refreshToken = tokenProvider.createToken(authentication);
-            OAuth2Provider provider = principal.getUserInfo().getProvider();
+        // accessToken을 사용하여 OAuth2 공급자와의 연동 해제
+        oAuth2UserUnlinkManager.unlink(provider, accessToken);
 
-            // 액세스 토큰 삭제
-            //log.info("num check: {}", num);
-            Member member = memberRepository.findByAccessToken(accessToken);
-            if (member != null) {
-                memberRepository.delete(member);
-            }
+        // 현재 사용자의 인증 정보를 SecurityContext에서 제거
+        SecurityContextHolder.clearContext();
 
-            // 해당하는 회원의 리프레시 토큰을 삭제
-            //log.info("num check: {}", num);
-            Member memberByRefreshToken = memberRepository.findByRefreshToken(refreshToken);
-            if (memberByRefreshToken != null) {
-                memberRepository.delete(memberByRefreshToken);
-            }
-            // OAuth2 공급자와의 연결 끊기 API 호출
-            //KakaoOAuth2UserUnlink.unlink(accessToken);
-            // OAuth2UserUnlinkManager를 통해 OAuth2 공급자와 연결된 액세스 토큰 및 리프레시 토큰을 삭제
-            oAuth2UserUnlinkManager.unlink(provider, accessToken);
+        // 사용자를 로그아웃 후 리다이렉트할 주소 설정
+        // 예: 로그인 페이지 또는 홈페이지 등
+        String logoutRedirectUrl = "/login-page"; // 이 부분은 실제 요구에 맞게 수정하세요.
 
-            return UriComponentsBuilder.fromUriString(targetUrl)
-                    .build().toUriString();
-        }
+        // 쿠키에서 refreshToken 제거
+        clearRefreshTokenCookie(response);
+
+        return "redirect:" + logoutRedirectUrl;
+    }
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("error", "Login failed")
@@ -141,6 +128,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
         return null;
     }
+
+    protected void clearRefreshTokenCookie(HttpServletResponse response) {
+        Cookie refreshTokenCookie = new Cookie("refreshToken", null); // 쿠키 이름은 실제 사용하는 이름으로 변경
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
+        response.addCookie(refreshTokenCookie);
+    }
+
 
     protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
         super.clearAuthenticationAttributes(request);
