@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login-page.css">
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+    
+</head>
+
+<body style="background-color: #ffffffed;">
+
+    <h1 class="web-title">NET VIEW</h1><hr>
+    
+    <div class="login-wrapper">
+        <h2>Login</h2>
+        <form action="/api/members/login-page" method="post" name="loginForm" id="login-form">
+            <label for="username"></label>
+            <input class="user-id" id="username" type="text" name="username" placeholder="Email">
+            
+            <label for="password"></label>
+            <input class="user-pw" id="password" type="password" name="password" placeholder="Password">
+            
+            <input class="login-button" type="submit" value="로그인" style="cursor:pointer">
+            
+
+            <div class="line">또는</div>
+            <div class="kakao-login-img-container">
+                <img src="kakao_login_large_wide.png" class="kakao-login-img" alt="">
+            </div>
+            
+            <button class="signup-button" type="button">회원가입</button>
+        </form>
+    </div>
+
+    
+
+    <script src="login-page.js"></script>
+</body>
+
+</html>
