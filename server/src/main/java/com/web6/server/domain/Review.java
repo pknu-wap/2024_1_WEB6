@@ -10,6 +10,7 @@ package com.web6.server.domain;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Review")
@@ -37,6 +38,12 @@ public class Review {
 
     @Column(name = "SPOILER", nullable = false)
     private boolean spoiler;
+
+    @Column(name = "LIKE_COUNT", nullable = false)
+    private int likeCount;
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewLike> likes; // 좋아요 목록
 
     // Constructors, getters, and setters
     public Review() {
@@ -97,6 +104,14 @@ public class Review {
     public void setSpoiler(boolean spoiler) {
         this.spoiler = spoiler;
     }
+
+    public int getLikeCount() { return likeCount; }
+
+    public void setLikeCount(int likeCount) { this.likeCount = likeCount; }
+
+    public List<ReviewLike> getLikes() { return likes; }
+
+    public void setLikes(List<ReviewLike> likes) { this.likes = likes; }
 }
 
 
