@@ -1,13 +1,12 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
 }
 
 .container {
     max-width: 50%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 h1 {
@@ -40,7 +39,6 @@ h4 {
 
     box-sizing: border-box;
     display: inline-block;
-
     width: 102.3%;
     background: #F3F4F8;
     border: 0;
@@ -58,10 +56,15 @@ textarea {
     resize: none;
 }
 
-button[type="submit"] {
+.spoiler-check {
+    color: #616161;
+}
+
+.review-submit-button {
     display: block;
     width: 100%;
     padding: 10px;
+    margin: 10px auto;
     background-color: #000000;
     color: #fff;
     border: none;
