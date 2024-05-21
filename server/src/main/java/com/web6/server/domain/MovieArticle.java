@@ -11,6 +11,15 @@ public class MovieArticle {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
+    @Column(name = "GRADE", nullable = false)
+    private double grade = 0.0; //평균 평점
+
+    @Column(name = "GRADE_COUNT", nullable = false)
+    private int gradeCount = 0; //평점의 개수(==리뷰의 개수)
+
+    @Column(name = "GRADE_SUM", nullable = false)
+    private double gradeSum = 0; //평점의 합
+
     @OneToMany(mappedBy = "movieArticle")
     private Set<TitleTag> titleTags;
 
@@ -41,5 +50,34 @@ public class MovieArticle {
         this.id = id;
     }
 
-    // Add getters and setters for the tag sets
+    public double getGrade() { return grade; }
+
+    //methods to update grade
+    //리뷰가 추가되었을 때
+    public  void addGrade (double grade) {
+        gradeCount += 1;
+        gradeSum += grade;
+        updateGrade();
+    }
+
+    //리뷰가 수정되었을 때
+    public void editGrade (double oldGrade, double newGrade) {
+        gradeSum -= oldGrade;
+        gradeSum += newGrade;
+        updateGrade();
+    }
+
+    //리뷰가 삭제되었을 때
+    public void deleteGrade (double grade) {
+        gradeCount -= 1;
+        gradeSum -= grade;
+        updateGrade();
+    }
+
+    private void updateGrade() {
+        if(gradeCount == 0) grade = 0.0;
+        else {
+            grade = gradeSum / (double)gradeCount;
+        }
+    }
 }

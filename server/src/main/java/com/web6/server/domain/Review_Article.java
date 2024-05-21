@@ -12,11 +12,14 @@ import jakarta.persistence.*;
 @Table(name = "Review_Article")
 public class Review_Article {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false, updatable = false)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "REVIEW_ID", nullable = true)
     private Review review;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "ARTICLE_ID", nullable = false)
     private MovieArticle article;
@@ -31,6 +34,10 @@ public class Review_Article {
     }
 
     // Getters and setters
+    public Long getId() {return id;}
+
+    public void setId(Long id) {this.id = id;}
+
     public Review getReview() {
         return review;
     }
