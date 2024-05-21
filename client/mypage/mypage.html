@@ -3,108 +3,45 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 정보 수정</title>
     <link rel="stylesheet" href="mypage.css">
-
-    <title>마이페이지</title>
 </head>
 
 <body>
-    <h1 class="web-title">NET VIEW</h1>
-    <hr>
-
-    <div class="mypage-main">
-        <div class="profile-card">
-            <div class="user-profile-image">
-                <img class="profile-image" src="https://www.studiopeople.kr/common/img/default_profile.png"
-                    alt="Profile Picture">
-                <img class="edit-profile-image" src="https://i.ibb.co/yy0V1Zr/gear.png" alt="Edit Profile"
-                    onclick="editProfile()">
-            </div>
-
-
-            <div class="profile-info">
-                <span class="username">사용자 닉네임</span>
-                <br><span class="user-email">user@example.com</span>
-                <div class="user-stats">
-                    <p><span class="post-count">리뷰 수 <span class="count_review">8</span></span></p>
-                    <p><span class="comment-count">댓글 수 <span class="count_comment">10</span></span></p>
+    <header>
+        <h1 class="web-title">NET VIEW</h1><br>
+    </header>
+    <div class="container">
+        <div class="change-form">
+            <h2>닉네임 변경</h2>
+            <form id="nicknameForm" action="/api/mypage" method="put" name="" modelAttribute="memberDTO">
+                <label for="nickname"></label>
+                <div class="input-group">
+                    <input type="text" id="nickname" name="nickname" placeholder="새 닉네임" required>
+                    <button class="check-nickname-btn" type="submit" onclick="">중복확인</button>
                 </div>
-            </div>
+                <span class="nickname-validation">닉네임은 최소 2~10자이며, 특수문자를 제외한 한글, 알파벳 대소문자, 숫자 사용 가능</span>
+                <button type="submit" onclick="">변경하기</button>
+            </form>
         </div>
-        <hr>
-        
 
+        <div class="change-form">
+            <h2>비밀번호 변경하기</h2>
+            <form id="passwordForm" action="/api/mypage" method="put" name="" modelAttribute="memberDTO">
+                <label for="newPassword"></label>
+                <input type="password" id="newPassword" name="newPassword" placeholder="새 비밀번호" required>
+                <br><span class="password-validation">최소 8자~16자이며, 영문 소문자(만), 숫자, 특수문자를 모두 사용</span>
 
-        <div class="review-container">
-            <div class="img-wrap">
-                <div class="">
-                    <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/c29bba8bec43a8139e0ccdee738bcbd0.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
                 
-                <div class="">
-                    <img src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/ae1d466087a6dfb562eb187f79d27fb7.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jt1GlLLvkWL2m83VX8I1qsDR187.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jpD6z9fgNe7OqsHoDeAWQWoULde.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bzpAD4rd40zZYoh6Lqzrz1O1xh4.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wrCwH6WOvXQvVuqcKNUrLDCDxdw.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-            </div>
-
+                <label for="confirmPassword"></label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="새 비밀번호 확인" required>
+                
+                <button type="submit" onclick="">변경하기</button>
+            </form>
         </div>
+
+        <div id="message"></div>
     </div>
 
     <script src="mypage.js"></script>
