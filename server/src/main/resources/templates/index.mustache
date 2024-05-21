@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Search</title>
+
+</head>
+<body>
+    <h1>Movie Search</h1>
+    <form action="/movie/search" method="get">
+        <label for="query">Query:</label>
+        <input type="text" id="query" name="query">
+        <button type="submit">Search</button>
+    </form>
+
+    {{#movies}}
+    <div>
+        <h2>Search Results</h2>
+        <ul>
+            {{#this}}
+            <li>
+                <p><strong>Title:</strong> {{title}}</p>
+                <p><strong>Director:</strong> {{#directors.director}}{{directorNm}}{{/directors.director}}</p>
+                <p><strong>Actors:</strong> {{#actors.actor}}{{actorNm}}{{/actors.actor}}</p>
+                <p><strong>Genre:</strong> {{genre}}</p>
+                <p><strong>Nation:</strong> {{nation}}</p>
+            </li>
+            {{/this}}
+        </ul>
+    </div>
+    {{/movies}}
+</body>
+</html>
