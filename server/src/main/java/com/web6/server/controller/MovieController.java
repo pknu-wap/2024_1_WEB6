@@ -148,7 +148,7 @@ public class MovieController {
                     // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
                     if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
                         List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
-                        movie.setStllsList(stillsList);
+                        movie.setStillsList(stillsList);
                     }
                 }
                 model.addAttribute("movies", movies);

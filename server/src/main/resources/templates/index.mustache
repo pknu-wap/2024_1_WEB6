@@ -37,19 +37,20 @@
                 {{/plot}}
             {{/plots}}
             <!-- 포스터 이미지 -->
+            <h4>포스터 이미지</h4>
             {{#postersList}}
                 {{#.}}
                     <img src="{{.}}" alt="{{title}} 포스터" style="width:200px;">
                 {{/.}}
             {{/postersList}}
+
             <!-- 스틸 이미지 -->
-            <div>
-                <h3>스틸 이미지</h3>
-                {{#stillsList}}
-                    {{#.}}
-                        <img src="{{.}}" alt="{{title}} 스틸 이미지" style="width:200px;">
-                    {{/.}}
-                {{/stillsList}}
+            <h4>스틸 이미지</h4>
+            {{#stillsList}}
+                {{#.}}
+                    <img src="{{.}}" alt="{{title}} 스틸 이미지" style="width:200px;">
+                {{/.}}
+            {{/stillsList}}
             </div>
             <p><a href="{{kmdbUrl}}">KMDb에서 더보기</a></p>
         </div>
