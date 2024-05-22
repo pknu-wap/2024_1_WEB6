@@ -10,12 +10,16 @@ import com.web6.server.dto.ResponseVo;
 import com.web6.server.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -120,7 +124,8 @@ public class MovieController {
         String movieResponse = movieService.getMovieInfoList(movieRequestVo);
         //log.info("json String response : " + movieResponse);
 
-        // JSON 응답을 MovieResponseVo 객체로 변환합니다.
+
+        // JSON 응답을 MovieDetailResponseVo 객체로 변환합니다.
         ObjectMapper objectMapper = new ObjectMapper();
         MovieDetailResponseVo response = null;
         try {
@@ -130,9 +135,24 @@ public class MovieController {
             log.error("Error occurred: " + e.getMessage(), e);
         }
 
-        // 변환된 MovieResponseVo 객체가 null이 아니고 데이터가 있는 경우 모델에 추가합니다.
-        if (response != null && !response.getData().isEmpty()) {
-            model.addAttribute("movies", response.getData().get(0).getResult());
+        // 변환된 MovieDetailResponseVo 객체가 null이 아니고 데이터가 있는 경우 모델에 추가합니다.
+        if (response != null && response.getData() != null && !response.getData().isEmpty()) {
+            List<MovieDetailResponseVo.DataInfo.ResultInfo> movies = response.getData().get(0).getResult();
+            if (movies != null) {
+                for (MovieDetailResponseVo.DataInfo.ResultInfo movie : movies) {
+                    // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
+                    if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
+                        List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
+                        movie.setPostersList(postersList);
+                    }
+                    // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
+                    if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
+                        List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
+                        movie.setStllsList(stillsList);
+                    }
+                }
+                model.addAttribute("movies", movies);
+            }
         }
 
         // 검색 결과 페이지를 반환합니다.

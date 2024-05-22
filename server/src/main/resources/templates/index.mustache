@@ -26,7 +26,7 @@
             {{/directors}}
             {{#actors}}
                 {{#actor}}
-                    <p>배우: {{actorNm}}, </p>
+                    <p>배우: {{actorNm}}</p>
                 {{/actor}}
             {{/actors}}
             <p>장르: {{genre}}</p>
@@ -36,9 +36,21 @@
                     <p>줄거리: {{plotText}}</p>
                 {{/plot}}
             {{/plots}}
-            {{#posterUrl}}
-                <img src="{{posters}}" alt="{{title}} 포스터" style="width:200px;">
-            {{/posterUrl}}
+            <!-- 포스터 이미지 -->
+            {{#postersList}}
+                {{#.}}
+                    <img src="{{.}}" alt="{{title}} 포스터" style="width:200px;">
+                {{/.}}
+            {{/postersList}}
+            <!-- 스틸 이미지 -->
+            <div>
+                <h3>스틸 이미지</h3>
+                {{#stillsList}}
+                    {{#.}}
+                        <img src="{{.}}" alt="{{title}} 스틸 이미지" style="width:200px;">
+                    {{/.}}
+                {{/stillsList}}
+            </div>
             <p><a href="{{kmdbUrl}}">KMDb에서 더보기</a></p>
         </div>
     {{/movies}}

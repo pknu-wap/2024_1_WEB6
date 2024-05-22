@@ -93,8 +93,10 @@ public class MovieDetailResponseVo {
             private String keywords;
             @JsonProperty("posters")
             private String posters;
+            private List<String> postersList;  // 추가된 필드
             @JsonProperty("stlls")
             private String stlls;
+            private List<String> stllsList;  // 추가된 필드
             @JsonProperty("staffs")
             private Staffs staffs;
             @JsonProperty("vods")
