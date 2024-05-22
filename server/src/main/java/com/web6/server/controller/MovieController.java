@@ -5,18 +5,15 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web6.server.dto.MovieDetailResponseVo;
 import com.web6.server.dto.MovieRequestVo;
-import com.web6.server.dto.MovieResponseVo;
 import com.web6.server.dto.ResponseVo;
 import com.web6.server.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
@@ -89,7 +86,7 @@ public class MovieController {
 
         // 검색 옵션이나 검색어가 없으면 기본 검색 페이지로 돌아갑니다.
         if (option == null || query == null || option.isEmpty() || query.isEmpty()) {
-            return "index";
+            return "movieSearch";
         }
 
         // MovieRequestVo 객체 생성 및 기본 설정
@@ -117,7 +114,7 @@ public class MovieController {
                 break;
             default:
                 // 유효하지 않은 검색 옵션인 경우 기본 검색 페이지로 돌아갑니다.
-                return "index";
+                return "movieSearch";
         }
 
         // MovieService를 이용해 영화 정보를 가져옵니다.
@@ -156,6 +153,6 @@ public class MovieController {
         }
 
         // 검색 결과 페이지를 반환합니다.
-        return "index";
+        return "movieSearch";
     }
 }
