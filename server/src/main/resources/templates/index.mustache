@@ -1,33 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>Movie Search</title>
-
 </head>
 <body>
     <h1>Movie Search</h1>
-    <form action="/movie/search" method="get">
-        <label for="query">Query:</label>
-        <input type="text" id="query" name="query">
-        <button type="submit">Search</button>
+    <form id="searchForm" action="/movie/search" method="get">
+        <select id="searchOption" name="option">
+            <option value="title">제목</option>
+            <option value="genre">장르</option>
+            <option value="actor">배우</option>
+            <option value="director">감독</option>
+            <option value="nation">국가</option>
+        </select>
+        <input type="text" id="searchQuery" name="query" placeholder="검색어를 입력하세요">
+        <button type="submit">검색</button>
     </form>
-
     {{#movies}}
-    <div>
-        <h2>Search Results</h2>
-        <ul>
-            {{#this}}
-            <li>
-                <p><strong>Title:</strong> {{title}}</p>
-                <p><strong>Director:</strong> {{#directors.director}}{{directorNm}}{{/directors.director}}</p>
-                <p><strong>Actors:</strong> {{#actors.actor}}{{actorNm}}{{/actors.actor}}</p>
-                <p><strong>Genre:</strong> {{genre}}</p>
-                <p><strong>Nation:</strong> {{nation}}</p>
-            </li>
-            {{/this}}
-        </ul>
-    </div>
+        <div>
+            <h2>{{title}}</h2>
+            {{#directors}}
+                {{#director}}
+                    <p>감독: {{directorNm}}</p>
+                {{/director}}
+            {{/directors}}
+            {{#actors}}
+                {{#actor}}
+                    <p>배우: {{actorNm}}, </p>
+                {{/actor}}
+            {{/actors}}
+            <p>장르: {{genre}}</p>
+            <p>국가: {{nation}}</p>
+            {{#plots}}
+                {{#plot}}
+                    <p>줄거리: {{plotText}}</p>
+                {{/plot}}
+            {{/plots}}
+            {{#posterUrl}}
+                <img src="{{posters}}" alt="{{title}} 포스터" style="width:200px;">
+            {{/posterUrl}}
+            <p><a href="{{kmdbUrl}}">KMDb에서 더보기</a></p>
+        </div>
     {{/movies}}
 </body>
 </html>
