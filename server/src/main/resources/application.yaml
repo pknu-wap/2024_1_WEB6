@@ -16,7 +16,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: ture
@@ -57,4 +57,4 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-  port: 7070
+  port: 8080
