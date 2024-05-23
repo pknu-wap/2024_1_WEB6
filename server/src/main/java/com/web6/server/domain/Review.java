@@ -28,7 +28,7 @@ public class Review {
     private String content;
 
     @Column(name = "GRADE", nullable = false)
-    private Long grade;
+    private double grade;
 
     @Column(name = "CREATE_DATE", nullable = false)
     private Date createDate;
@@ -38,12 +38,6 @@ public class Review {
 
     @Column(name = "SPOILER", nullable = false)
     private boolean spoiler;
-
-    @Column(name = "LIKE_COUNT", nullable = false)
-    private int likeCount;
-
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReviewLike> likes; // 좋아요 목록
 
     // Constructors, getters, and setters
     public Review() {
@@ -73,11 +67,11 @@ public class Review {
         this.content = content;
     }
 
-    public Long getGrade() {
+    public double getGrade() {
         return grade;
     }
 
-    public void setGrade(Long grade) {
+    public void setGrade(double grade) {
         this.grade = grade;
     }
 
@@ -104,14 +98,6 @@ public class Review {
     public void setSpoiler(boolean spoiler) {
         this.spoiler = spoiler;
     }
-
-    public int getLikeCount() { return likeCount; }
-
-    public void setLikeCount(int likeCount) { this.likeCount = likeCount; }
-
-    public List<ReviewLike> getLikes() { return likes; }
-
-    public void setLikes(List<ReviewLike> likes) { this.likes = likes; }
 }
 
 
