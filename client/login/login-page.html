@@ -7,35 +7,36 @@
     <title>Login Page</title>
     <link rel="stylesheet" href="login-page.css">
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script> <!-- 카카오 sdk 로드 -->
     
 </head>
 
 <body style="background-color: #ffffffed;">
 
     <h1 class="web-title">NET VIEW</h1><hr>
-    
+
     <div class="login-wrapper">
         <h2>Login</h2>
         <form action="/api/members/login-page" method="post" name="loginForm" id="login-form">
-            <label for="username"></label>
             <input class="user-id" id="username" type="text" name="username" placeholder="Email">
-            
-            <label for="password"></label>
             <input class="user-pw" id="password" type="password" name="password" placeholder="Password">
             
-            <input class="login-button" type="submit" value="로그인" style="cursor:pointer">
-            
+            <!-- 로그인 버튼 -->
+            <input class="login-button" type="submit" value="로그인">
 
             <div class="line">또는</div>
+            <!-- 카카오 로그인 버튼 -->
             <div class="kakao-login-img-container">
-                <img src="kakao_login_large_wide.png" class="kakao-login-img" alt="">
+                <img src="kakao_login_large_wide.png" class="kakao-login-img" alt="Kakao Login" onclick="kakaoLogin()">
             </div>
             
-            <button class="signup-button" type="button">회원가입</button>
+            <!-- 회원가입 버튼 -->
+            <button class="signup-button" type="button">회원가입</button><br>
+
+            <!-- 에러 메세지 -->
+            {{#errorMessage}} <span style="color: red; font-weight: bold;">{{errorMessage}}</span> {{/errorMessage}}
         </form>
     </div>
-
-    
 
     <script src="login-page.js"></script>
 </body>
