@@ -69,7 +69,7 @@ public class MemberService {
     public void updatePassword(String loginId, String newPassword) {
         Member member = memberRepository.findByLoginId(loginId);
 
-        member.setPassword(newPassword);
+        member.setPassword(bCryptPasswordEncoder.encode(newPassword));
 
         /*Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(member.getNickname(), member.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);*/

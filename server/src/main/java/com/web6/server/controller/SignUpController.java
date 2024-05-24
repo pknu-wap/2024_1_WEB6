@@ -1,6 +1,7 @@
 package com.web6.server.controller;
 
 import com.web6.server.domain.Member;
+import com.web6.server.dto.ApiResponse;
 import com.web6.server.repository.MemberRepository;
 import com.web6.server.oauth2login.user.KakaoOAuth2UserUnlink;
 import com.web6.server.dto.MemberDTO;
@@ -10,15 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class SignUpController {
 
     private final MemberRepository memberRepository;
@@ -34,7 +38,7 @@ public class SignUpController {
     private KakaoOAuth2UserUnlink kakaoOAuth2UserUnlink;
 
     @GetMapping("/")
-    public String MainP(Model model) {
+    public ApiResponse<Void> MainP() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
 
@@ -57,16 +61,15 @@ public class SignUpController {
             }
 
             if (nickname != null) {
-                message = "Currently logged in as " + nickname;
+                message = nickname + "님";
             } else {
-                message = "Not logged in";
+                message = "로그인을 해주세요.";
             }
         } else {
-            message = "Not logged in";
+            message = "로그인을 해주세요.";
         }
 
-        model.addAttribute("loginMessage", message);
-        return "main";
+        return new ApiResponse<>(true, message, null);
     }
 
     @GetMapping("/sign-up")
@@ -75,27 +78,28 @@ public class SignUpController {
     }
 
     @PostMapping("/api/members/sign-up")
-    public String SignUpProcess(@Valid MemberDTO memberDTO, Errors errors, Model model) {
+    public ApiResponse<MemberDTO> SignUpProcess(@RequestBody @Valid MemberDTO memberDTO, Errors errors) {
         if (errors.hasErrors()) {
-            model.addAttribute("memberDTO", memberDTO);
-
             Map<String, String> validatorResult = signUpService.validateHandling(errors);
-            for(String key : validatorResult.keySet()) {
-                model.addAttribute(key, validatorResult.get(key));
-            }
-            return "signUp";
+            return new ApiResponse<>(false, "회원가입 실패", validatorResult, memberDTO);
         }
 
-        String duplicatedResult = signUpService.duplicateHandling(memberDTO);
-        if(!duplicatedResult.isEmpty()) {
-            model.addAttribute("memberDTO", memberDTO);
-            model.addAttribute("duplicate", duplicatedResult);
+        String duplicateMessage = signUpService.duplicateHandling(memberDTO);
+        if(!duplicateMessage.isEmpty()) {
+            Map<String, String> duplicatedResult = new HashMap<>();
+            duplicatedResult.put("duplicate", duplicateMessage);
 
-            return "signUp";
-        } else {
-            signUpService.signUpProcess(memberDTO);
-            return "redirect:/login-page";
+            return new ApiResponse<>(false, "회원가입 실패", duplicatedResult, memberDTO);
         }
+        if (!memberDTO.getPassword().equals(memberDTO.getConfirmPassword())) {
+            Map<String, String> confirmPwd = new HashMap<>();
+            confirmPwd.put("confirm_password", "비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+
+            return new ApiResponse<>(false, "회원가입 실패", confirmPwd, memberDTO);
+        }
+
+        signUpService.signUpProcess(memberDTO);
+        return new ApiResponse<>(true, "회원가입 성공", null);
     }
 
     @GetMapping("/login-page")
@@ -104,14 +108,13 @@ public class SignUpController {
     }
 
     @PostMapping("/loginError")
-    public String loginerror(Model model){
-        model.addAttribute("errorMessage", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해 주세요.");
-        return "loginPage";
-    }
+    public ApiResponse<Void> loginerror(){
+        return new ApiResponse<>(true, "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해 주세요.", null);
+    } //loginError get이 true라는 뜻임 -> 로그인은 실패라는 뜻
 
     @GetMapping("/logout-page")
-    public String logoutPage() {
-        return "logoutPage"; // 일반 로그아웃 페이지의 뷰 이름 반환
+    public ApiResponse<Void> logoutPage() {
+        return new ApiResponse<>(true, "로그아웃 페이지", null);
     }
 
 }
