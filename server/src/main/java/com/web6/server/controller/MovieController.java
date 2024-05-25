@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
-
 @RestController
 //@Controller
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:63342")
 @Slf4j
 public class MovieController {
     private final MovieService movieService;
@@ -140,19 +139,24 @@ public class MovieController {
         if (response != null && response.getData() != null && !response.getData().isEmpty()) {
             List<MovieDetailResponseVo.DataInfo.ResultInfo> movies = response.getData().get(0).getResult();
             if (movies != null) {
+                List<MovieDetailResponseVo.DataInfo.ResultInfo> filteredMovies = new ArrayList<>();
                 for (MovieDetailResponseVo.DataInfo.ResultInfo movie : movies) {
-                    // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
-                    if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
-                        List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
-                        movie.setPostersList(postersList);
-                    }
-                    // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
-                    if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
-                        List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
-                        movie.setStillsList(stillsList);
+                    // "에로" 장르의 영화를 필터링
+                    if (!movie.getGenre().contains("에로")) {
+                        // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
+                        if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
+                            List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
+                            movie.setPostersList(postersList);
+                        }
+                        // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
+                        if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
+                            List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
+                            movie.setStillsList(stillsList);
+                        }
+                        filteredMovies.add(movie);
                     }
                 }
-                model.addAttribute("movies", movies);
+                model.addAttribute("movies", filteredMovies);
             }
         }
 

@@ -28,7 +28,7 @@ public class Review {
     private String content;
 
     @Column(name = "GRADE", nullable = false)
-    private Long grade;
+    private double grade;
 
     @Column(name = "CREATE_DATE", nullable = false)
     private Date createDate;
@@ -73,11 +73,11 @@ public class Review {
         this.content = content;
     }
 
-    public Long getGrade() {
+    public double getGrade() {
         return grade;
     }
 
-    public void setGrade(Long grade) {
+    public void setGrade(double grade) {
         this.grade = grade;
     }
 
