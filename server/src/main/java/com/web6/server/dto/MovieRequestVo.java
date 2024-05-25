@@ -23,6 +23,13 @@ public class MovieRequestVo {
     String director;     //상세 검색 - 감독명
     String actor;        //상세 검색 - 배우명
     String keyword;      //상세 검색 - 키워드
+
+    String prodYear;
+    String docID;        // 영화 DOCID 추가
+    String movieSeq;        // 영화 movieSeq 추가
+    String movieId;        // 영화 movieId 추가
+    String plot;        // 영화 plot 추가
+
 }
 
 

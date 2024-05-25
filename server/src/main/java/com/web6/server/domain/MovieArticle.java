@@ -7,9 +7,18 @@ import java.util.Set;
 @Table(name = "MovieArticle")
 public class MovieArticle {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //ID는 자동 생성됨
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
+
+    @Column(name = "MOVIESEQ", nullable = false, updatable = false)
+    private String movieSeq;
+
+    @Column(name = "TITLE", nullable = false, updatable = false)
+    private String title;
+
+    @Column(name = "DOCID", nullable = false, updatable = false)
+    private String docId;
 
     @Column(name = "GRADE", nullable = false)
     private double grade = 0.0; //평균 평점
@@ -48,6 +57,30 @@ public class MovieArticle {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String  getMovieSeq() {
+        return movieSeq;
+    }
+
+    public void setMovieSeq(String movieSeq) {
+        this.movieSeq = movieSeq;
+    }
+
+    public String  getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String  getDocId() {
+        return docId;
+    }
+
+    public void setDocId(String docId) {
+        this.docId = docId;
     }
 
     public double getGrade() { return grade; }
