@@ -27,7 +27,7 @@ public class MypageController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/mypage")
+    @GetMapping("/api/mypage")
     public ApiResponse<MemberEditDTO> MypageP(@AuthenticationPrincipal MemberDetails currentMember) {
 
         //마이페이지로 이동하면, 현재 로그인한 유저의 닉네임과 아이디 필드가 빈값이 아니도록

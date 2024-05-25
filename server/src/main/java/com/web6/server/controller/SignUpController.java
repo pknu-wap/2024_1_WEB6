@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 public class SignUpController {
@@ -37,7 +35,7 @@ public class SignUpController {
     @Autowired
     private KakaoOAuth2UserUnlink kakaoOAuth2UserUnlink;
 
-    @GetMapping("/")
+    @GetMapping("/api/main")
     public ApiResponse<Void> MainP() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
@@ -72,10 +70,14 @@ public class SignUpController {
         return new ApiResponse<>(true, message, null);
     }
 
+    /*
+    뷰를 위한 get 요청. 프론트와 연동한 후에는 필요 없을 듯함.
+     */
     @GetMapping("/sign-up")
     public String SignUpP() {
         return "signUp";
     }
+
 
     @PostMapping("/api/members/sign-up")
     public ApiResponse<MemberDTO> SignUpProcess(@RequestBody @Valid MemberDTO memberDTO, Errors errors) {
@@ -102,12 +104,16 @@ public class SignUpController {
         return new ApiResponse<>(true, "회원가입 성공", null);
     }
 
+    /*
+    뷰를 위한 get 요청. 프론트와 연동한 후에는 필요 없을 듯함.
+     */
     @GetMapping("/login-page")
     public String LoginP() {
         return "loginPage";
     }
 
-    @PostMapping("/loginError")
+
+    @PostMapping("/api/loginError")
     public ApiResponse<Void> loginerror(){
         return new ApiResponse<>(true, "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해 주세요.", null);
     } //loginError get이 true라는 뜻임 -> 로그인은 실패라는 뜻

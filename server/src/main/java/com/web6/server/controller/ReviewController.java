@@ -29,7 +29,7 @@ public class ReviewController {
     }
 
     //Create
-    @GetMapping("/movies/{movie-id}/reviews")
+    @GetMapping("/api/movies/{movie-id}/reviews")
     public ApiResponse<Void> reviewP(@PathVariable("movie-id") Long movieId) {
 
         //review writer 불러오기
@@ -65,7 +65,7 @@ public class ReviewController {
     //Read
 
     //Update
-    @GetMapping("/movies/{movie-id}/reviewEdit/{review-id}")
+    @GetMapping("/api/movies/{movie-id}/reviewEdit/{review-id}")
     public ApiResponse<ReviewDTO> reviewEditP(@PathVariable("movie-id") Long movieId, @PathVariable("review-id") Long reviewId) {
         //이 리뷰가 현재 접속한 유저가 작성한 리뷰가 맞는 지 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

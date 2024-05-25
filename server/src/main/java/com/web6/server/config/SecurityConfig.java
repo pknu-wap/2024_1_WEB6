@@ -42,8 +42,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/login-page", "/api/members/login-page", "/loginError", "/sign-up", "/api/members/sign-up").anonymous()
+                        .requestMatchers("/api/main").permitAll()
+                        .requestMatchers("/login-page", "/api/members/login-page", "/api/loginError", "/sign-up", "/api/members/sign-up").anonymous()
                         .requestMatchers(("/movie/findAll")).permitAll() //movie.findAll 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("/movie/search")).permitAll()  //movie/search 경로에 대해 모든 사용자 접근 허용
                         .anyRequest().authenticated()
@@ -53,8 +53,8 @@ public class SecurityConfig {
                 .formLogin((auth) -> auth
                         .loginPage("/login-page")
                         .loginProcessingUrl("/api/members/login-page")
-                        .failureForwardUrl("/loginError")
-                        .defaultSuccessUrl("/", true)
+                        .failureForwardUrl("/api/loginError")
+                        .defaultSuccessUrl("/api/main", true)
                 );
 
         http.httpBasic(AbstractHttpConfigurer::disable);
@@ -62,7 +62,7 @@ public class SecurityConfig {
         http
                 .logout((auth) -> auth //일반 로그아웃
                         .logoutUrl("/api/members/logout-page")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/api/main")
                         .invalidateHttpSession(true)
                         .deleteCookies("accessToken", "refreshToken")
                         .deleteCookies("JSESSIONID")
