@@ -21,4 +21,6 @@ public class MemberEditDTO {
     private String newPassword;
 
     private String confirmPassword;
+
+    private boolean isNicknameChecked;
 }

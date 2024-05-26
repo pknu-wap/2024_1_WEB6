@@ -38,28 +38,40 @@ public class MypageController {
         return new ApiResponse<>(true, "마이페이지 이동 성공", editDTO);
     }
 
+    @PostMapping("/api/mypage/duplicate")
+    public ApiResponse<Void> CheckNicknameDuplicate(@RequestBody MemberEditDTO editDTO, @AuthenticationPrincipal MemberDetails currentMember) {
+        String nickname = editDTO.getNickname();
+
+        if(!currentMember.getNickname().equals(nickname)) {
+            //닉네임의 유효성 검사
+            if(!memberService.isValidNickname(nickname)) {
+                Map<String, String> validResult = new HashMap<>();
+                validResult.put("valid_nickname", "닉네임은 2~10자의 한글, 영문 대소문자, 숫자로 구성되어야 합니다.");
+
+                return new ApiResponse<>(false, "마이페이지 닉네임 유효성 검사 탈락", validResult, null);
+            }
+
+            //닉네임의 중복 검사
+            if(memberService.isDuplicatedNickname(nickname)) {
+                Map<String, String> duplicateResult = new HashMap<>();
+                duplicateResult.put("duplicate", "이미 존재하는 닉네임입니다.");
+
+                return new ApiResponse<>(false, "마이페이지 닉네임 중복 검사 탈락", duplicateResult, null);
+            }
+
+            return new ApiResponse<>(true, "사용 가능한 닉네임입니다.", null);
+        }
+
+        return new ApiResponse<>(false, "변경 사항이 없습니다.", null);
+    }
+
     @PostMapping("/api/mypage")
     public ApiResponse<MemberEditDTO>  MypageProcess(@RequestBody MemberEditDTO editDTO, @AuthenticationPrincipal MemberDetails currentMember) {
 
         //닉네임 변경 로직
-        if(!currentMember.getNickname().equals(editDTO.getNickname())){
-
-            //닉네임의 유효성 검사
-            if(!memberService.isValidNickname(editDTO.getNickname())) {
-                Map<String, String> validResult = new HashMap<>();
-                validResult.put("valid_nickname", "닉네임은 2~10자의 한글, 영문 대소문자, 숫자로 구성되어야 합니다.");
-
-                return new ApiResponse<>(false, "마이페이지 닉네임 유효성 검사 탈락", validResult, editDTO);
-            }
-
-            //닉네임의 중복 검사
-            if(memberService.isDuplicatedNickname(editDTO.getNickname())){
-                Map<String, String> duplicateResult = new HashMap<>();
-                duplicateResult.put("duplicate", "이미 존재하는 닉네임입니다.");
-
-                return new ApiResponse<>(false, "마이페이지 닉네임 중복 검사 탈락", duplicateResult, editDTO);
-            }
-
+        if(!currentMember.getNickname().equals(editDTO.getNickname()) && !editDTO.isNicknameChecked()){
+            //닉네임에 변경 사항이 있는데, 중복확인 버튼을 누르지 않은 경우
+            return new ApiResponse<>(false, "닉네임이 중복되는지 '중복확인'을 클릭하여 확인해주세요.", editDTO);
         }
 
         //비밀번호 변경 로직
@@ -76,9 +88,9 @@ public class MypageController {
             //새 비밀번호 유효성 검사
             if (!memberService.isValidPassword(editDTO.getNewPassword())) {
                 Map<String, String> validResult = new HashMap<>();
-                validResult.put("valid_password", "비밀번호는 8~16자의 영문 대소문자, 숫자, 특수문자를 모두 포함해야 합니다.");
+                validResult.put("valid_password", "새 비밀번호는 8~16자의 영문 대소문자, 숫자, 특수문자를 모두 포함해야 합니다.");
 
-                return new ApiResponse<>(false, "마이페이지 비밀번호 유효성 검사 탈락", validResult, editDTO);
+                return new ApiResponse<>(false, "마이페이지 새 비밀번호 유효성 검사 탈락", validResult, editDTO);
             }
 
             //새 비밀번호와 새 비밀번호 확인의 입력 값이 일치하는 지 검사
@@ -100,8 +112,6 @@ public class MypageController {
                 new UsernamePasswordAuthenticationToken(editDTO.getLoginId(), editDTO.getNewPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);*/
-
-
 
         return new ApiResponse<>(true, "회원정보 수정 완료", null);
         //성공하면, 새로운 세션을 받아오기 위해, 강제로 로그아웃 시켜야 함
