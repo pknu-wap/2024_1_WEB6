@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="search-results.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">  <!-- 아이콘 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
+        rel="stylesheet">
+    <title>NET VIEW - 영화 리뷰</title>
+</head>
+
+<body>
+    <!-- 상단바 -->
+    <header class="header-bar">
+        <h1 class="web-title">
+            <span class="title-text">NET <span>VIEW</span></span>
+        </h1>
+        <div class="login-section">
+            <button class="login-button">로그인</button>
+            <button class="signup-button">회원가입</button>
+        </div>
+    </header>
+
+    <!-- 검색 결과 제목 -->
+    <div class="search-result-heading" id="search-result-heading"></div>
+
+    <!-- 검색창 -->
+    <form class="search-box" id="search-form" action="/search-results/search-results.html" method="GET">
+        <div class="search-container">
+            <select id="search-option" class="search-option">
+                <option value="title">제목</option>
+                <option value="genre">장르</option>
+                <option value="actor">배우</option>
+                <option value="director">감독</option>
+                <option value="nation">국가</option>
+            </select>
+            <input type="text" class="search-input" id="search-input" name="query" placeholder="검색어를 입력하세요.">
+            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+
+    <!-- 검색 결과 컨테이너 -->
+    <div id="results-container" class="results-container"></div>
+    <!-- 페이지 네비게이션 -->
+    <div id="pagination" class="pagination"></div>
+
+    <script src="search-results.js"></script>
+</body>
+
+</html>
