@@ -1,21 +1,15 @@
 package com.web6.server.controller;
 
 import com.web6.server.dto.ApiResponse;
-import com.web6.server.dto.ReviewDTO;
+import com.web6.server.dto.review.ReviewRequestDTO;
 import com.web6.server.service.ReviewService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 
 @RestController
@@ -29,6 +23,7 @@ public class ReviewController {
     }
 
     //Create
+    //리뷰 쓰기 페이지로 이동할 수 있는지
     @GetMapping("/api/movies/{movie-id}/reviews")
     public ApiResponse<Void> reviewP(@PathVariable("movie-id") Long movieId) {
 
@@ -45,7 +40,7 @@ public class ReviewController {
     }
 
     @PostMapping("/api/movies/{movie-id}/reviews")
-    public ApiResponse<ReviewDTO> createReview(@PathVariable("movie-id") Long movieId, @RequestBody @Valid ReviewDTO reviewDTO, Errors errors) {
+    public ApiResponse<ReviewRequestDTO> createReview(@PathVariable("movie-id") Long movieId, @RequestBody @Valid ReviewRequestDTO reviewRequestDTO, Errors errors) {
 
         //review writer 불러오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -53,20 +48,21 @@ public class ReviewController {
 
         //유효성 검사 탈락
         if (errors.hasErrors()) {
-            return new ApiResponse<>(false, errors.getFieldError().getDefaultMessage(), reviewDTO);
+            return new ApiResponse<>(false, errors.getFieldError().getDefaultMessage(), reviewRequestDTO);
         }
 
         //DB에 저장
-        reviewService.addReview(movieId, writerId, reviewDTO);
+        reviewService.addReview(movieId, writerId, reviewRequestDTO);
         
-        return new ApiResponse<>(true, "리뷰 작성 성공", reviewDTO);
+        return new ApiResponse<>(true, "리뷰 작성 성공", reviewRequestDTO);
     }
 
     //Read
 
     //Update
+    //리뷰 수정(쓰기) 페이지로 이동할 수 있는지
     @GetMapping("/api/movies/{movie-id}/reviewEdit/{review-id}")
-    public ApiResponse<ReviewDTO> reviewEditP(@PathVariable("movie-id") Long movieId, @PathVariable("review-id") Long reviewId) {
+    public ApiResponse<ReviewRequestDTO> reviewEditP(@PathVariable("movie-id") Long movieId, @PathVariable("review-id") Long reviewId) {
         //이 리뷰가 현재 접속한 유저가 작성한 리뷰가 맞는 지 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String writerId = authentication.getName();
@@ -77,12 +73,12 @@ public class ReviewController {
         }
 
         //작성되었던 내용 불러와서 띄우기
-        ReviewDTO currentReview = reviewService.getReview(reviewId);
+        ReviewRequestDTO currentReview = reviewService.getReview(reviewId);
         return new ApiResponse<>(true, "리뷰 수정 페이지로 이동합니다.", currentReview);
     }
 
     @PutMapping("/api/movies/{movie-id}/reviewEdit/{review-id}")
-    public ApiResponse<ReviewDTO> updateReview(@PathVariable("movie-id") Long movieId, @PathVariable("review-id") Long reviewId, @RequestBody @Valid ReviewDTO editReview, Errors errors) {
+    public ApiResponse<ReviewRequestDTO> updateReview(@PathVariable("movie-id") Long movieId, @PathVariable("review-id") Long reviewId, @RequestBody @Valid ReviewRequestDTO editReview, Errors errors) {
         //유효성 검사
         if (errors.hasErrors()) {
             return new ApiResponse<>(false, errors.getFieldError().getDefaultMessage(), editReview);

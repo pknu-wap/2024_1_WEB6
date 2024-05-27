@@ -4,7 +4,7 @@ import com.web6.server.domain.Member;
 import com.web6.server.domain.MovieArticle;
 import com.web6.server.domain.Review;
 import com.web6.server.domain.Review_Article;
-import com.web6.server.dto.ReviewDTO;
+import com.web6.server.dto.review.ReviewRequestDTO;
 import com.web6.server.repository.MemberRepository;
 import com.web6.server.repository.MovieArticleRepository;
 import com.web6.server.repository.ReviewArticleRepository;
@@ -13,8 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Service
 public class ReviewService {
@@ -41,20 +40,26 @@ public class ReviewService {
         else {return false;}
     }
 
-    public boolean existArticle(Long movieId) {
+   /*public boolean existArticle(Long movieId) {
         return movieArticleRepository.existsByid(movieId);
-    }
+    }*/
 
-    public ReviewDTO getReview(Long reviewId) {
+    //리뷰 단일 불러오기
+    public ReviewRequestDTO getReview(Long reviewId) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid review ID"));
 
-        ReviewDTO reviewDTO = new ReviewDTO();
-        reviewDTO.setContent(review.getContent());
-        reviewDTO.setGrade(review.getGrade());
-        reviewDTO.setSpoiler(review.isSpoiler());
-        return reviewDTO;
+        ReviewRequestDTO reviewRequestDTO = new ReviewRequestDTO();
+        reviewRequestDTO.setContent(review.getContent());
+        reviewRequestDTO.setGrade(review.getGrade());
+        reviewRequestDTO.setSpoiler(review.isSpoiler());
+        return reviewRequestDTO;
     }
+
+    /*public String getNickname(String writerId) {
+        Member writer = memberRepository.findByLoginId(writerId);
+        return writer.getNickname();
+    }*/
 
     public boolean checkMyReview(Long reviewId, String writerId) {
         Review review = reviewRepository.findById(reviewId)
@@ -65,20 +70,21 @@ public class ReviewService {
     }
 
     @Transactional
-    public void addReview(Long movieId, String writerId, ReviewDTO reviewDTO) {
+    public void addReview(Long movieId, String writerId, ReviewRequestDTO reviewRequestDTO) {
         Member writer = memberRepository.findByLoginId(writerId);
         MovieArticle article = movieArticleRepository.findByid(movieId);
 
         //영화 게시글의 별점 추가
-        article.addGrade(reviewDTO.getGrade());
+        article.addGrade(reviewRequestDTO.getGrade());
 
         Review review = new Review();
         review.setWriter(writer);
-        review.setContent(reviewDTO.getContent());
-        review.setGrade(reviewDTO.getGrade());
-        review.setCreateDate(new Date());
+        review.setContent(reviewRequestDTO.getContent());
+        review.setGrade(reviewRequestDTO.getGrade());
+        review.setCreateDate(LocalDateTime.now());
         review.setEdit(false);
-        review.setSpoiler(reviewDTO.isSpoiler());
+        review.setSpoiler(reviewRequestDTO.isSpoiler());
+        review.setCommentsCount(0);
 
         Review saveReview = reviewRepository.save(review);
 
@@ -87,7 +93,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public void updateReview(Long movieId, Long reviewId, ReviewDTO editReview) {
+    public void updateReview(Long movieId, Long reviewId, ReviewRequestDTO editReview) {
         MovieArticle article = movieArticleRepository.findByid(movieId);
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid review ID"));

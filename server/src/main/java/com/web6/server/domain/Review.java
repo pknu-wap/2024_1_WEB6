@@ -9,8 +9,9 @@ columnDefinition = "TEXT" 속성을 사용함. 이는 대용량 텍스트가 필
 package com.web6.server.domain;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "Review")
@@ -31,7 +32,7 @@ public class Review {
     private double grade;
 
     @Column(name = "CREATE_DATE", nullable = false)
-    private Date createDate;
+    private LocalDateTime createDate;
 
     @Column(name = "EDIT", nullable = false)
     private boolean edit;
@@ -39,11 +40,8 @@ public class Review {
     @Column(name = "SPOILER", nullable = false)
     private boolean spoiler;
 
-    @Column(name = "LIKE_COUNT", nullable = false)
-    private int likeCount;
-
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReviewLike> likes; // 좋아요 목록
+    @Column(name = "COMMENTS_COUNT", nullable = false)
+    private int commentsCount;
 
     // Constructors, getters, and setters
     public Review() {
@@ -73,19 +71,15 @@ public class Review {
         this.content = content;
     }
 
-    public double getGrade() {
-        return grade;
-    }
+    public double getGrade() { return grade; }
 
     public void setGrade(double grade) {
         this.grade = grade;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+    public LocalDateTime getCreateDate() { return createDate; }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
@@ -105,13 +99,20 @@ public class Review {
         this.spoiler = spoiler;
     }
 
-    public int getLikeCount() { return likeCount; }
+    public int getCommentsCount() { return commentsCount; }
 
-    public void setLikeCount(int likeCount) { this.likeCount = likeCount; }
+    public void setCommentsCount(int commentsCount) { this.commentsCount = commentsCount; }
 
-    public List<ReviewLike> getLikes() { return likes; }
+    //대댓글이 새로 추가되었을 때
+    public void addComment () {
+        commentsCount++;
+    }
 
-    public void setLikes(List<ReviewLike> likes) { this.likes = likes; }
+    //대댓글이 삭제되었을 때
+    public void deleteComment () {
+        commentsCount--;
+    }
+
 }
 
 
