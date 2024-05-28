@@ -1,4 +1,4 @@
-package com.web6.server.dto;
+package com.web6.server.dto.review;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReviewDTO {
+public class ReviewRequestDTO {
 
     @NotBlank(message = "리뷰 내용은 필수 입력 값입니다.")
     @Size(min = 15, max = 500, message = "리뷰 내용은 15자 이상 500자 이하로 입력해주세요.")
@@ -21,5 +21,5 @@ public class ReviewDTO {
 
     private double grade;
 
-    private boolean spoiler ;
+    private boolean spoiler;
 }

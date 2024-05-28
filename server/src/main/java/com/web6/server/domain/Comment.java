@@ -6,6 +6,8 @@ package com.web6.server.domain;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "Comment")
 public class Comment {
@@ -23,7 +25,7 @@ public class Comment {
     private String content;
 
     @Column(name = "CREATE_DATE", nullable = false)
-    private java.sql.Timestamp createDate;
+    private LocalDateTime createDate;
 
     @Column(name = "EDIT", nullable = false)
     private boolean edit;
@@ -56,11 +58,11 @@ public class Comment {
         this.content = content;
     }
 
-    public java.sql.Timestamp getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(java.sql.Timestamp createDate) {
+    public void setCreaeDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
