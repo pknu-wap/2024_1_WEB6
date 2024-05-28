@@ -1,19 +1,14 @@
 package com.web6.server.service;
 
-import com.web6.server.domain.Member;
-import com.web6.server.domain.MovieArticle;
-import com.web6.server.domain.Review;
-import com.web6.server.domain.Review_Article;
+import com.web6.server.domain.*;
 import com.web6.server.dto.review.ReviewRequestDTO;
-import com.web6.server.repository.MemberRepository;
-import com.web6.server.repository.MovieArticleRepository;
-import com.web6.server.repository.ReviewArticleRepository;
-import com.web6.server.repository.ReviewRepository;
+import com.web6.server.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -22,13 +17,17 @@ public class ReviewService {
     private final MemberRepository memberRepository;
     private final MovieArticleRepository movieArticleRepository;
     private final ReviewArticleRepository reviewArticleRepository;
+    private final CommentReviewRepository commentReviewRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository, MemberRepository memberRepository, MovieArticleRepository movieArticleRepository, ReviewArticleRepository reviewArticleRepository ) {
+    public ReviewService(ReviewRepository reviewRepository, MemberRepository memberRepository, MovieArticleRepository movieArticleRepository, ReviewArticleRepository reviewArticleRepository, CommentReviewRepository commentReviewRepository, CommentRepository commentRepository) {
         this.reviewRepository = reviewRepository;
         this.memberRepository = memberRepository;
         this.movieArticleRepository = movieArticleRepository;
         this.reviewArticleRepository = reviewArticleRepository;
+        this.commentReviewRepository = commentReviewRepository;
+        this.commentRepository = commentRepository;
     }
 
     public boolean existReview(Long movieId, String writerId) {
@@ -117,8 +116,14 @@ public class ReviewService {
 
         //영화 게시글의 별점 삭제
         article.deleteGrade(review.getGrade());
+
         //리뷰에 달린 comments 삭제
-        //리뷰에 달린 Like 객체 삭제
+        List<Comment_Review> commentReviews = commentReviewRepository.findByReviewIdOrderByCommentCreateDateDesc(reviewId);
+        for(Comment_Review commentReview : commentReviews) {
+            Comment comment = commentReview.getComment();
+            commentReviewRepository.delete(commentReview); //commentReview 삭제
+            commentRepository.delete(comment); //comment 삭제
+        }
 
         reviewArticleRepository.deleteByArticleAndReview(article, review);
         reviewRepository.deleteById(reviewId);
