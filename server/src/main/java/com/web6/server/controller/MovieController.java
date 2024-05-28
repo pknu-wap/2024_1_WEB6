@@ -31,7 +31,7 @@ public class MovieController {
     private final MovieService movieService;
     private final MovieArticleRepository movieArticleRepository;
 
-    @GetMapping("/movie/findAll")
+    @GetMapping("/movies/findAll")
     public ResponseEntity<?> findAllMovies() {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
@@ -86,7 +86,7 @@ public class MovieController {
      * @param model 뷰에 데이터를 전달하기 위한 모델 객체
      * @return 검색 결과 페이지 (index)
      */
-    @GetMapping("/movie/search")
+    @GetMapping("/movies/search")
     public String searchMovies(@RequestParam(required = false) String option,
                                 @RequestParam(required = false) String query,
                                 Model model) {
@@ -165,7 +165,7 @@ public class MovieController {
     }
 
     // 영화 상세 페이지
-    @GetMapping("/movie/detail/{movieSeq}")
+    @GetMapping("/movies/detail/{movieSeq}")
     public ResponseEntity<?> findMovies(@PathVariable String movieSeq) {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
@@ -228,7 +228,7 @@ public class MovieController {
     }
 
     // 최신순 정렬
-    @GetMapping("/movie/latest")
+    @GetMapping("/movies/latest")
     public ResponseEntity<?> getLatestMovies() {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
