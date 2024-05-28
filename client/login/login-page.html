@@ -27,7 +27,8 @@
         <h1 class="web-title">
             <span class="title-text">NET <span>VIEW</span></span>
         </h1>
-        <form action="/api/members/login-page" method="post" name="loginForm" id="login-form">
+
+        <form name="loginForm" id="login-form">
             <input class="user-id" id="username" type="text" name="username" placeholder="Email">
             <input class="user-pw" id="password" type="password" name="password" placeholder="Password">
 
@@ -35,7 +36,7 @@
             <input class="login-button" type="submit" value="로그인">
 
             <!-- 에러 메세지 -->
-            <!-- {{#errorMessage}} <span style="color: red; font-weight: bold;">{{errorMessage}}</span> {{/errorMessage}} -->
+            {{#errorMessage}} <span style="color: red; font-weight: bold;">{{errorMessage}}</span> {{/errorMessage}}
 
             <div class="line">또는</div>
             <!-- 카카오 로그인 버튼 -->
