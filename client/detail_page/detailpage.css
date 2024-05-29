@@ -1,0 +1,72 @@
+h1 {
+    text-align: center;
+    cursor: pointer;
+    width: 200px;
+    padding: 20px;
+    margin: 0px auto;
+}
+
+hr {
+    height: 1px;
+    border: none;
+    background-color: #b3b3b3;
+}
+
+.movie-detail {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.poster img {
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+.info {
+    margin-left: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.info h2 {
+    margin-top: 0;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.info p {
+    margin: 5px 0;
+}
+
+.comment-section {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#commentInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#submitComment {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
