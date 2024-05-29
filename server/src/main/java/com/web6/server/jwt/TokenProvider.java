@@ -1,3 +1,6 @@
+/*
+토큰으로부터 사용자 정보를 추출하는 기능을 제공하는 클래스.
+ */
 package com.web6.server.jwt;
 
 import io.jsonwebtoken.*;
@@ -34,6 +37,7 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(key);
     }
 
+    //  주어진 JWT가 유효한지 검증.
     public boolean validateToken(String token) {
 
         try {
@@ -57,7 +61,7 @@ public class TokenProvider {
 
         return false;
     }
-
+    // 토큰 생성
     public String createToken(Authentication authentication) {
 
         Date date = new Date();
@@ -68,7 +72,7 @@ public class TokenProvider {
                 .setIssuedAt(date)
                 .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
+                .compact(); //JWT 문자열을 생성.
     }
 
     public Authentication getAuthentication(String token) {

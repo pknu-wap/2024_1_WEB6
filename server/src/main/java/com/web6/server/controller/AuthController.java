@@ -1,3 +1,7 @@
+/*
+클라이언트 로그아웃 요청을 받아 로그아웃을 처리하는 컨트롤러.
+KakaoOAuth2UserUnlink를 사용하여 Kakao 계정과의 연동 해제를 수행
+ */
 package com.web6.server.controller;
 
 import com.web6.server.oauth2login.user.KakaoOAuth2UserUnlink;

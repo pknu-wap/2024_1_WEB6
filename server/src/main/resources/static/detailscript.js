@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function fetchMovieDetail(movieSeq) {
     console.log(`Fetching movie detail for movieSeq: ${movieSeq}`);
-    fetch(`http://localhost:8080/movie/detail/?movieSeq=${encodeURIComponent(movieSeq)}`)
+    fetch(`http://localhost:8080/movies/detail/?movieSeq=${encodeURIComponent(movieSeq)}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
