@@ -23,7 +23,7 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
     });
 
     try {
-        const response = await fetch('http://localhost:8080/api/members/login-page', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app//api/members/login-page', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ function kakaoLogin() {
 }
 
 async function kakaoLoginApi(kakaoUserData) {
-    const response = await fetch('/api/members/kakao-login', {
+    const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app//api/members/kakao-login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
