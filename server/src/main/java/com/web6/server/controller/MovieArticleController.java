@@ -17,8 +17,8 @@ public class MovieArticleController {
     @Autowired
     private MovieArticleService movieArticleService;
 
-    @GetMapping("/AllOrderByGradeCountDesc")
-    public List<MovieArticleDTO> getAllOrderByGradeCountDesc() {
-        return movieArticleService.getAllOrderByGradeCountDesc();
+    @GetMapping("/Top5OrderByGradeCountDesc")
+    public List<MovieArticleDTO> getTop5OrderByGradeCountDesc() {
+        return movieArticleService.getTop5OrderByGradeCountDesc();
     }
 }
