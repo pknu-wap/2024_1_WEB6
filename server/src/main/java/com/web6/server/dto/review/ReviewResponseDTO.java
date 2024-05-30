@@ -1,5 +1,6 @@
 package com.web6.server.dto.review;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.web6.server.domain.Review;
 import lombok.*;
 
@@ -20,6 +21,7 @@ public class ReviewResponseDTO {
 
     private boolean spoiler;
     //아래 필드들은 닉네임 반환과 마찬가지로 requestDTO 에는 없음
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createDate;
 
     private boolean edit;
