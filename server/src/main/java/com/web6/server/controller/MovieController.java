@@ -259,9 +259,27 @@ public class MovieController {
             log.info("Latest Movies:");
             if (response != null && !response.getData().isEmpty()) {
                 List<MovieDetailResponseVo.DataInfo.ResultInfo> movies = response.getData().get(0).getResult();
+                List<MovieDetailResponseVo.DataInfo.ResultInfo> filteredMovies = new ArrayList<>();
                 for (MovieDetailResponseVo.DataInfo.ResultInfo movie : movies) {
                     log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
+
+                    // "에로" 장르의 영화를 필터링
+                    if (!movie.getGenre().contains("에로")) {
+                        // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
+                        if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
+                            List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
+                            movie.setPostersList(postersList);
+                        }
+                        // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
+                        if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
+                            List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
+                            movie.setStillsList(stillsList);
+                        }
+                        filteredMovies.add(movie);
+                        log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
+                    }
                 }
+                response.getData().get(0).setResult(filteredMovies);
             }
         } catch (Exception e) {
             log.error("Error occurred while fetching latest movies: " + e.getMessage(), e);
