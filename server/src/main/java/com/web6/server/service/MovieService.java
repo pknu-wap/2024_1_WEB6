@@ -1,13 +1,8 @@
 package com.web6.server.service;
-import com.web6.server.domain.Review;
-import com.web6.server.domain.Review_Article;
-import com.web6.server.dto.review.ReviewResponseDTO;
 import com.web6.server.repository.MovieArticleRepository;
-import com.web6.server.domain.MovieArticle;
 import com.web6.server.dto.MovieRequestVo;
 import com.web6.server.repository.ReviewArticleRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.web6.server.dto.MovieRequestVo;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;

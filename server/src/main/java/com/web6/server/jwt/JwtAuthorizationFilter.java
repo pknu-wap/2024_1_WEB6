@@ -1,3 +1,9 @@
+/*
+JWT 기반 인증을 처리하는 Spring Security 필터.
+요청이 적절한 JWT를 포함하는지 확인한 후,
+유효한 경우 인증 정보를 설정한다.
+ */
+
 package com.web6.server.jwt;
 
 import jakarta.servlet.FilterChain;
@@ -24,8 +30,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String token = resolveToken(request);
+        String token = resolveToken(request); // resolveToken 메서드를 호출하여, HTTP 요청 헤더에서 JWT를 추출함.
 
+        // 토큰이 존재 & 유효한 경우, tokenProvider를 통해 Authentication 객체를 생성.
         if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);

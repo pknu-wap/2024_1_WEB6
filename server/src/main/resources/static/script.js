@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function fetchMovies() {
-    fetch('http://localhost:8080/movie/findAll')
+    fetch('http://localhost:8080/movies/findAll')
         .then(response => response.json())
         .then(data => {
             displayMovies(data);
@@ -24,7 +24,7 @@ function displayMovies(movies) {
 }
 
 function handleClick(movieSeq) {
-    const apiUrl =  `http://localhost:8080/movie/detail/${movieSeq}`;
+    const apiUrl =  `http://localhost:8080/movies/detail/${movieSeq}`;
     const options = {
         method: "POST",
         headers: {

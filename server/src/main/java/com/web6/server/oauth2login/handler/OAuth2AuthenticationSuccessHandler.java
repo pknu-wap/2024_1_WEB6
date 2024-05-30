@@ -106,7 +106,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // 사용자를 로그아웃 후 리다이렉트할 주소 설정
         // 예: 로그인 페이지 또는 홈페이지 등
-        String logoutRedirectUrl = "/login-page"; // 이 부분은 실제 요구에 맞게 수정하세요.
+        String logoutRedirectUrl = "/login-page"; // 이 부분은 실제 요구에 맞게 수정 필요.
 
         // 쿠키에서 refreshToken 제거
         clearRefreshTokenCookie(response);
