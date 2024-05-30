@@ -66,7 +66,11 @@ public class ReviewController {
     @GetMapping("/api/movies/{movieSeq}/reviewsCommentCnt")
     public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByCommentsCount(@PathVariable String movieSeq) {
         List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByCommentCount(movieSeq);
-
+        
+        //리스트가 empty
+        if(reviewList.isEmpty()) {
+            return new ApiResponse<>(true, "리뷰들을 코멘트순으로 불러왔으나, 달린 리뷰가 없음", null);
+        }
         //리스트가 empty가 아닐 때
         return new ApiResponse<>(true, "리뷰들을 코멘트순으로 불러오기 성공", reviewList);
     }
@@ -76,6 +80,10 @@ public class ReviewController {
     public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByLate(@PathVariable String movieSeq) {
         List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByLate(movieSeq);
 
+        //리스트가 empty
+        if(reviewList.isEmpty()) {
+            return new ApiResponse<>(true, "리뷰들을 최신순으로 불러왔으나, 달린 리뷰가 없음", null);
+        }
         //리스트가 empty가 아닐 때
         return new ApiResponse<>(true, "리뷰들을 최신순으로 불러오기 성공", reviewList);
     }
