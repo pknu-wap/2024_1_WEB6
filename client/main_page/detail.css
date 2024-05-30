@@ -1,0 +1,119 @@
+h1 {
+    text-align: center;
+    /* justify-content: center;  */
+    cursor: pointer;
+    width: 200px;
+    padding: 20px;
+    margin: 0px auto;
+    margin-right: 30%;
+}
+
+hr {
+    height: 1px;
+    /* 높이 조절 */
+    border: none;
+    /* 기본 테두리 제거 */
+    background-color: #b3b3b3;
+    /* 배경색 지정 */
+}
+
+header {
+    display: flex;
+}
+
+
+.login-section {
+    display: flex;
+    float: right;
+    height: 50px;
+    margin-top: 30px;
+}
+
+.login-button {
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    height: 35px;
+    /* 버튼의 높이 지정 */
+    width: 80px;
+    /* 버튼의 너비 지정 */
+    border-radius: 10px;
+    background-color: none;
+    /* 배경색 지정 */
+    color: rgb(0, 0, 0);
+    /* 텍스트 색상 지정 */
+    border: 1px solid #b2b2b2;
+    /* 테두리 제거 */
+    cursor: pointer;
+    /* 커서 모양 설정 */
+    font-size: 13px;
+    /* 텍스트 크기 설정 */
+}
+
+.signup-button {
+    display: flex;
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    height: 35px;
+    /* 버튼의 높이 지정 */
+    width: 80px;
+    /* 버튼의 너비 지정 */
+    border-radius: 10px;
+    background-color: none;
+    /* 배경색 지정 */
+    color: rgb(0, 0, 0);
+    /* 텍스트 색상 지정 */
+    border: 1px solid #b2b2b2;
+    /* 테두리 제거 */
+    cursor: pointer;
+    /* 커서 모양 설정 */
+    font-size: 13px;
+    /* 텍스트 크기 설정 */
+}
+
+.login-button:hover {
+    cursor: pointer;
+    border-bottom: 1px solid #b3b3b3;
+    background-color: #c5c5c5;
+
+}
+
+.signup-button:hover {
+    cursor: pointer;
+    border-bottom: 1px solid #b3b3b3;
+    background-color: #c5c5c5;
+}
+
+.comment-section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#commentInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#submitComment {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
