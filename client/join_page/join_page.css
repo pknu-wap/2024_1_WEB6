@@ -1,0 +1,80 @@
+h1{
+    text-align: center; 
+    cursor: pointer;
+    width: 200px;
+    padding: 20px;
+    margin: 0px auto;
+}
+
+hr {
+    height: 1px;
+    border: none;
+    background-color: #b3b3b3;
+}
+
+.sing-up-container {
+    border: 0.5px solid #b3b3b3;
+    width: 400px;
+    height: 650px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 30px auto;
+    border-radius: 6px;
+}
+
+table {
+    width: 280px;
+    height: 550px;
+    margin: auto;      
+}
+.email {
+    width: 127px;
+    height: 32px;
+    font-size: 15px;
+    border: 0;
+    border-color: lightgray;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    background-color: rgb(233,233,233);
+}
+.text {
+    width: 250px;
+    height: 32px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    background-color: rgb(233,233,233);
+}
+select {
+    width: 100px;
+    height: 32px;
+    font-size: 15px;
+    border: 1;
+    border-color: lightgray;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+}
+.btn {
+    width: 262px;
+    height: 32px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    background-color: rgb(164, 199, 255);
+}
+.btn:active {
+    width: 262px;
+    height: 32px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    background-color: rgb(61, 135, 255);
+}
