@@ -10,33 +10,37 @@ signupButton[0].onclick = function () {
     window.location.href = '/join_page/join_page.html';
 };
 
-// 로그인
+// 일반 로그인
 document.getElementById('login-form').addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    const requestBody = JSON.stringify({
-        username: username,
-        password: password
-    });
+    const formData = new URLSearchParams();
+    formData.append('username', username);
+    formData.append('password', password);
 
     try {
-        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app//api/members/login-page', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/login-page', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: requestBody
+
+            // 쿠키나 인증 헤더를 포함하여 서버로 보냄
+            credentials: 'include',
+            body: formData.toString()
         });
 
         const data = await response.json();
-        if (response.ok) {
+        console.log(data)
+        if (response.success) {
             alert('로그인 성공!');
         } else {
-            alert('로그인 실패: ' + data.message);
-            messageElement.innerText = data.message;
+            // alert(data.message);
+            let messageElement = document.getElementById("messageElement");
+            messageElement.textContent = data.message;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -46,46 +50,72 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
 
 
 
-// 카카오 로그인?
-// 카카오 SDK 초기화
-Kakao.init('인증_KEY');
 
-function kakaoLogin() {
-    Kakao.Auth.login({
-        scope: 'profile_nickname, account_email',
-        success: function (authObj) {  // 로그인 성공
-            Kakao.API.request({  // API 요청 보내는 함수
-                url: '/v2/user/me',
-                success: function (res) {  // 요청 성공 -> 응답 데이터 res
-                    const kakaoAccount = res.kakao_account;
-                    const kakaoUserData = {
-                        email: kakaoAccount.email,
-                        nickname: kakaoAccount.profile.nickname
-                    };
-                    kakaoLoginApi(kakaoUserData);
-                }
-            });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const kakaoLoginBtn = document.getElementById('kakaoLoginBtn');
+
+    // 카카오 로그인 버튼 클릭 처리
+    kakaoLoginBtn.addEventListener('click', handleLogin);
+
+    function handleLogin() {
+        const authUrl = "/login";
+        window.location.href = authUrl;
+    }
+
+    function handleOAuth2Redirect() {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');  // 서버에서 JWT 토큰을 전달했다고 가정
+        const error = params.get('error');
+
+        if (token) {
+            localStorage.setItem('accessToken', token);  // 토큰 저장
+            window.location.href = '/';  // 리디렉션
+        } else {
+            console.error(error);
+            window.location.href = '/login';  // 로그인 페이지로 리디렉션
         }
-    });
-}
+    }
 
-async function kakaoLoginApi(kakaoUserData) {
-    const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app//api/members/kakao-login', {
-        method: 'POST',
+    if (window.location.pathname === '/oauth2/callback') {
+        handleOAuth2Redirect();
+    }
+
+    // axios 인스턴스 생성
+    const axiosInstance = axios.create({
+        baseURL: '/login',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(kakaoUserData),
     });
 
-    const response_json = await response.json();
+    // 요청 인터셉터 설정
+    axiosInstance.interceptors.request.use(
+        config => {
+            const token = localStorage.getItem('accessToken');
+            if (token) {
+                config.headers['Authorization'] = 'Bearer ' + token;
+            }
+            return config;
+        },
+        error => {
+            return Promise.reject(error);
+        }
+    );
 
-    if (response.status == 200) {
-        alert(response_json.msg);
-        window.location.href = '/main_page/index.html';
-    } else {
-        alert('카카오 로그인 실패!');
+    // API 요청 예시
+    async function fetchUserData() {
+        try {
+            const response = await axiosInstance.get('/user/me');
+            console.log(response.data);
+        } catch (error) {
+            console.error('API 요청 실패:', error);
+        }
     }
-}
+
+    if (window.location.pathname === '/') {
+        fetchUserData();
+    }
+});
 
 

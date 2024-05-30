@@ -54,6 +54,11 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+#messageElement {
+    margin-top: 5px;
+    color: red;
+}
+
 .signup-container {
     text-align: center;
     font-size: 15px;
