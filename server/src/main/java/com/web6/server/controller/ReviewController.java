@@ -2,14 +2,18 @@ package com.web6.server.controller;
 
 import com.web6.server.dto.ApiResponse;
 import com.web6.server.dto.review.ReviewRequestDTO;
+import com.web6.server.dto.review.ReviewResponseDTO;
 import com.web6.server.service.ReviewService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -58,6 +62,23 @@ public class ReviewController {
     }
 
     //Read
+    //리뷰를 대댓글 순으로 정렬
+    @GetMapping("/api/movies/{movieSeq}/reviewsCommentCnt")
+    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByCommentsCount(@PathVariable String movieSeq) {
+        List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByCommentCount(movieSeq);
+
+        //리스트가 empty가 아닐 때
+        return new ApiResponse<>(true, "리뷰들을 코멘트순으로 불러오기 성공", reviewList);
+    }
+
+    //리뷰들 최신 순으로 정렬
+    @GetMapping("/api/movies/{movieSeq}/reviewsLatest")
+    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByLate(@PathVariable String movieSeq) {
+        List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByLate(movieSeq);
+
+        //리스트가 empty가 아닐 때
+        return new ApiResponse<>(true, "리뷰들을 최신순으로 불러오기 성공", reviewList);
+    }
 
     //Update
     //리뷰 수정(쓰기) 페이지로 이동할 수 있는지

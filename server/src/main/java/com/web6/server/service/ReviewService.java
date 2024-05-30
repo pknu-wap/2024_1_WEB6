@@ -2,6 +2,7 @@ package com.web6.server.service;
 
 import com.web6.server.domain.*;
 import com.web6.server.dto.review.ReviewRequestDTO;
+import com.web6.server.dto.review.ReviewResponseDTO;
 import com.web6.server.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -89,6 +91,33 @@ public class ReviewService {
 
         Review_Article review_article = new Review_Article(saveReview, article);
         reviewArticleRepository.save(review_article);
+    }
+
+    public List<ReviewResponseDTO> getReviewsOrderByCommentCount(String movieSeq) {
+        //movieSeq로 movieArticle의 Id 가져오기
+        Long movieId = movieArticleRepository.findByMovieSeq(movieSeq).getId();
+        //Id를 movieReview Repository에 넘겨서 review 리스트 가져오기
+        List<Review_Article> reviewArticles = reviewArticleRepository.findByArticleIdOrderByReviewCommentsCountDesc(movieId);
+        //review 리스트를 reviewResponseDTO로 변환하기
+        return reviewArticles.stream()
+                .map(reviewArticle -> convertToDTO(reviewArticle.getReview()))
+                .collect(Collectors.toList());
+    }
+
+    public List<ReviewResponseDTO> getReviewsOrderByLate(String movieSeq) {
+        //movieSeq로 movieArticle의 Id 가져오기
+        Long movieId = movieArticleRepository.findByMovieSeq(movieSeq).getId();
+        //Id를 movieReview Repository에 넘겨서 review 리스트 가져오기
+        List<Review_Article> reviewArticles = reviewArticleRepository.findByArticleIdOrderByReviewCreateDateDesc(movieId);
+        //review 리스트를 reviewResponseDTO로 변환하기
+        return reviewArticles.stream()
+                .map(reviewArticle -> convertToDTO(reviewArticle.getReview()))
+                .collect(Collectors.toList());
+    }
+
+    public ReviewResponseDTO convertToDTO(Review review) {
+        String nickname = review.getWriter().getNickname();
+        return new ReviewResponseDTO(review, nickname);
     }
 
     @Transactional

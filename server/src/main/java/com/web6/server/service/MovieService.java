@@ -1,7 +1,11 @@
 package com.web6.server.service;
+import com.web6.server.domain.Review;
+import com.web6.server.domain.Review_Article;
+import com.web6.server.dto.review.ReviewResponseDTO;
 import com.web6.server.repository.MovieArticleRepository;
 import com.web6.server.domain.MovieArticle;
 import com.web6.server.dto.MovieRequestVo;
+import com.web6.server.repository.ReviewArticleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,8 +14,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class MovieService {
+
+    private final MovieArticleRepository movieArticleRepository;
+    private final ReviewArticleRepository reviewArticleRepository;
+
+    public MovieService(MovieArticleRepository movieArticleRepository, ReviewArticleRepository reviewArticleRepository) {
+        this.movieArticleRepository = movieArticleRepository;
+        this.reviewArticleRepository = reviewArticleRepository;
+    }
 
     public String getMovieInfoList(MovieRequestVo movieRequestVo) {
         int bufferSize = 16 * 1024 * 1024; // 16MB로 버퍼 크기 설정
@@ -120,5 +136,4 @@ public class MovieService {
                 .block();
 
     }
-
 }
