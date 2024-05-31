@@ -115,7 +115,7 @@ public class SignUpController {
 
     @PostMapping("/api/loginError")
     public ApiResponse<Void> loginerror(){
-        return new ApiResponse<>(true, "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해 주세요.", null);
+        return new ApiResponse<>(false, "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해 주세요.", null);
     } //loginError get이 true라는 뜻임 -> 로그인은 실패라는 뜻
 
     @GetMapping("/logout-page")

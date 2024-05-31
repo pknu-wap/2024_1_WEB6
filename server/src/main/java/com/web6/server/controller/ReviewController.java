@@ -65,12 +65,12 @@ public class ReviewController {
     //Read
     //리뷰를 대댓글 순으로 정렬
     @GetMapping("/api/movies/{movieSeq}/reviewsCommentCnt")
-    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByCommentsCount(@PathVariable String movieSeq) {
+    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByCommentsCount(@PathVariable("movieSeq") String movieSeq) {
         List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByCommentCount(movieSeq);
         
         //리스트가 empty
         if(reviewList.isEmpty()) {
-            return new ApiResponse<>(true, "리뷰들을 코멘트순으로 불러왔으나, 달린 리뷰가 없음", null);
+            return new ApiResponse<>(true, "movieSeq가 " + movieSeq + " 인 영화의 리뷰들을 최신순으로 불러왔으나, 달린 리뷰가 없음",  reviewList);
         }
         //리스트가 empty가 아닐 때
         return new ApiResponse<>(true, "리뷰들을 코멘트순으로 불러오기 성공", reviewList);
@@ -78,12 +78,12 @@ public class ReviewController {
 
     //리뷰들 최신 순으로 정렬
     @GetMapping("/api/movies/{movieSeq}/reviewsLatest")
-    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByLatest(@PathVariable String movieSeq) {
+    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByLatest(@PathVariable("movieSeq") String movieSeq) {
         List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByLatest(movieSeq);
 
         //리스트가 empty
         if(reviewList.isEmpty()) {
-            return new ApiResponse<>(true, "리뷰들을 최신순으로 불러왔으나, 달린 리뷰가 없음", null);
+            return new ApiResponse<>(true, "movieSeq가 " + movieSeq + " 인 영화의 리뷰들을 최신순으로 불러왔으나, 달린 리뷰가 없음",  reviewList);
         }
         //리스트가 empty가 아닐 때
         return new ApiResponse<>(true, "리뷰들을 최신순으로 불러오기 성공", reviewList);
@@ -98,10 +98,14 @@ public class ReviewController {
         if (authentication == null || !authentication.isAuthenticated()) {
             return new ApiResponse<>(false, "로그인이 필요합니다.", null);
         }
+        List<ReviewManagementDTO> managementList = reviewService.getReviewsForWriter(nickname);
 
-        List<ReviewManagementDTO> managementDTOs = reviewService.getReviewsForWriter(nickname);
+        //리스트가 empty
+        if(managementList.isEmpty()) {
+            return new ApiResponse<>(true, "닉네임이 " + nickname + "인 유저의 리뷰들을 최신순으로 불러왔으나, 작성한 리뷰가 없음",  managementList);
+        }
         
-        return new ApiResponse<>(true, nickname + "님의 리뷰관리 페이지로 이동", managementDTOs);
+        return new ApiResponse<>(true, nickname + "님의 리뷰관리 페이지로 이동", managementList);
     }
 
 
