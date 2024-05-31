@@ -1,4 +1,5 @@
 package com.web6.server.controller;
+import com.web6.server.dto.ApiResponse;
 import com.web6.server.repository.MovieArticleRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 @RestController
 //@Controller
@@ -81,28 +83,33 @@ public class MovieController {
     /**
      * 영화 검색 요청을 처리하는 메소드
      *
-     * @param option 검색 옵션 (title, genre, actor, director, nation)
-     * @param query 검색어
-     * @param model 뷰에 데이터를 전달하기 위한 모델 객체
-     * @return 검색 결과 페이지 (index)
+     *
+     * @return 타입 : ApiResponse 객체.
      */
-    @GetMapping("/movies/search")
-    public String searchMovies(@RequestParam(required = false) String option,
-                                @RequestParam(required = false) String query,
-                                Model model) {
 
-        // 검색 옵션이나 검색어가 없으면 기본 검색 페이지로 돌아갑니다.
+    @GetMapping("/movies/search/json")
+    public ResponseEntity<ApiResponse<List<MovieDetailResponseVo.DataInfo.ResultInfo>>> searchMoviesJson(
+            @RequestParam(required = false) String option,
+            @RequestParam(required = false) String query,
+            Model model) {
+
+        // ApiResponse 객체 생성
+        ApiResponse<List<MovieDetailResponseVo.DataInfo.ResultInfo>> apiResponse;
+
+
+        // 검색 옵션이나 검색어가 없으면 실패 응답 반환
         if (option == null || query == null || option.isEmpty() || query.isEmpty()) {
-            return "movieSearch";
+            apiResponse = new ApiResponse<>(false, "검색 옵션과 검색어를 모두 제공해주세요.", null);
+            return ResponseEntity.ok(apiResponse);
         }
 
         // MovieRequestVo 객체 생성 및 기본 설정
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
         movieRequestVo.setDetail("Y");
-        movieRequestVo.setListCount(100);
+        movieRequestVo.setListCount(50);
 
-        // 검색 옵션에 따라 MovieRequestVo에 검색어를 설정합니다.
+        // 검색 옵션에 따라 MovieRequestVo에 검색어 설정
         switch (option) {
             case "title":
                 movieRequestVo.setTitle(query);
@@ -120,12 +127,15 @@ public class MovieController {
                 movieRequestVo.setNation(query);
                 break;
             default:
-                // 유효하지 않은 검색 옵션인 경우 기본 검색 페이지로 돌아갑니다.
-                return "movieSearch";
+                // 유효하지 않은 검색 옵션인 경우 실패 응답 반환
+                apiResponse = new ApiResponse<>(false, "유효하지 않은 검색 옵션입니다.", null);
+                return ResponseEntity.ok(apiResponse);
         }
 
-        // MovieService를 이용해 영화 정보를 가져옵니다.
+        // MovieService를 이용해 영화 정보 가져옴
         String movieResponse = movieService.getMovieInfoList(movieRequestVo);
+
+        // string JSON 응답을 MovieDetailResponseVo 객체로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         MovieDetailResponseVo response = null;
         try {
@@ -133,9 +143,12 @@ public class MovieController {
             log.info("MovieDetailResponseVo : " + response);
         } catch (Exception e) {
             log.error("Error occurred: " + e.getMessage(), e);
+            // JSON 변환 오류 발생 시 실패 응답을 반환합니다.
+            apiResponse = new ApiResponse<>(false, "영화 정보 변환 중 오류가 발생했습니다.", null);
+            return ResponseEntity.ok(apiResponse);
         }
 
-        // 변환된 MovieDetailResponseVo 객체가 null이 아니고 데이터가 있는 경우 모델에 추가합니다.
+        // 변환된 MovieDetailResponseVo 객체가 null이 아니고 데이터가 있는 경우 ApiResponse에 데이터를 설정합니다.
         if (response != null && response.getData() != null && !response.getData().isEmpty()) {
             List<MovieDetailResponseVo.DataInfo.ResultInfo> movies = response.getData().get(0).getResult();
             if (movies != null) {
@@ -156,13 +169,17 @@ public class MovieController {
                         filteredMovies.add(movie);
                     }
                 }
-                model.addAttribute("movies", filteredMovies);
+                // 성공 응답에 필터링된 영화 리스트를 설정
+                apiResponse = new ApiResponse<>(true, "영화 검색 성공", filteredMovies);
+                return ResponseEntity.ok(apiResponse);
             }
         }
 
-        // 검색 결과 페이지를 반환.
-        return "movieSearch";
+        // 검색 결과가 없는 경우 빈 리스트 반환
+        apiResponse = new ApiResponse<>(true, "검색 결과가 없습니다.", Collections.emptyList());
+        return ResponseEntity.ok(apiResponse);
     }
+
 
     // 영화 상세 페이지
     @GetMapping("/movies/detail/{movieSeq}")
@@ -244,9 +261,27 @@ public class MovieController {
             log.info("Latest Movies:");
             if (response != null && !response.getData().isEmpty()) {
                 List<MovieDetailResponseVo.DataInfo.ResultInfo> movies = response.getData().get(0).getResult();
+                List<MovieDetailResponseVo.DataInfo.ResultInfo> filteredMovies = new ArrayList<>();
                 for (MovieDetailResponseVo.DataInfo.ResultInfo movie : movies) {
                     log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
+
+                    // "에로" 장르의 영화를 필터링
+                    if (!movie.getGenre().contains("에로")) {
+                        // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
+                        if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
+                            List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
+                            movie.setPostersList(postersList);
+                        }
+                        // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
+                        if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
+                            List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
+                            movie.setStillsList(stillsList);
+                        }
+                        filteredMovies.add(movie);
+                        log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
+                    }
                 }
+                response.getData().get(0).setResult(filteredMovies);
             }
         } catch (Exception e) {
             log.error("Error occurred while fetching latest movies: " + e.getMessage(), e);

@@ -46,10 +46,11 @@ public class SecurityConfig {
                         .requestMatchers("/login-page", "/api/members/login-page", "/api/loginError", "/sign-up", "/api/members/sign-up").anonymous()
                         .requestMatchers(("/movies/findAll")).permitAll() //movies/findAll 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("/movies/search")).permitAll()  //movies/search 경로에 대해 모든 사용자 접근 허용
-                        .requestMatchers(("/movies/detail/{movieSeq}")).permitAll()  //모든 사용자 접근 허용
-                        .requestMatchers(("/movies/latest")).permitAll()  //모든 사용자 접근 허용
-                        .requestMatchers(("/Top5OrderByGradeCountDesc")).permitAll()  // 경로에 대해 모든 사용자 접근 허용
-
+                        .requestMatchers(("/OrderByGradeCountDesc")).permitAll()  //OrderByGradeCountDesc 경로에 대해 모든 사용자 접근 허용
+                        .requestMatchers(("/movies/search/json")).permitAll() //movies/search/json 경로에 대해 모든 사용자 접근 허용
+                        .requestMatchers(("/movies/latest")).permitAll()  //movies/latest 경로에 대해 모든 사용자 접근 허용
+                        .requestMatchers("/api/movies/{movieSeq}/reviewsCommentCnt", "/api/movies/{movieSeq}/reviewsLatest").permitAll()
+                        .requestMatchers(("/movies/detail/{movieSeq}")).permitAll()  ///movies/detail/{movieSeq} 경로에 대해 모든 사용자 접근 허용
                         .anyRequest().authenticated()
                 );
 
