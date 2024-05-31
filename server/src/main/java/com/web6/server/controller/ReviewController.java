@@ -1,6 +1,7 @@
 package com.web6.server.controller;
 
 import com.web6.server.dto.ApiResponse;
+import com.web6.server.dto.review.ReviewManagementDTO;
 import com.web6.server.dto.review.ReviewRequestDTO;
 import com.web6.server.dto.review.ReviewResponseDTO;
 import com.web6.server.service.ReviewService;
@@ -77,8 +78,8 @@ public class ReviewController {
 
     //리뷰들 최신 순으로 정렬
     @GetMapping("/api/movies/{movieSeq}/reviewsLatest")
-    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByLate(@PathVariable String movieSeq) {
-        List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByLate(movieSeq);
+    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByLatest(@PathVariable String movieSeq) {
+        List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByLatest(movieSeq);
 
         //리스트가 empty
         if(reviewList.isEmpty()) {
@@ -87,6 +88,22 @@ public class ReviewController {
         //리스트가 empty가 아닐 때
         return new ApiResponse<>(true, "리뷰들을 최신순으로 불러오기 성공", reviewList);
     }
+
+
+    //리뷰관리
+    @GetMapping("/api/writer/{nickname}/reviews")
+    public ApiResponse<List<ReviewManagementDTO>> getReviewsForWriter(@PathVariable("nickname") String nickname) {
+        //로그인한 유저인지 아닌지
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return new ApiResponse<>(false, "로그인이 필요합니다.", null);
+        }
+
+        List<ReviewManagementDTO> managementDTOs = reviewService.getReviewsForWriter(nickname);
+        
+        return new ApiResponse<>(true, nickname + "님의 리뷰관리 페이지로 이동", managementDTOs);
+    }
+
 
     //Update
     //리뷰 수정(쓰기) 페이지로 이동할 수 있는지
@@ -132,5 +149,4 @@ public class ReviewController {
         reviewService.deleteReview(movieId, reviewId);
         return new ApiResponse<>(true, "리뷰 삭제 성공", null);
     }
-
 }

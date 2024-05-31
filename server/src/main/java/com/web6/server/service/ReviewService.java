@@ -1,6 +1,7 @@
 package com.web6.server.service;
 
 import com.web6.server.domain.*;
+import com.web6.server.dto.review.ReviewManagementDTO;
 import com.web6.server.dto.review.ReviewRequestDTO;
 import com.web6.server.dto.review.ReviewResponseDTO;
 import com.web6.server.repository.*;
@@ -100,24 +101,39 @@ public class ReviewService {
         List<Review_Article> reviewArticles = reviewArticleRepository.findByArticleIdOrderByReviewCommentsCountDesc(movieId);
         //review 리스트를 reviewResponseDTO로 변환하기
         return reviewArticles.stream()
-                .map(reviewArticle -> convertToDTO(reviewArticle.getReview()))
+                .map(reviewArticle -> convertToResponseDTO(reviewArticle.getReview()))
                 .collect(Collectors.toList());
     }
 
-    public List<ReviewResponseDTO> getReviewsOrderByLate(String movieSeq) {
+    public List<ReviewResponseDTO> getReviewsOrderByLatest(String movieSeq) {
         //movieSeq로 movieArticle의 Id 가져오기
         Long movieId = movieArticleRepository.findByMovieSeq(movieSeq).getId();
         //Id를 movieReview Repository에 넘겨서 review 리스트 가져오기
         List<Review_Article> reviewArticles = reviewArticleRepository.findByArticleIdOrderByReviewCreateDateDesc(movieId);
         //review 리스트를 reviewResponseDTO로 변환하기
         return reviewArticles.stream()
-                .map(reviewArticle -> convertToDTO(reviewArticle.getReview()))
+                .map(reviewArticle -> convertToResponseDTO(reviewArticle.getReview()))
                 .collect(Collectors.toList());
     }
 
-    public ReviewResponseDTO convertToDTO(Review review) {
+    public List<ReviewManagementDTO> getReviewsForWriter(String nickname){
+        //닉네임으로 member entitiy 반환받기
+        Member writer = memberRepository.findByNickname(nickname);
+        //writer가 쓴 리뷰들 찾기
+        List<Review_Article> reviewArticles = reviewArticleRepository.findByReviewWriterOrderByReviewCreateDateDesc(writer);
+        //managementDTO로 변환해서 반환
+        return reviewArticles.stream()
+                .map(this::convertToManagementDTO)
+                .collect(Collectors.toList());
+    }
+
+    private ReviewResponseDTO convertToResponseDTO(Review review) {
         String nickname = review.getWriter().getNickname();
         return new ReviewResponseDTO(review, nickname);
+    }
+
+    private ReviewManagementDTO convertToManagementDTO(Review_Article review_article) {
+        return new ReviewManagementDTO(review_article.getArticle(), convertToResponseDTO(review_article.getReview()));
     }
 
     @Transactional
