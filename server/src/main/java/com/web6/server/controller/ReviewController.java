@@ -29,23 +29,23 @@ public class ReviewController {
 
     //Create
     //리뷰 쓰기 페이지로 이동할 수 있는지
-    @GetMapping("/api/movies/{movie-id}/reviews")
-    public ApiResponse<Void> reviewP(@PathVariable("movie-id") Long movieId) {
+    @GetMapping("/api/movies/{movieSeq}/reviews")
+    public ApiResponse<Void> reviewP(@PathVariable("movieSeq") String movieSeq) {
 
         //review writer 불러오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String writerId = authentication.getName();
 
         //한 유저가 한 영화게시글에 쓸 수 있는 리뷰 개수는 1개로 제한
-        if (reviewService.existReview(movieId, writerId)) {
+        if (reviewService.existReview(movieSeq, writerId)) {
             return new ApiResponse<>(false, "리뷰 작성 개수 제한을 초과하였습니다.", null); //
         }
 
         return new ApiResponse<>(true, "리뷰 작성 페이지로 이동합니다.", null);
     }
 
-    @PostMapping("/api/movies/{movie-id}/reviews")
-    public ApiResponse<ReviewRequestDTO> createReview(@PathVariable("movie-id") Long movieId, @RequestBody @Valid ReviewRequestDTO reviewRequestDTO, Errors errors) {
+    @PostMapping("/api/movies/{movieSeq}/reviews")
+    public ApiResponse<ReviewRequestDTO> createReview(@PathVariable("movieSeq") String movieSeq, @RequestBody @Valid ReviewRequestDTO reviewRequestDTO, Errors errors) {
 
         //review writer 불러오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,7 +57,7 @@ public class ReviewController {
         }
 
         //DB에 저장
-        reviewService.addReview(movieId, writerId, reviewRequestDTO);
+        reviewService.addReview(movieSeq, writerId, reviewRequestDTO);
         
         return new ApiResponse<>(true, "리뷰 작성 성공", reviewRequestDTO);
     }
@@ -107,8 +107,8 @@ public class ReviewController {
 
     //Update
     //리뷰 수정(쓰기) 페이지로 이동할 수 있는지
-    @GetMapping("/api/movies/{movie-id}/reviewEdit/{review-id}")
-    public ApiResponse<ReviewRequestDTO> reviewEditP(@PathVariable("movie-id") Long movieId, @PathVariable("review-id") Long reviewId) {
+    @GetMapping("/api/reviewEdit/{review-id}")
+    public ApiResponse<ReviewRequestDTO> reviewEditP(@PathVariable("review-id") Long reviewId) {
         //이 리뷰가 현재 접속한 유저가 작성한 리뷰가 맞는 지 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String writerId = authentication.getName();
@@ -123,21 +123,21 @@ public class ReviewController {
         return new ApiResponse<>(true, "리뷰 수정 페이지로 이동합니다.", currentReview);
     }
 
-    @PutMapping("/api/movies/{movie-id}/reviewEdit/{review-id}")
-    public ApiResponse<ReviewRequestDTO> updateReview(@PathVariable("movie-id") Long movieId, @PathVariable("review-id") Long reviewId, @RequestBody @Valid ReviewRequestDTO editReview, Errors errors) {
+    @PutMapping("/api/reviewEdit/{review-id}")
+    public ApiResponse<ReviewRequestDTO> updateReview(@PathVariable("review-id") Long reviewId, @RequestBody @Valid ReviewRequestDTO editReview, Errors errors) {
         //유효성 검사
         if (errors.hasErrors()) {
             return new ApiResponse<>(false, errors.getFieldError().getDefaultMessage(), editReview);
         }
 
         //변경 내용 DB에 저장
-        reviewService.updateReview(movieId, reviewId, editReview);
+        reviewService.updateReview(reviewId, editReview);
         return new ApiResponse<>(true, "리뷰 수정 성공", editReview);
     }
 
     // Delete
-    @DeleteMapping("/api/movies/{movie-id}/reviewDelete/{review-id}")
-    public ApiResponse<Void> deleteReview(@PathVariable("movie-id") Long movieId, @PathVariable("review-id") Long reviewId) {
+    @DeleteMapping("/api/reviewDelete/{review-id}")
+    public ApiResponse<Void> deleteReview(@PathVariable("review-id") Long reviewId) {
         // 이 리뷰가 현재 접속한 유저가 작성한 리뷰가 맞는 지 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String writerId = authentication.getName();
@@ -146,7 +146,7 @@ public class ReviewController {
             return new ApiResponse<>(false, "잘못된 요청입니다.", null);
         }
 
-        reviewService.deleteReview(movieId, reviewId);
+        reviewService.deleteReview(reviewId);
         return new ApiResponse<>(true, "리뷰 삭제 성공", null);
     }
 }

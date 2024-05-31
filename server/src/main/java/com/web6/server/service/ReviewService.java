@@ -33,8 +33,8 @@ public class ReviewService {
         this.commentRepository = commentRepository;
     }
 
-    public boolean existReview(Long movieId, String writerId) {
-        MovieArticle article = movieArticleRepository.findByid(movieId);
+    public boolean existReview(String movieSeq, String writerId) {
+        MovieArticle article = movieArticleRepository.findByMovieSeq(movieSeq);
         Member writer = memberRepository.findByLoginId(writerId);
 
         boolean exist = reviewArticleRepository.existsByArticleAndReview_Writer(article, writer);
@@ -72,9 +72,9 @@ public class ReviewService {
     }
 
     @Transactional
-    public void addReview(Long movieId, String writerId, ReviewRequestDTO reviewRequestDTO) {
+    public void addReview(String movieSeq, String writerId, ReviewRequestDTO reviewRequestDTO) {
         Member writer = memberRepository.findByLoginId(writerId);
-        MovieArticle article = movieArticleRepository.findByid(movieId);
+        MovieArticle article = movieArticleRepository.findByMovieSeq(movieSeq);
 
         //영화 게시글의 별점 추가
         article.addGrade(reviewRequestDTO.getGrade());
@@ -137,10 +137,10 @@ public class ReviewService {
     }
 
     @Transactional
-    public void updateReview(Long movieId, Long reviewId, ReviewRequestDTO editReview) {
-        MovieArticle article = movieArticleRepository.findByid(movieId);
+    public void updateReview(Long reviewId, ReviewRequestDTO editReview) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid review ID"));
+        MovieArticle article = reviewArticleRepository.findByReview(review).getArticle();
 
         //영화 게시글의 별점 업데이트
         double oldGrade = review.getGrade();
@@ -154,10 +154,10 @@ public class ReviewService {
     }
 
     @Transactional
-    public void deleteReview(Long movieId, Long reviewId) {
-        MovieArticle article = movieArticleRepository.findByid(movieId);
+    public void deleteReview(Long reviewId) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid review ID"));
+        MovieArticle article = reviewArticleRepository.findByReview(review).getArticle();
 
         //영화 게시글의 별점 삭제
         article.deleteGrade(review.getGrade());
