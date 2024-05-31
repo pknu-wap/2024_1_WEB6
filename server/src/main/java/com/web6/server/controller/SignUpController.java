@@ -123,4 +123,9 @@ public class SignUpController {
         return new ApiResponse<>(true, "로그아웃 페이지", null);
     }
 
+    @GetMapping("/api/loginSuccess")
+    public ApiResponse<Void> loginSuccess(){
+        return new ApiResponse<>(true, "로그인 성공", null);
+    }
+
 }

@@ -42,7 +42,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/main").permitAll()
+                        .requestMatchers("/api/main", "/api/loginSuccess").permitAll()
                         .requestMatchers("/login-page", "/api/members/login-page", "/api/loginError", "/sign-up", "/api/members/sign-up").anonymous()
                         .requestMatchers(("/movies/findAll")).permitAll() //movies/findAll 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("/movies/search")).permitAll()  //movies/search 경로에 대해 모든 사용자 접근 허용
@@ -59,7 +59,7 @@ public class SecurityConfig {
                         .loginPage("/login-page")
                         .loginProcessingUrl("/api/members/login-page")
                         .failureForwardUrl("/api/loginError")
-                        .defaultSuccessUrl("/api/main", true)
+                        .defaultSuccessUrl("/api/loginSuccess", true)
                 );
 
         http.httpBasic(AbstractHttpConfigurer::disable);
