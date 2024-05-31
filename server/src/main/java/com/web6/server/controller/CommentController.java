@@ -51,7 +51,7 @@ public class CommentController {
 
         //리스트가 empty
         if(commentList.isEmpty()) {
-            return new ApiResponse<>(true, "리뷰의 대댓글들을 불러오려 했으나, 달린 대댓글이 없음", null);
+            return new ApiResponse<>(true, "아이디가" + reviewId + "인 리뷰에 달린 대댓글이 없음", commentList);
         }
 
         //리뷰에 대댓글들이 있을 때만 (나중에 리스트가 비어있을 때도 추가해야 함)
