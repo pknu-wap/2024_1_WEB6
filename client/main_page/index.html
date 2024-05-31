@@ -32,35 +32,6 @@
         </div>
     </header>
 
-    <!-- 랭킹 -->
-    <div class="movie-ranking">
-        <ul>
-            <li>
-                <p>랭킹 1</p>
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-            </li>
-
-            <li>
-                <p>랭킹 1</p>
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-            </li>
-
-            <li>
-                <p>랭킹 1</p>
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-            </li>
-
-            <li>
-                <p>랭킹 1</p>
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-            </li>
-
-            <li>
-                <p>랭킹 1</p>
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-            </li>
-        </ul>
-    </div>
 
     <!-- 검색창 -->
     <form class="search-box" id="search-form" action="/search-results/search-results.html" method="GET">
@@ -77,88 +48,22 @@
         </div>
     </form>
 
+    <!-- 정렬 -->
     <div class="sort-reviews-container">
-        <select id="sort-reviews">
-            <option value="">별점순</option>
-            <option value="">누적관객순</option>
-            <option value="">댓글순</option>
+        <select class="sort-option" id="sort-option">
+            <option value="latest">최신순</option>
+            <option value="comments">댓글순</option>
         </select>
     </div>
 
 
-
-
     <!-- 게시글 -->
-    <div class="review-container">
-        <div class="img-wrap">
-            <div class="">
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg">
-                <div class="review-title">
-                    <p>Movie Title</p>
-                    <p>★4.5</p>
-                </div>
-            </div>
-
-            <div class="">
-                <img
-                    src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/c29bba8bec43a8139e0ccdee738bcbd0.jpg">
-                <div class="review-title">
-                    <p>Movie Title</p>
-                    <p>★4.5</p>
-                </div>
-            </div>
-
-            <div class="">
-                <img
-                    src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/ae1d466087a6dfb562eb187f79d27fb7.jpg">
-                <div class="review-title">
-                    <p>Movie Title</p>
-                    <p>★4.5</p>
-                </div>
-            </div>
-
-            <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jt1GlLLvkWL2m83VX8I1qsDR187.jpg">
-                <div class="review-title">
-                    <p>Movie Title</p>
-                    <p>★4.5</p>
-                </div>
-            </div>
-
-            <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jpD6z9fgNe7OqsHoDeAWQWoULde.jpg">
-                <div class="review-title">
-                    <p>Movie Title</p>
-                    <p>★4.5</p>
-                </div>
-            </div>
-
-            <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bzpAD4rd40zZYoh6Lqzrz1O1xh4.jpg">
-                <div class="review-title">
-                    <p>Movie Title</p>
-                    <p>★4.5</p>
-                </div>
-            </div>
-
-            <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg">
-                <div class="review-title">
-                    <p>Movie Title</p>
-                    <p>★4.5</p>
-                </div>
-            </div>
-
-            <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wrCwH6WOvXQvVuqcKNUrLDCDxdw.jpg">
-                <div class="review-title">
-                    <p>Movie Title</p>
-                    <p>★4.5</p>
-                </div>
-            </div>
-        </div>
+    <div id="moviesGrid" class="movies-grid" onclick="handleClick(movieSeq)"></div>
+    <div class="pagination">
+        <button id="prevPage">이전</button>
+        <span id="pageInfo"></span>
+        <button id="nextPage">다음</button>
     </div>
-
 
 
     <script src="index.js"></script>

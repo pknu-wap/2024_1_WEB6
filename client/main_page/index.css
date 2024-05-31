@@ -18,19 +18,12 @@
     box-sizing: border-box;
 }
 
-.title-text {
-    cursor: pointer;
-}
-
 .login-section button {
-    font-family: "Noto Sans KR", sans-serif;
     font-weight: 500;
-
 }
 
 body {
     padding-top: 40px;
-    font-family: "Noto Sans KR", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
@@ -39,7 +32,6 @@ body {
 /* 타이틀 */
 .web-title {
     font-size: 35px;
-    font-family: "Signika", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
@@ -47,8 +39,14 @@ body {
         "GRAD" 0;
 }
 
+.title-text {
+    cursor: pointer;
+    font-family: "Signika", sans-serif;
+}
+
 .title-text span {
     color: #E50914;
+    font-family: "Signika", sans-serif;
 }
 
 /* 로그인, 회원가입 버튼 */
@@ -101,28 +99,19 @@ body {
 .search-container {
     display: flex;
     justify-content: center;
-    margin: 5em 30% 50px 30% ;
+    margin: 5em 30% 50px 30%;
 }
 
 .search-option {
     color: rgb(55, 55, 55);
-    padding: 10px;
+    padding: 10px 5px 10px 10px;
     font-size: 16px;
     border-width: 1px 1px 1px 1px;
     border-style: solid;
     border-color: rgb(137, 137, 137);
     border-radius: 5px 0 0 5px;
     outline: none;
-
-    /* -webkit-appearance:none;
-    /* appearance:none; */
-    /* background: url(https://cdn.icon-icons.com/icons2/1339/PNG/512/downarrow_87468.png) no-repeat right 24px center; */
 }
-
-.search-option::-ms-expand {
-    display: none;
-}
-
 
 .search-input {
     width: 300px;
@@ -169,15 +158,34 @@ body {
 }
 
 
-/* 리뷰 정렬 */
+/* 리뷰 정렬 버튼 */
 .sort-reviews-container {
     position: absolute;
-    top: 30%; /* 위에서 50px */
-    right: 20%; /* 왼쪽에서 100px */
+    top: 20%;
+    /* 위에서 50px */
+    right: 10%;
+    /* 왼쪽에서 100px */
 }
-.sort-reviews select{
-    padding: 20px;
+
+.sort-option {
+    padding: 6px 3px;
+    border-radius: 5px;
+    color: rgb(55, 55, 55);
+    font-size: 13px;
+    border-color: rgb(137, 137, 137);
+    outline: none;
 }
+
+.sort-option:hover {
+    cursor: pointer;
+    font-weight: 500;
+
+}
+
+.sort-option option {
+    font-size: 13px;
+}
+
 
 
 
@@ -185,80 +193,51 @@ body {
 
 
 /* 작성한 리뷰 */
-* {
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-.review-container {
-    display: flex;
-    justify-content: center;
-    /* 가운데 정렬 */
+.sort-reviews-container,
+#search-form {
+    margin: 20px;
+    text-align: center;
 }
 
-.img-wrap {
+.movies-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* 4개의 열 생성 */
-    gap: 10px;
-    /* 이미지 사이의 간격 */
-    grid-row-gap: 50px;
-    /* 그리드의 행 사이의 간격 */
-    max-width: 800px;
-    /* 그리드의 최대 너비 */
-    margin-left: -30%;
-    padding-left: 1px;
-    padding-bottom: 10%;
-    padding-top: 40px;
+    grid-template-columns: repeat(5, 0.5fr);
+    /* 각 영화 카드의 너비를 줄임 */
+    gap: 20px;
+    padding: 20px 10%;
 }
 
-.img-wrap img {
-    max-width: 100%;
-    /* 이미지가 항목을 넘어서지 않도록 최대 너비를 설정 */
+.movie-card {
+    /* border: 1px solid #ccc; */
+    padding: 10px;
+    text-align: center;
+}
+
+.movie-card img {
+    width: 100%;
     height: auto;
-    /* 비율을 유지하면서 높이를 자동으로 조정 */
+}
+
+.movie-title {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.movie-rating {
+    color: gold;
+}
+
+.pagination {
+    text-align: center;
+    margin: 20px;
+}
+
+.movies-grid img, .movie-title :hover {
     cursor: pointer;
-}
-
-.review-title {
-    display: flex;
-    /* 요소를 가로로 배치 */
-    align-items: center;
-    /* 수직 중앙 정렬 */
-}
-
-.review-title p {
-    margin-right: 10px;
-    /* 각 텍스트 요소 사이의 간격 조정 */
-}
-
-
-
-
-/* 랭킹 */
-.movie-ranking {
-    position: relative;
-    border: 1px solid #b3b3b3;
-    top: 30%;
-    border-radius: 10px;
-    float: left;
-    width: 10%;
-    margin: 5em 100px;
-    padding: 20px;
-    background-color: #ffffff;
-
-}
-
-.movie-ranking li {
-    list-style-type: none;
-}
-
-.movie-ranking p {
-    font-size: 17px;
-    font-weight: bold;
-}
-
-.movie-ranking img {
-    width: 80%;
-    margin-bottom: 40px;
 }
