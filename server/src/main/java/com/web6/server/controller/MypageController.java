@@ -42,27 +42,27 @@ public class MypageController {
     public ApiResponse<Void> CheckNicknameDuplicate(@RequestBody MemberEditDTO editDTO, @AuthenticationPrincipal MemberDetails currentMember) {
         String nickname = editDTO.getNickname();
 
+        Map<String, String> error = new HashMap<>();
         if(!currentMember.getNickname().equals(nickname)) {
             //닉네임의 유효성 검사
             if(!memberService.isValidNickname(nickname)) {
-                Map<String, String> validResult = new HashMap<>();
-                validResult.put("valid_nickname", "닉네임은 2~10자의 한글, 영문 대소문자, 숫자로 구성되어야 합니다.");
+                error.put("valid_nickname", "닉네임은 2~10자의 한글, 영문 대소문자, 숫자로 구성되어야 합니다.");
 
-                return new ApiResponse<>(false, "마이페이지 닉네임 유효성 검사 탈락", validResult, null);
+                return new ApiResponse<>(false, "마이페이지 닉네임 유효성 검사 탈락", error, null);
             }
 
             //닉네임의 중복 검사
             if(memberService.isDuplicatedNickname(nickname)) {
-                Map<String, String> duplicateResult = new HashMap<>();
-                duplicateResult.put("duplicate", "이미 존재하는 닉네임입니다.");
+                error.put("duplicate", "이미 존재하는 닉네임입니다.");
 
-                return new ApiResponse<>(false, "마이페이지 닉네임 중복 검사 탈락", duplicateResult, null);
+                return new ApiResponse<>(false, "마이페이지 닉네임 중복 검사 탈락", error, null);
             }
 
-            return new ApiResponse<>(true, "사용 가능한 닉네임입니다.", null);
+            return new ApiResponse<>(true, "사용 가능한 닉네임", null);
         }
+        error.put("change","변경 사항이 없습니다.");
 
-        return new ApiResponse<>(false, "변경 사항이 없습니다.", null);
+        return new ApiResponse<>(false, "변경 사항이 없음", error, null);
     }
 
     @PostMapping("/api/mypage")
