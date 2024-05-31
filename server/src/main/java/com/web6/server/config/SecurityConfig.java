@@ -48,6 +48,7 @@ public class SecurityConfig {
                         .requestMatchers(("/movies/search")).permitAll()  //movies/search 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("movies/search/json")).permitAll() //movies/search/json 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("/movies/latest")).permitAll()  //movies/latest 경로에 대해 모든 사용자 접근 허용
+                        .requestMatchers("/api/movies/{movieSeq}/reviewsCommentCnt", "/api/movies/{movieSeq}/reviewsLatest").permitAll()
                         .anyRequest().authenticated()
                 );
 

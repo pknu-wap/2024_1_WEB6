@@ -13,4 +13,5 @@ public interface ReviewArticleRepository extends JpaRepository<Review_Article, L
     void deleteByArticleAndReview(MovieArticle movieArticle, Review review);
     List<Review_Article> findByArticleIdOrderByReviewCommentsCountDesc(Long articleId);
     List<Review_Article> findByArticleIdOrderByReviewCreateDateDesc(Long articleId);
+    List<Review_Article> findByReviewWriterOrderByReviewCreateDateDesc(Member member);
 }
