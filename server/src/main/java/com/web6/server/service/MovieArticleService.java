@@ -14,8 +14,8 @@ public class MovieArticleService {
     @Autowired
     private MovieArticleRepository movieArticleRepository;
 
-    public List<MovieArticleDTO> getTop5OrderByGradeCountDesc() {
-        PageRequest pageRequest = PageRequest.of(0, 5); // 첫 페이지에서 5개의 항목을 가져옴
-        return movieArticleRepository.findTop5OrderByGradeCountDesc(pageRequest).getContent();
+    public List<MovieArticleDTO> getOrderByGradeCountDesc() {
+        PageRequest pageRequest = PageRequest.of(0, 10); // 첫 페이지에서 10개의 항목을 가져옴
+        return movieArticleRepository.findOrderByGradeCountDesc(pageRequest).getContent();
     }
 }
