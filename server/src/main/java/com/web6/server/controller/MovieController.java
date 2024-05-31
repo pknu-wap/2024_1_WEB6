@@ -86,6 +86,7 @@ public class MovieController {
      *
      * @return 타입 : ApiResponse 객체.
      */
+
     @GetMapping("/movies/search/json")
     public ResponseEntity<ApiResponse<List<MovieDetailResponseVo.DataInfo.ResultInfo>>> searchMoviesJson(
             @RequestParam(required = false) String option,
@@ -94,6 +95,7 @@ public class MovieController {
 
         // ApiResponse 객체 생성
         ApiResponse<List<MovieDetailResponseVo.DataInfo.ResultInfo>> apiResponse;
+
 
         // 검색 옵션이나 검색어가 없으면 실패 응답 반환
         if (option == null || query == null || option.isEmpty() || query.isEmpty()) {
@@ -248,7 +250,7 @@ public class MovieController {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
         movieRequestVo.setDetail("N");
-        movieRequestVo.setListCount(10);
+        movieRequestVo.setListCount(10); //10개 정렬
         movieRequestVo.setSort("prodYear,1"); // 최신 영화의 제작 연도를 기준으로 설정
 
         String movieResponse = movieService.getMovieLatestList(movieRequestVo);

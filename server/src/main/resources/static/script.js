@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function fetchMovies() {
-    fetch('http://localhost:8080/movies/findAll')
+    fetch('http://localhost:8080//movies/latest')// 일단 최신순 정렬 하나만 적어놓음. 댓글순도 추가하기.
         .then(response => response.json())
         .then(data => {
             displayMovies(data);

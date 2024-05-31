@@ -1,5 +1,5 @@
 /*
-댓글수를 기준으로 5개의 Article(title, gradeCount)을 반환.
+댓글수를 기준으로 10개의 Article(title, gradeCount)을 반환.
  */
 package com.web6.server.controller;
 
@@ -17,8 +17,8 @@ public class MovieArticleController {
     @Autowired
     private MovieArticleService movieArticleService;
 
-    @GetMapping("/Top5OrderByGradeCountDesc")
-    public List<MovieArticleDTO> getTop5OrderByGradeCountDesc() {
-        return movieArticleService.getTop5OrderByGradeCountDesc();
+    @GetMapping("/OrderByGradeCountDesc")
+    public List<MovieArticleDTO> getOrderByGradeCountDesc() {
+        return movieArticleService.getOrderByGradeCountDesc();
     }
 }

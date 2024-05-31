@@ -1,8 +1,9 @@
 package com.web6.server.service;
+
+import com.web6.server.dto.MovieRequestVo;
 import com.web6.server.repository.MovieArticleRepository;
 import com.web6.server.dto.MovieRequestVo;
 import com.web6.server.repository.ReviewArticleRepository;
-import com.web6.server.dto.MovieRequestVo;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
