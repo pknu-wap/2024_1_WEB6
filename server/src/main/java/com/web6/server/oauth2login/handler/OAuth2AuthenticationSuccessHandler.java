@@ -2,7 +2,6 @@
 
 package com.web6.server.oauth2login.handler;
 
-
 import com.web6.server.domain.Member;
 import com.web6.server.repository.MemberRepository;
 import com.web6.server.jwt.TokenProvider;
