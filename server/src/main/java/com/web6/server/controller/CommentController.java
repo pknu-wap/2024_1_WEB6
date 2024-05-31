@@ -60,7 +60,7 @@ public class CommentController {
 
     //update
     @GetMapping("/api/commentEdit/{comment-id}")
-    public ApiResponse<Void> CommentEditPermission(@PathVariable("comment-id") Long commentId) {
+    public ApiResponse<CommentResponseDTO> CommentEditPermission(@PathVariable("comment-id") Long commentId) {
         //코멘트가 자기 것이 맞는지 검사
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String writerId = authentication.getName();
@@ -69,7 +69,8 @@ public class CommentController {
             return new ApiResponse<>(false, "잘못된 요청입니다.", null);
         }
 
-        return new ApiResponse<>(true, "대댓글 수정 가능", null);
+        CommentResponseDTO currentComment = commentService.getComment(commentId);
+        return new ApiResponse<>(true, "대댓글 수정 가능", currentComment);
     }
 
     @PutMapping("/api/commentEdit/{comment-id}")

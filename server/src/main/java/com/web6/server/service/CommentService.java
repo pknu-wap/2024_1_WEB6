@@ -35,6 +35,12 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
+    public CommentResponseDTO getComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid comment ID"));
+        return new CommentResponseDTO(comment);
+    }
+
     public List<CommentResponseDTO> getComments(Long reviewId) {
 
         List<Comment_Review> commentReviews= commentsReviewRepository.findByReviewIdOrderByCommentCreateDateDesc(reviewId); //오래된 코멘트 -> 최신 코멘트 순

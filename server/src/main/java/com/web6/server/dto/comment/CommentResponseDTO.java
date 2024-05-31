@@ -1,6 +1,7 @@
 package com.web6.server.dto.comment;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.web6.server.domain.Comment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,11 +19,11 @@ public class CommentResponseDTO {
 
     public CommentResponseDTO() {}
     //create
-    public CommentResponseDTO(Long id, String nickname, String content, LocalDateTime createDate) {
-        this.id = id;
-        this.nickname = nickname;
-        this.content = content;
-        this.createDate = createDate;
+    public CommentResponseDTO(Comment comment) {
+        this.id = comment.getId();
+        this.nickname = comment.getWriter().getNickname();
+        this.content = getContent();
+        this.createDate = getCreateDate();
         this.edit = false;
     }
     //update
