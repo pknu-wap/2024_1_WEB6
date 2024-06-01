@@ -16,17 +16,18 @@ if (logoutButton) {
 // 마이페이지 정보 로드
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('http://localhost:8080/api/mypage', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/mypage', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
 
-        if (response.ok) {
+        if (response.success) {
             const data = await response.json();
             document.getElementById('user-id').value = data.loginId;
             document.getElementById('nickname').value = data.nickname;
+            console.log(data.message)
             // 다른 필요한 필드들도 여기에 추가
         } else {
             console.error('Failed to load user information');
@@ -36,40 +37,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// 닉네임 중복 확인
+// 닉네임 중복 검사
 document.getElementById('check-nickname').addEventListener('click', async () => {
-    const nickname = document.getElementById('nickname').value;
     const loginId = document.getElementById('user-id').value;
-
-    const requestBody = JSON.stringify({
-        nickname: nickname,
-        loginId: loginId,
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-        nicknameChecked: false
-    });
+    const nickname = document.getElementById('nickname').value;
+    const currentPassword = "";
+    const newPassword = "";
+    const confirmPassword = "";
 
     try {
-        const response = await fetch('http://localhost:8080/api/mypage/duplicate', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app//mypage/duplicate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: requestBody
+            body: JSON.stringify({
+                nickname,
+                loginId,
+                currentPassword,
+                newPassword,
+                confirmPassword
+            })
         });
 
-        const data = await response.json();
+        if (response.success) {
+            const data = await response.json();
 
-        if (response.ok) {
-            document.getElementById('nicknameChecked').value = 'true';
-            alert(result.message);
+            if (data.success) {  // 중복 확인 성공
+                document.getElementById('nicknameChecked').value = 'true';
+                document.getElementById('nickname-error').textContent = data.message;
+            } else {  // 중복 확인 실패
+                document.getElementById('nicknameChecked').value = 'false';
+                console.log(data.message);
+
+                if (data.errors) {
+                    if (data.errors.valid_nickname) {     // 닉네임 유효성 검사 탈락
+                        document.getElementById('nickname-error').textContent = data.errors.valid_nickname;
+                    } else if (data.errors.duplicate) {    // 닉네임이 중복될 때
+                        document.getElementById('nickname-error').textContent = data.errors.duplicate;
+                    } else if (data.errors.change) {       // 닉네임에 변경사항이 없을 때
+                        document.getElementById('nickname-error').textContent = data.errors.change;
+                    } else {
+                        alert('중복 확인 실패. 다시 시도해주세요.');
+                    }
+                } else {
+                    alert('중복 확인 실패. 다시 시도해주세요.');
+                }
+            }
         } else {
-            document.getElementById('nicknameChecked').value = 'false';
+            console.error('Response not ok:', response.statusText);
+            alert('중복 확인 실패. 다시 시도해주세요.');
         }
     } catch (error) {
         console.error('Error:', error);
-        document.getElementById('nickname-error').textContent = '오류가 발생했습니다. 다시 시도해주세요.';
+        alert('Error:', error);
     }
 });
 
@@ -79,51 +100,50 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
 
     const nickname = document.getElementById('nickname').value;
     const loginId = document.getElementById('user-id').value;
-    const currentPassword = document.getElementById('current-password').value;
-    const newPassword = document.getElementById('new-password').value;
-    const confirmPassword = document.getElementById('confirm-new-password').value;
-    const nicknameChecked = false; // 예시로 고정값 사용. 실제로는 중복 확인 후 값 설정
-
-    const requestBody = {
-        nickname: nickname,
-        loginId: loginId,
-        currentPassword: currentPassword,
-        newPassword: newPassword,
-        confirmPassword: confirmPassword,
-        nicknameChecked: nicknameChecked
-    };
+    const currentPassword = document.getElementById('current-password').value || '';
+    const newPassword = document.getElementById('new-password').value || '';
+    const confirmPassword = document.getElementById('confirm-new-password').value || '';
+    const isNicknameChecked = document.getElementById('nicknameChecked').value === 'true';
 
     try {
-        const response = await fetch('http://localhost:8080/api/mypage', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/mypage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify({
+                nickname,
+                loginId,
+                currentPassword,
+                newPassword,
+                confirmPassword,
+                isNicknameChecked
+            }),
         });
 
         const data = await response.json();
 
-        if (response.ok) {
-            alert('회원 정보가 성공적으로 수정되었습니다.');
-        } else {
-            // 서버에서 반환된 오류 메시지를 해당 입력 필드 아래에 표시
-            if (data.errors) {
-                if (data.errors.nickname) {
-                    document.getElementById('nickname-error').textContent = data.errors.nickname;
+        if (response.success) {   // 수정 성공
+            if (data.success) {
+                alert(data.message);
+                window.location.href = '/main_page/index.html';
+            } else {   // 수정 실패 
+                if (!data.nicknameChecked && data.errors && data.errors.nickname) {  // 닉네임 수정 실패
+                    alert(data.message);
+                } else if (data.errors && data.errors.errorMessage) {  // 현재 비밀번호가 불일치
+                    console.log(data.message);
+                    document.getElementById('current-password-error').textContent = data.errors.errorMessage;
+                } else if (data.errors && data.errors.valid_password) {  // 새 비밀번호의 유효성 검사 탈락
+                    console.log(data.message);
+                    document.getElementById('new-password-error').textContent = data.errors.valid_password;
+                } else if (data.errors && data.errors.confirm_password) {  // 비밀번호 확인 불일치
+                    console.log(data.message);
+                    document.getElementById('confirm-new-password-error').textContent = data.errors.confirm_password;
                 }
-                if (data.errors.currentPassword) {
-                    document.getElementById('current-password-error').textContent = data.errors.currentPassword;
-                }
-                if (data.errors.newPassword) {
-                    document.getElementById('new-password-error').textContent = data.errors.newPassword;
-                }
-                if (data.errors.confirmPassword) {
-                    document.getElementById('confirm-new-password-error').textContent = data.errors.confirmPassword;
-                }
-            } else {
-                alert('오류가 발생했습니다: ' + data.message);
             }
+        } else {
+            console.error('Response not ok:', data);
+            alert('오류가 발생했습니다. 다시 시도해주세요.');
         }
     } catch (error) {
         console.error('Error:', error);

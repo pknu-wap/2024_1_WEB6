@@ -39,13 +39,11 @@ body {
 
 #title-text {
     font-family: "Signika", sans-serif;
-}
-
-.title-text {
     cursor: pointer;
 }
 
 .title-text span {
+    font-family: "Signika", sans-serif;
     color: #E50914;
 }
 
