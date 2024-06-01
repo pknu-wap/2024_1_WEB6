@@ -67,10 +67,20 @@ public class MypageController {
 
     @PostMapping("/api/mypage")
     public ApiResponse<MemberEditDTO>  MypageProcess(@RequestBody MemberEditDTO editDTO, @AuthenticationPrincipal MemberDetails currentMember) {
-
+        // 소셜 로그인 유저인지 확인
+        if (currentMember.getAccessToken() != null && !currentMember.getAccessToken().isEmpty()) {
+            if (!editDTO.getCurrentPassword().isEmpty() || !editDTO.getNewPassword().isEmpty() || !editDTO.getConfirmPassword().isEmpty()) {
+                Map<String, String> errorResult = new HashMap<>();
+                errorResult.put("error", "소셜 로그인 유저는 비밀번호를 변경할 수 없습니다.");
+                return new ApiResponse<>(false, "소셜 로그인 유저는 비밀번호를 변경할 수 없습니다.", errorResult, editDTO);
+            }
+        }
         //닉네임 변경 로직
         if(!currentMember.getNickname().equals(editDTO.getNickname()) && !editDTO.isNicknameChecked()){
-            //닉네임에 변경 사항이 있는데, 중복확인 버튼을 누르지 않은 경우
+            //닉네임에 변경 사항        return true;
+            //    }
+            //}
+            //3이 있는데, 중복확인 버튼을 누르지 않은 경우
             return new ApiResponse<>(false, "닉네임이 중복되는지 '중복확인'을 클릭하여 확인해주세요.", editDTO);
         }
 
@@ -108,7 +118,7 @@ public class MypageController {
         /*
         * 변경된 세션 등록
         */
-       /* Authentication authentication = authenticationManagerBean.authenticate(
+        /* Authentication authentication = authenticationManagerBean.authenticate(
                 new UsernamePasswordAuthenticationToken(editDTO.getLoginId(), editDTO.getNewPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);*/

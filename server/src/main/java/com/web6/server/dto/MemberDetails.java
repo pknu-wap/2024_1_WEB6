@@ -54,6 +54,7 @@ public class MemberDetails implements UserDetails {
         return member.getNickname();
     }
 
+    public String getAccessToken() { return member.getAccessToken(); }
     /*
     * 계정이 만료되었는지에 관한 메서드
     * 일단 그런 사항은 체크하지 않아서 값을 모드 true로 바꿈
