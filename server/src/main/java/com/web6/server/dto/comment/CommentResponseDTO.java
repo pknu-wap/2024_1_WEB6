@@ -22,9 +22,9 @@ public class CommentResponseDTO {
     public CommentResponseDTO(Comment comment) {
         this.id = comment.getId();
         this.nickname = comment.getWriter().getNickname();
-        this.content = getContent();
-        this.createDate = getCreateDate();
-        this.edit = false;
+        this.content = comment.getContent();
+        this.createDate = comment.getCreateDate();
+        this.edit = comment.isEdit();
     }
     //update
     public CommentResponseDTO(Long id, String nickname, String content, LocalDateTime createDate, boolean edit) {
