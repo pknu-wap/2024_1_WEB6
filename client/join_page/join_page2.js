@@ -1,5 +1,4 @@
-var webTitle = document.getElementsByClassName('web-title');
-webTitle[0].onclick = function () {
+document.querySelector('.web-title').onclick = () => {
     window.location.href = '/main_page/index.html';
 };
 

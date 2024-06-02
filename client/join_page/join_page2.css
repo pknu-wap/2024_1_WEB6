@@ -13,6 +13,11 @@ body {
     background-color: #fffffffc;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 /* 타이틀 부분 */
 .web-title {
     font-size: 35px;
@@ -41,6 +46,7 @@ h2 {
     text-align: center;
     margin: 0px auto 10px auto;
 }
+
 .sing-up-container {
     border: 1px solid #D2D2D2;
     width: 400px;
@@ -116,7 +122,7 @@ select {
     background-color: rgb(61, 135, 255);
 }
 
-.btn:hover{
+.btn:hover {
     cursor: pointer;
     background-color: rgb(52, 52, 52);
 }
