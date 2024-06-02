@@ -94,6 +94,43 @@ body {
 }
 
 
+/* 로그아웃 버튼 */
+.user-info-section {
+    display: flex;
+    /* display: none; */
+}
+
+.logout-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+    background: none;
+
+    height: 35px;
+    width: 80px;
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.logout-button:hover {
+    cursor: pointer;
+    color: #E50914;
+    border-color: #E50914;
+}
+
+.welcome-message {
+    font-size: 14px;
+    text-align: right;
+    font-weight: 500;
+    margin: 10px;
+    text-align: center;
+    color: #E50914;
+}
+
+
 
 /* 검색창 */
 .search-container {
@@ -186,7 +223,19 @@ body {
     font-size: 13px;
 }
 
+#prevPage,
+#nextPage {
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #b2b2b2
+}
 
+#prevPage:hover,
+#nextPage:hover {
+    cursor: pointer;
+    background-color: #e8e8e8;
+}
 
 
 

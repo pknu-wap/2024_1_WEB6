@@ -26,9 +26,13 @@
         <h1 class="web-title">
             <span class="title-text">NET <span>VIEW</span></span>
         </h1>
-        <div class="login-section">
+        <div class="login-section" id="login-section">
             <button class="login-button">로그인</button>
             <button class="signup-button">회원가입</button>
+        </div>
+        <div class="user-info-section" id="user-info-section">
+            <span class="welcome-message" id="welcome-message"></span>
+            <button class="logout-button" id="logout-button">로그아웃</button>
         </div>
     </header>
 
@@ -51,8 +55,8 @@
     <!-- 정렬 -->
     <div class="sort-reviews-container">
         <select class="sort-option" id="sort-option">
-            <option value="latest">최신순</option>
-            <option value="comments">댓글순</option>
+            <option value="latest" id="sort-latest">최신순</option>
+            <option value="comments" id="sort-comments">댓글순</option>
         </select>
     </div>
 
@@ -67,6 +71,8 @@
 
 
     <script src="index.js"></script>
+    <script src="main_auth.js"></script>
+    <script src="main_search.js"></script>
 </body>
 
 </html>
