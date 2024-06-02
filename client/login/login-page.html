@@ -7,12 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="login-page.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script> <!-- 카카오 sdk 로드 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
@@ -42,7 +38,7 @@
             <div class="line">또는</div>
             <!-- 카카오 로그인 버튼 -->
             <div class="kakao-login-img-container">
-                <img src="kakao_login_large_wide.png" class="kakao-login-img" alt="Kakao Login" id="kakaoLoginBtn">
+                <img src="kakao_login_large_wide.png" class="kakao-login-img" id="kakaoLoginBtn">
             </div>
 
             <!-- 회원가입 버튼 -->
@@ -53,9 +49,13 @@
         </form>
     </div>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>  <!-- 카카오 sdk 로드 -->
     <script type="module" src="login-page.js"></script>
-    <script type="module" src="axiosInstance.js"></script>
-    <!-- <script type="module" src="Login.js"></script> -->
+    <script src="OAuth.js"></script>
+    
 </body>
 
 </html>
