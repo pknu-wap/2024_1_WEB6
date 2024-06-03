@@ -14,6 +14,9 @@ public class MovieArticle {
     @Column(name = "MOVIEID", nullable = false, updatable = false)
     private String movieId;
 
+    @Column(name = "POSTER")
+    private String poster;
+
     @Column(name = "MOVIESEQ", nullable = false, updatable = false)
     private String movieSeq;
 
@@ -85,6 +88,10 @@ public class MovieArticle {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getPoster() { return poster; }
+
+    public void setPoster(String poster) { this.poster = poster; }
 
     public String getDocId() {
         return docId;

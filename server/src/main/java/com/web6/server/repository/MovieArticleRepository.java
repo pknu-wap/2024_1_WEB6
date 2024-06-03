@@ -15,8 +15,9 @@ public interface MovieArticleRepository extends JpaRepository<MovieArticle, Long
 
     boolean existsByid(Long id);
     boolean existsByMovieIdAndMovieSeq(String movieId, String movieSeq); // 추가
+    MovieArticle findByMovieIdAndMovieSeq(String movieId, String movieSeq);
 
     // 댓글순 정렬
-    @Query("SELECT new com.web6.server.dto.MovieArticleDTO(m.title, m.gradeCount) FROM MovieArticle m ORDER BY m.gradeCount DESC, m.title ASC")
+    @Query("SELECT new com.web6.server.dto.MovieArticleDTO(m.title, m.gradeCount, m.poster) FROM MovieArticle m ORDER BY m.gradeCount DESC, m.title ASC")
     Page<MovieArticleDTO> findOrderByGradeCountDesc(Pageable pageable);
 }
