@@ -162,3 +162,37 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
     }
 });
 
+// 회원탈퇴
+document.getElementById('deleteAccountBtn').addEventListener('click', () => {
+    document.getElementById('passwordModal').style.display = 'block';
+});
+
+function submitPassword() {
+    const password = document.getElementById('password').value;
+
+    // 비밀번호 검증을 서버로 요청
+    fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/withdraw', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password: password })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('정삭적으로 탈퇴 처리 되었습니다');
+                window.location.href = 'https://example.com/main_page'; // 메인 페이지로 이동
+            } else {
+                alert('비밀번호가 틀렸습니다');
+                document.getElementById('passwordModal').style.display = 'block'; // 비밀번호 입력 받는 창으로
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('요청 오류입니다.');
+        });
+}
+
+
+
