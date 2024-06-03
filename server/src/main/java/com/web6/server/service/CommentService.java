@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,7 +75,7 @@ public class CommentService {
         Comment comment = new Comment();
         comment.setWriter(writer);
         comment.setContent(requestDTO.getContent());
-        comment.setCreaeDate(LocalDateTime.now());
+        comment.setCreaeDate(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
         comment.setEdit(false);
 
         Comment saveComment = commentRepository.save(comment);
