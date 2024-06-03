@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,7 +84,7 @@ public class ReviewService {
         review.setWriter(writer);
         review.setContent(reviewRequestDTO.getContent());
         review.setGrade(reviewRequestDTO.getGrade());
-        review.setCreateDate(LocalDateTime.now());
+        review.setCreateDate(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
         review.setEdit(false);
         review.setSpoiler(reviewRequestDTO.isSpoiler());
         review.setCommentsCount(0);
