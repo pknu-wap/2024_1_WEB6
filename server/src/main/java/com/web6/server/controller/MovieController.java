@@ -29,52 +29,6 @@ public class MovieController {
     private final MovieService movieService;
     private final MovieArticleRepository movieArticleRepository;
 
-    @GetMapping("/movies/findAll")
-    public ResponseEntity<?> findAllMovies() {
-        MovieRequestVo movieRequestVo = new MovieRequestVo();
-        movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
-        movieRequestVo.setDetail("Y");
-        movieRequestVo.setListCount(100);
-
-        // controller에선 request/response만 참여
-        // 실제 데이터 처리 비즈니스 로직은 service로 이동
-        String movieResponse = movieService.getMovieInfoList(movieRequestVo);
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        MovieDetailResponseVo response = null;
-        try {
-            response = objectMapper.readValue(movieResponse, MovieDetailResponseVo.class);
-            // 매핑된 객체를 콘솔에 출력
-            System.out.println(response);
-            log.info("MovieResponseVo : " + response);
-        } catch (JsonMappingException e) {
-            // 매핑 중에 문제가 발생한 경우
-            log.error("Error occurred while mapping JSON to object: " + e.getMessage(), e);
-        } catch (JsonProcessingException e) {
-            // JSON 파싱 중에 문제가 발생한 경우
-            log.error("Error occurred while processing JSON: " + e.getMessage(), e);
-        } catch (Exception e) {
-            // 기타 예외가 발생한 경우
-            log.error("Unexpected error occurred: " + e.getMessage(), e);
-        }
-
-        if (response == null || response.getData().isEmpty()) {
-            return ResponseEntity.status(500).body("영화 조회 실패");
-        } else {
-            return ResponseEntity.ok(response.getData().get(0).getResult());
-        }
-    }
-
-//    ResponseVo responseVo = new ResponseVo();
-//        if (response.getData().isEmpty()) {
-//        responseVo.setUcd("99");
-//        responseVo.setMessage("영화 조회 실패");
-//    } else {
-//        responseVo.setUcd("00");
-//        responseVo.setMessage(response.toString());
-//    }
-//        return ResponseEntity.ok(responseVo);
-//}
 
     /**
      * 영화 검색 요청을 처리하는 메소드
@@ -308,6 +262,58 @@ public class MovieController {
             return ResponseEntity.ok(response.getData().get(0).getResult());
         }
     }
+
+/**
+ * 무비 ａｐｉ 받아오기
+ * 삭제 예정
+ * 쓰지 않습니다
+ *
+ @GetMapping("/movies/findAll")
+ public ResponseEntity<?> findAllMovies() {
+ MovieRequestVo movieRequestVo = new MovieRequestVo();
+ movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
+ movieRequestVo.setDetail("Y");
+ movieRequestVo.setListCount(100);
+
+ // controller에선 request/response만 참여
+ // 실제 데이터 처리 비즈니스 로직은 service로 이동
+ String movieResponse = movieService.getMovieInfoList(movieRequestVo);
+ ObjectMapper objectMapper = new ObjectMapper();
+
+ MovieDetailResponseVo response = null;
+ try {
+ response = objectMapper.readValue(movieResponse, MovieDetailResponseVo.class);
+ // 매핑된 객체를 콘솔에 출력
+ System.out.println(response);
+ log.info("MovieResponseVo : " + response);
+ } catch (JsonMappingException e) {
+ // 매핑 중에 문제가 발생한 경우
+ log.error("Error occurred while mapping JSON to object: " + e.getMessage(), e);
+ } catch (JsonProcessingException e) {
+ // JSON 파싱 중에 문제가 발생한 경우
+ log.error("Error occurred while processing JSON: " + e.getMessage(), e);
+ } catch (Exception e) {
+ // 기타 예외가 발생한 경우
+ log.error("Unexpected error occurred: " + e.getMessage(), e);
+ }
+
+ if (response == null || response.getData().isEmpty()) {
+ return ResponseEntity.status(500).body("영화 조회 실패");
+ } else {
+ return ResponseEntity.ok(response.getData().get(0).getResult());
+ }
+ }
+
+ //    ResponseVo responseVo = new ResponseVo();
+ //        if (response.getData().isEmpty()) {
+ //        responseVo.setUcd("99");
+ //        responseVo.setMessage("영화 조회 실패");
+ //    } else {
+ //        responseVo.setUcd("00");
+ //        responseVo.setMessage(response.toString());
+ //    }
+ //        return ResponseEntity.ok(responseVo);
+ //}  */
 
 }
 
