@@ -132,12 +132,15 @@ public class MovieController {
 
 
     // 영화 상세 페이지
-    @GetMapping("/movies/detail/{movieSeq}")
-    public ResponseEntity<?> findMovies(@PathVariable String movieSeq) {
+    @GetMapping("/movies/detail/{movieId}/{movieSeq}")
+    public ResponseEntity<?> findMovies(@PathVariable String movieId, @PathVariable String movieSeq) {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
         movieRequestVo.setDetail("Y");
         movieRequestVo.setMovieSeq(movieSeq);
+
+        // 필요에 따라 movieId를 요청 객체에 추가합니다.
+        // movieRequestVo.setMovieId(movieId);  // API 요청에 movieId가 필요하면 추가합니다.
 
         // controller에선 request/response만 참여
         // 실제 데이터 처리 비즈니스 로직은 service로 이동
@@ -150,19 +153,32 @@ public class MovieController {
             System.out.println(response);
             log.info("MovieResponseVo : " + response);
 
-            // 추가된 코드: movieSeq, title, DOCID 값을 콘솔에 출력
+            // 추가된 코드: movieId, movieSeq, title, DOCID 값을 콘솔에 출력
             if (response != null && !response.getData().isEmpty()) {
                 MovieDetailResponseVo.DataInfo dataInfo = response.getData().get(0);
                 if (dataInfo != null && !dataInfo.getResult().isEmpty()) {
-                    MovieDetailResponseVo.DataInfo.ResultInfo resultInfo = dataInfo.getResult().get(0);
+                    List<MovieDetailResponseVo.DataInfo.ResultInfo> results = dataInfo.getResult();
+                    MovieDetailResponseVo.DataInfo.ResultInfo resultInfo = null;
+
+                    // movieId와 movieSeq가 일치하는 영화를 찾습니다.
+                    for (MovieDetailResponseVo.DataInfo.ResultInfo result : results) {
+                        if (movieId.equals(result.getMovieId()) && movieSeq.equals(result.getMovieSeq())) {
+                            resultInfo = result;
+                            break;
+                        }
+                    }
+
                     if (resultInfo != null) {
                         String title = resultInfo.getTitle();
                         String docId = resultInfo.getDocID();
+                        System.out.println("movieId: " + movieId + ", movieSeq: " + movieSeq + ", title: " + title + ", DOCID: " + docId);
 
-                        // 중복된 movieSeq가 없는 경우에만 데이터를 저장
-                        if (!movieArticleRepository.existsByMovieSeq(movieSeq)) {
+
+                        // movieId와 movieSeq의 조합으로 중복 체크
+                        if (!movieArticleRepository.existsByMovieIdAndMovieSeq(movieId, movieSeq)) {
                             // 영화 정보를 데이터베이스에 저장
                             MovieArticle movieArticle = new MovieArticle();
+                            movieArticle.setMovieId(movieId);
                             movieArticle.setMovieSeq(movieSeq);
                             movieArticle.setTitle(title);
                             movieArticle.setDocId(docId);
@@ -176,20 +192,29 @@ public class MovieController {
                                     log.info("Poster URI saved in MovieArticle table: " + firstPoster);
                                 }
                             }
+
                             movieArticleRepository.save(movieArticle);
                         } else {
                             // 이미 저장된 경우에는 로그를 출력
-                            log.info("Movie with movieSeq " + movieSeq + " is already saved in the database.");
+                            log.info("Movie with movieId " + movieId + " and movieSeq " + movieSeq + " is already saved in the database.");
                         }
                         if (!resultInfo.getGenre().contains("에로")) {
+                            // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
                             if (resultInfo.getPosters() != null && !resultInfo.getPosters().isEmpty()) {
                                 List<String> postersList = Arrays.asList(resultInfo.getPosters().split("\\|"));
                                 resultInfo.setPostersList(postersList);
+                            } else {
+                                // 포스터가 없는 경우 로그를 출력합니다.
+                                log.info("No posters found for movieId: " + movieId + " and movieSeq: " + movieSeq);
                             }
-
+                          
+                            // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
                             if (resultInfo.getStlls() != null && !resultInfo.getStlls().isEmpty()) {
                                 List<String> stillsList = Arrays.asList(resultInfo.getStlls().split("\\|"));
                                 resultInfo.setStillsList(stillsList);
+                            } else {
+                                // 스틸 이미지가 없는 경우 로그를 출력합니다.
+                                log.info("No stills found for movieId: " + movieId + " and movieSeq: " + movieSeq);
                             }
                         }
                         // filteredMovies에 저장
