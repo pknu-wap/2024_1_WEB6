@@ -173,6 +173,7 @@ public class MovieController {
                         String docId = resultInfo.getDocID();
                         System.out.println("movieId: " + movieId + ", movieSeq: " + movieSeq + ", title: " + title + ", DOCID: " + docId);
 
+
                         // movieId와 movieSeq의 조합으로 중복 체크
                         if (!movieArticleRepository.existsByMovieIdAndMovieSeq(movieId, movieSeq)) {
                             // 영화 정보를 데이터베이스에 저장
@@ -181,6 +182,17 @@ public class MovieController {
                             movieArticle.setMovieSeq(movieSeq);
                             movieArticle.setTitle(title);
                             movieArticle.setDocId(docId);
+
+                            // 첫 번째 포스터 이미지 URL을 추출하여 저장
+                            if (resultInfo.getPosters() != null && !resultInfo.getPosters().isEmpty()) {
+                                String[] postersList = resultInfo.getPosters().split("\\|");
+                                if (postersList.length > 0) {
+                                    String firstPoster = postersList[0];
+                                    movieArticle.setPoster(firstPoster);
+                                    log.info("Poster URI saved in MovieArticle table: " + firstPoster);
+                                }
+                            }
+
                             movieArticleRepository.save(movieArticle);
                         } else {
                             // 이미 저장된 경우에는 로그를 출력
@@ -195,6 +207,7 @@ public class MovieController {
                                 // 포스터가 없는 경우 로그를 출력합니다.
                                 log.info("No posters found for movieId: " + movieId + " and movieSeq: " + movieSeq);
                             }
+                          
                             // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
                             if (resultInfo.getStlls() != null && !resultInfo.getStlls().isEmpty()) {
                                 List<String> stillsList = Arrays.asList(resultInfo.getStlls().split("\\|"));
@@ -236,7 +249,7 @@ public class MovieController {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
         movieRequestVo.setDetail("Y");
-        movieRequestVo.setListCount(50); //먼저 50개를 받아온 후, 필터링을 거쳐 10개만 반환.
+        movieRequestVo.setListCount(500); //먼저 500개를 받아온 후, 필터링을 거쳐 50개만 반환.
         movieRequestVo.setSort("prodYear,1"); // 최신 영화의 제작 연도를 기준으로 설정
 
         String movieResponse = movieService.getMovieLatestList(movieRequestVo);
@@ -251,8 +264,8 @@ public class MovieController {
                 for (MovieDetailResponseVo.DataInfo.ResultInfo movie : movies) {
                     log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
 
-                    // "에로" 장르의 영화를 필터링
-                    if (!movie.getGenre().contains("에로")) {
+                    // "에로" 장르의 영화를 필터링하고, 제작 연도가 '2025'가 아닌 영화만 추가
+                    if (!movie.getGenre().contains("에로") && !movie.getProdYear().equals("2025")) {
                         // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
                         if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
                             List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
@@ -267,7 +280,7 @@ public class MovieController {
                         log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
                     }
                     // 10개의 영화만 가져오기
-                    if (filteredMovies.size() >= 10) {
+                    if (filteredMovies.size() >= 50) {
                         break;
                     }
                 }
