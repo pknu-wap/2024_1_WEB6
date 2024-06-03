@@ -8,12 +8,8 @@ import com.web6.server.domain.MovieArticle;
 import com.web6.server.dto.MovieDetailResponseVo;
 import com.web6.server.dto.MovieRequestVo;
 import com.web6.server.service.MovieService;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -222,6 +218,16 @@ public class MovieController {
                             // 이미 저장된 경우에는 로그를 출력
                             log.info("Movie with movieSeq " + movieSeq + " is already saved in the database.");
                         }
+                        if (!resultInfo.getGenre().contains("에로")) {
+                            if (resultInfo.getPosters() != null && !resultInfo.getPosters().isEmpty()) {
+                                List<String> postersList = Arrays.asList(resultInfo.getPosters().split("\\|"));
+                                resultInfo.setPostersList(postersList);
+                            }
+                            if (resultInfo.getStlls() != null && !resultInfo.getStlls().isEmpty()) {
+                                List<String> stillsList = Arrays.asList(resultInfo.getStlls().split("\\|"));
+                                resultInfo.setStillsList(stillsList);
+                            }
+                        }
                     }
                 }
             }
@@ -250,7 +256,7 @@ public class MovieController {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
         movieRequestVo.setDetail("N");
-        movieRequestVo.setListCount(10); //10개 정렬
+        movieRequestVo.setListCount(50); //먼저 50개를 받아온 후, 필터링을 거쳐 10개만 반환.
         movieRequestVo.setSort("prodYear,1"); // 최신 영화의 제작 연도를 기준으로 설정
 
         String movieResponse = movieService.getMovieLatestList(movieRequestVo);
@@ -279,6 +285,10 @@ public class MovieController {
                         }
                         filteredMovies.add(movie);
                         log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
+                    }
+                    // 10개의 영화만 가져오기
+                    if (filteredMovies.size() >= 10) {
+                        break;
                     }
                 }
                 response.getData().get(0).setResult(filteredMovies);
