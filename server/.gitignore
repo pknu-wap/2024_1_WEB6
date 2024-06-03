@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Ignore application.yml files for storing sensitive information like database connection info
+# src/main/resources/application.yaml
+# application.yaml

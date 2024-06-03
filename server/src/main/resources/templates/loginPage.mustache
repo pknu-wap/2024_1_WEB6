@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+    <style>
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Login Page</h2>
+    <form action="/api/members/login-page" method="post" name="loginForm">
+        <div>
+            <label for="username">ID:</label>
+            <input id="username" type="text" name="username" placeholder="ID"/>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password" placeholder="Password"/>
+        </div>
+        <input type="submit" value="Login"/>
+        {{#errorMessage}} <span style="color: red; font-weight: bold;">{{errorMessage}}</span> {{/errorMessage}}
+    </form>
+</div>
+
+</body>
+</html>

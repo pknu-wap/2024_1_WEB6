@@ -1,20 +1,62 @@
+jwt:
+  secret: ${JWT_SECRET}
+
+#spring:
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379
+
 spring:
+  jackson:
+    time-zone: Asia/Seoul
   datasource:
-    url: "jdbc:mysql://localhost:3306/netview"
-    username: "root"
-    password: ""
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mariadb://svc.sel5.cloudtype.app:32171/netview"
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: ${DDL_AUTO}
     properties:
       hibernate:
         format_sql: ture
         show_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MariaDBDialect
 
+  # 소셜로그인 설정
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            scope: # https://developers.kakao.com/docs/latest/ko/kakaologin/common#user-info
+              - profile_nickname
+              - profile_image
+              - account_email
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            #            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            client-name: Kakao
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-info-authentication-method: header
+            user-name-attribute: id # Kakao 응답 값 id, connected_at, properties, kakao_account 중 id 지정
+#  profiles: include=oauth
 server:
   servlet:
     session:
       timeout: 90m
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  port: ${SERVER_PORT}
