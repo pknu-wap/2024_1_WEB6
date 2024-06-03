@@ -60,14 +60,17 @@ public class SignUpController {
 
             if (nickname != null) {
                 message = nickname + "님";
-            } else {
+                return new ApiResponse<>(true, message, null);
+            }
+            else {
                 message = "로그인을 해주세요.";
             }
-        } else {
+        }
+        else {
             message = "로그인을 해주세요.";
         }
 
-        return new ApiResponse<>(true, message, null);
+        return new ApiResponse<>(false, message, null);
     }
 
     /*
