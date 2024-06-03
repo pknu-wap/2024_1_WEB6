@@ -132,8 +132,12 @@ public class SignUpController {
     }
 
     @GetMapping("/api/loginSuccess")
-    public ApiResponse<Void> loginSuccess(){
-        return new ApiResponse<>(true, "로그인 성공", null);
+    public ApiResponse<Map<String,String>> loginSuccess(HttpServletRequest request){
+        String sessionId = request.getSession().getId();
+        Map<String, String> data = new HashMap<>();
+        data.put("sessionId", sessionId);
+
+        return new ApiResponse<>(true, "로그인 성공", data);
     }
 
 }
