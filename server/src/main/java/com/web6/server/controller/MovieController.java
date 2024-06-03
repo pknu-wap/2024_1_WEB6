@@ -209,7 +209,7 @@ public class MovieController {
     public ResponseEntity<?> getLatestMovies() {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
-        movieRequestVo.setDetail("N");
+        movieRequestVo.setDetail("Y");
         movieRequestVo.setListCount(50); //먼저 50개를 받아온 후, 필터링을 거쳐 10개만 반환.
         movieRequestVo.setSort("prodYear,1"); // 최신 영화의 제작 연도를 기준으로 설정
 
