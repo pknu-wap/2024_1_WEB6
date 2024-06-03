@@ -1,6 +1,13 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const paramValue = getQueryParam('paramname');
+ const dummy = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fpng.pngtree.com%2Felement_our%2F20190529%2Fourlarge%2Fpngtree-black-movie-field-board-illustration-image_1221631.jpg&type=sc960_832";
 
+ document.addEventListener("DOMContentLoaded", function () {
+    const paramValue = getQueryParam('paramname');
+    getMovieDetail(paramValue);
+    getMovieReviews(paramValue);
+    
+});
+
+function getMovieDetail(paramValue){
     fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/'+paramValue, {
         credentials: 'include'
     })
@@ -12,6 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(data => {
             // document.getElementById("response").innerHTML = data.hasNext;
+            var posterImage = document.getElementById("posterImage");
+            if(data[0].postersList==null){
+                posterImage.src = dummy;
+            }else{
+                posterImage.src = data[0].postersList[0];
+            }
+
             var title = document.getElementById("title");
             title.innerHTML += data[0].title;
             
@@ -34,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             nation.innerHTML += data[0].nation;
 
             var plotText = document.getElementById("summary");
-            plotText.innerHTML += data[0].plotText;
+            plotText.innerHTML += data[0].plots.plot[0].plotText;
 
             var runtime = document.getElementById("runtime");
             runtime.innerHTML += data[0].runtime + "분";
@@ -59,4 +73,23 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
-});
+}
+
+// API 요청을 보내는 함수
+function getMovieReviews(paramValue) {
+    const url = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/movies/' + paramValue + '/reviewsLatest'; // 실제 API URL로 대체하세요
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json(); // JSON 응답을 JavaScript 객체로 변환
+        })
+        .then(data => {
+            console.log(data); // 데이터를 콘솔에 출력하거나 다른 방식으로 처리
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
