@@ -12,9 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface MovieArticleRepository extends JpaRepository<MovieArticle, Long> {
     boolean existsByMovieSeq(String movieSeq);
     MovieArticle findByMovieSeq(String movieSeq);
-  
     boolean existsByid(Long id);
     // 댓글순 정렬
-    @Query("SELECT new com.web6.server.dto.MovieArticleDTO(m.title, m.gradeCount) FROM MovieArticle m ORDER BY m.gradeCount DESC, m.title ASC")
+    @Query("SELECT new com.web6.server.dto.MovieArticleDTO(m.title, m.gradeCount, m.poster) FROM MovieArticle m ORDER BY m.gradeCount DESC, m.title ASC")
     Page<MovieArticleDTO> findOrderByGradeCountDesc(Pageable pageable);
 }

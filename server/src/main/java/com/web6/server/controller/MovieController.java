@@ -167,6 +167,15 @@ public class MovieController {
                             movieArticle.setMovieSeq(movieSeq);
                             movieArticle.setTitle(title);
                             movieArticle.setDocId(docId);
+
+                            // 첫 번째 포스터 이미지 URL을 추출하여 저장
+                            if (resultInfo.getPosters() != null && !resultInfo.getPosters().isEmpty()) {
+                                String[] postersList = resultInfo.getPosters().split("\\|");
+                                if (postersList.length > 0) {
+                                    movieArticle.setPoster(postersList[0]);
+                                }
+                            }
+
                             movieArticleRepository.save(movieArticle);
                         } else {
                             // 이미 저장된 경우에는 로그를 출력

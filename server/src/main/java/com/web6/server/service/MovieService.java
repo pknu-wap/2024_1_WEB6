@@ -97,7 +97,6 @@ public class MovieService {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-
     }
     //최신순 요청
     public String getMovieLatestList(MovieRequestVo movieRequestVo) {
