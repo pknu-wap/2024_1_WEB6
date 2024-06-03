@@ -22,8 +22,8 @@ const authorizationCode = queryParams['code'];  // 'code' 파라미터 값 가�
 
 if (authorizationCode) {
     // 인가 코드를 백엔드에 전달
-    fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/auth/kakao', {
-        method: 'POST',
+    fetch(`https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/auth/kakao?code=${authorizationCode}`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -33,7 +33,7 @@ if (authorizationCode) {
         .then(data => {
             // 백엔드로부터 받은 토큰을 저장하고 로그인 상태 유지
             if (data.token) {
-                localStorage.setItem('kakaoToken', data.token);
+                localStorage.setItem('accessToken', data.token);
                 alert('로그인 성공!');
                 window.location.href = 'http://localhost:5500/main_page/index.html'; // 메인 페이지로 리디렉션
             } else {

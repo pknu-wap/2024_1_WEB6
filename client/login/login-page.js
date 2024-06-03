@@ -3,7 +3,6 @@ document.querySelector('.web-title').onclick = () => {
     window.location.href = '/main_page/index.html';
 };
 
-
 // 회원가입 페이지로 이동
 document.querySelector('.signup-button').onclick = () => {
     window.location.href = '/join_page/join_page2.html';
@@ -31,16 +30,31 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-
-            // 쿠키나 인증 헤더를 포함하여 서버로 보냄
-            credentials: 'include',
+            credentials: 'include', // 쿠키나 인증 헤더를 포함하여 서버로 보냄
             body: formData.toString()
         });
 
         const data = await response.json();
-        console.log(data)
+        console.log(data);
 
-        if (response.ok && data.message === '로그인 성공') {
+        if (data.success) {
+            function getCookie(name) {
+                let cookieString = document.cookie;
+                // let cookies = cookieString.split(';');
+                console.log(cookieString);
+                // var matches = document.cookie.match(new RegExp(
+                //     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                // ));
+                // return matches ? decodeURIComponent(matches[1]) : undefined;
+            }
+
+            // 예시: 세션 쿠키 확인
+            var sessionId = getCookie('JSESSIONID');
+            console.log('Session ID:', sessionId);
+
+
+
+
             window.location.href = '/main_page/index.html';
         } else {
             let messageElement = document.getElementById("messageElement");
@@ -51,3 +65,10 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
         alert('오류가 발생했습니다. 다시 시도해주세요.');
     }
 });
+
+function getCookie(name) {
+    var matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
