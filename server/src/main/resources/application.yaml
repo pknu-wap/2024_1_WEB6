@@ -1,5 +1,5 @@
 jwt:
-  secret: ${JWT_SECRET}
+  secret: Wt7Z0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs4TroZzrgpjslYTqsIDsnpDtm4zrpa3tlZzqsJzrsJzsnpDrpbzrp4zrk6TslrTqsIDsnpA=
 
 #spring:
 #  data:
@@ -8,22 +8,20 @@ jwt:
 #      port: 6379
 
 spring:
-  jackson:
-    time-zone: Asia/Seoul
   datasource:
-    url: "jdbc:mariadb://svc.sel5.cloudtype.app:32171/netview"
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/netview"
+    username: "root"
+    password: "1234"
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: ${DDL_AUTO}
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: ture
         show_sql: true
-        dialect: org.hibernate.dialect.MariaDBDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
   # 소셜로그인 설정
   security:
@@ -31,8 +29,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: ${KAKAO_CLIENT_ID}
-            client-secret: ${KAKAO_CLIENT_SECRET}
+            client-id: 7df825c06a3162cabc499582d021d248
+            client-secret: GTOMlmMBY5aG1bi0DZPDSuZNeAc3J14H
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             scope: # https://developers.kakao.com/docs/latest/ko/kakaologin/common#user-info
@@ -59,4 +57,4 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-  port: ${SERVER_PORT}
+  port: 7070

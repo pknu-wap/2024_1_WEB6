@@ -182,6 +182,60 @@ public class MovieController {
 
 
     // 영화 상세 페이지
+    @GetMapping("/movies/latest")
+    public ResponseEntity<?> getLatestMovies() {
+        MovieRequestVo movieRequestVo = new MovieRequestVo();
+        movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
+        movieRequestVo.setDetail("Y");
+        movieRequestVo.setListCount(50); // 먼저 50개를 받아온 후, 필터링을 거쳐 10개만 반환.
+        movieRequestVo.setSort("prodYear,1"); // 최신 영화의 제작 연도를 기준으로 설정
+
+        String movieResponse = movieService.getMovieLatestList(movieRequestVo);
+        ObjectMapper objectMapper = new ObjectMapper();
+        MovieDetailResponseVo response = null;
+        try {
+            response = objectMapper.readValue(movieResponse, MovieDetailResponseVo.class);
+            log.info("Latest Movies:");
+            if (response != null && !response.getData().isEmpty()) {
+                List<MovieDetailResponseVo.DataInfo.ResultInfo> movies = response.getData().get(0).getResult();
+                List<MovieDetailResponseVo.DataInfo.ResultInfo> filteredMovies = new ArrayList<>();
+                for (MovieDetailResponseVo.DataInfo.ResultInfo movie : movies) {
+                    log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
+
+                    // "에로" 장르의 영화를 필터링
+                    if (!movie.getGenre().contains("에로")) {
+                        // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
+                        if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
+                            List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
+                            movie.setPostersList(postersList);
+                        }
+                        // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
+                        if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
+                            List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
+                            movie.setStillsList(stillsList);
+                        }
+                        filteredMovies.add(movie);
+                        log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
+                    }
+                    // 10개의 영화만 가져오기
+                    if (filteredMovies.size() >= 10) {
+                        break;
+                    }
+                }
+                response.getData().get(0).setResult(filteredMovies);
+            }
+        } catch (Exception e) {
+            log.error("Error occurred while fetching latest movies: " + e.getMessage(), e);
+            return ResponseEntity.status(500).body("Failed to fetch latest movies");
+        }
+
+        if (response == null || response.getData().isEmpty()) {
+            return ResponseEntity.status(500).body("No latest movies found");
+        } else {
+            return ResponseEntity.ok(response.getData().get(0).getResult());
+        }
+    }
+
     @GetMapping("/movies/detail/{movieSeq}")
     public ResponseEntity<?> findMovies(@PathVariable String movieSeq) {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
@@ -222,6 +276,28 @@ public class MovieController {
                             // 이미 저장된 경우에는 로그를 출력
                             log.info("Movie with movieSeq " + movieSeq + " is already saved in the database.");
                         }
+                        if (!resultInfo.getGenre().contains("에로")) {
+                            // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
+                            if (resultInfo.getPosters() != null && !resultInfo.getPosters().isEmpty()) {
+                                List<String> postersList = Arrays.asList(resultInfo.getPosters().split("\\|"));
+                                resultInfo.setPostersList(postersList);
+                            } else {
+                                // 포스터가 없는 경우 로그를 출력합니다.
+                                log.info("No posters found for movieSeq: " + movieSeq);
+                            }
+                            // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
+                            if (resultInfo.getStlls() != null && !resultInfo.getStlls().isEmpty()) {
+                                List<String> stillsList = Arrays.asList(resultInfo.getStlls().split("\\|"));
+                                resultInfo.setStillsList(stillsList);
+                            } else {
+                                // 스틸 이미지가 없는 경우 로그를 출력합니다.
+                                log.info("No stills found for movieSeq: " + movieSeq);
+                            }
+                        }
+                        // filteredMovies에 저장
+                        List<MovieDetailResponseVo.DataInfo.ResultInfo> filteredMovies = new ArrayList<>();
+                        filteredMovies.add(resultInfo);
+                        response.getData().get(0).setResult(filteredMovies);
                     }
                 }
             }
@@ -243,59 +319,4 @@ public class MovieController {
             return ResponseEntity.ok(response.getData().get(0).getResult());
         }
     }
-
-    // 최신순 정렬
-    @GetMapping("/movies/latest")
-    public ResponseEntity<?> getLatestMovies() {
-        MovieRequestVo movieRequestVo = new MovieRequestVo();
-        movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
-        movieRequestVo.setDetail("N");
-        movieRequestVo.setListCount(10); //10개 정렬
-        movieRequestVo.setSort("prodYear,1"); // 최신 영화의 제작 연도를 기준으로 설정
-
-        String movieResponse = movieService.getMovieLatestList(movieRequestVo);
-        ObjectMapper objectMapper = new ObjectMapper();
-        MovieDetailResponseVo response = null;
-        try {
-            response = objectMapper.readValue(movieResponse, MovieDetailResponseVo.class);
-            log.info("Latest Movies:");
-            if (response != null && !response.getData().isEmpty()) {
-                List<MovieDetailResponseVo.DataInfo.ResultInfo> movies = response.getData().get(0).getResult();
-                List<MovieDetailResponseVo.DataInfo.ResultInfo> filteredMovies = new ArrayList<>();
-                for (MovieDetailResponseVo.DataInfo.ResultInfo movie : movies) {
-                    log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
-
-                    // "에로" 장르의 영화를 필터링
-                    if (!movie.getGenre().contains("에로")) {
-                        // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
-                        if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
-                            List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
-                            movie.setPostersList(postersList);
-                        }
-                        // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
-                        if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
-                            List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
-                            movie.setStillsList(stillsList);
-                        }
-                        filteredMovies.add(movie);
-                        log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
-                    }
-                }
-                response.getData().get(0).setResult(filteredMovies);
-            }
-        } catch (Exception e) {
-            log.error("Error occurred while fetching latest movies: " + e.getMessage(), e);
-            return ResponseEntity.status(500).body("Failed to fetch latest movies");
-        }
-
-        if (response == null || response.getData().isEmpty()) {
-            return ResponseEntity.status(500).body("No latest movies found");
-        } else {
-            return ResponseEntity.ok(response.getData().get(0).getResult());
-        }
-    }
-
 }
-
-
-
