@@ -8,6 +8,8 @@ jwt:
 #      port: 6379
 
 spring:
+  jackson:
+    time-zone: Asia/Seoul
   datasource:
     url: "jdbc:mariadb://svc.sel5.cloudtype.app:32171/netview"
     username: ${DB_USERNAME}
