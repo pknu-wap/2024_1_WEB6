@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             method: 'GET',
             credentials: 'include' // 쿠키를 포함하여 요청
         });
+        
 
         const data = await response.json();
         console.log('Session Data:', data);

@@ -18,5 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // 검색어가 공백인 경우
             window.location.href = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/search/json-tag';
         }
+        
     });
 });

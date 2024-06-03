@@ -64,9 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 정렬 옵션에 따라 API URL 설정
         if (orderBy === 'latest') {
-            apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movie/latest`;
+            apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/latest`;
         } else if (orderBy === 'comments') {
-            apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/Top5OrderByGradeCountDesc`;
+            apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/OrderByGradeCountDesc`;
         }
 
         // API 요청
