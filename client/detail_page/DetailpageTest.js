@@ -1,14 +1,16 @@
  const dummy = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fpng.pngtree.com%2Felement_our%2F20190529%2Fourlarge%2Fpngtree-black-movie-field-board-illustration-image_1221631.jpg&type=sc960_832";
 
  document.addEventListener("DOMContentLoaded", function () {
-    const paramValue = getQueryParam('paramname');
-    getMovieDetail(paramValue);
-    getMovieReviews(paramValue);
+    const movieseq = getQueryParam('movieseq');
+    const movieid = getQueryParam('movieid');
+
+    getMovieDetail(movieid, movieseq);
+    getMovieReviews(movieid, movieseq);
     
 });
 
-function getMovieDetail(paramValue){
-    fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/'+paramValue, {
+function getMovieDetail(movieid, movieseq){
+    fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/'+ movieid +'/'+ movieseq, {
         credentials: 'include'
     })
         .then(response => {
@@ -75,11 +77,12 @@ function getMovieDetail(paramValue){
         });
 }
 
-// API 요청을 보내는 함수
-function getMovieReviews(paramValue) {
-    const url = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/movies/' + paramValue + '/reviewsLatest'; // 실제 API URL로 대체하세요
 
-    fetch(url)
+// API 요청을 보내는 함수
+function getMovieReviews(movieid, movieseq) {
+    const requestUrl = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/movies/' + movieseq + '/reviewsLatest'; // 실제 API URL로 대체하세요
+    
+    fetch(requestUrl,{})
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
@@ -93,3 +96,4 @@ function getMovieReviews(paramValue) {
             console.error('There has been a problem with your fetch operation:', error);
         });
 }
+
