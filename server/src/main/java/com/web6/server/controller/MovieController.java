@@ -278,7 +278,7 @@ public class MovieController {
         MovieRequestVo movieRequestVo = new MovieRequestVo();
         movieRequestVo.setServiceKey("MZ6960ZIAJY0W0XX7IX7");
         movieRequestVo.setDetail("Y");
-        movieRequestVo.setListCount(500); //먼저 500개를 받아온 후, 필터링을 거쳐 50개만 반환.
+        movieRequestVo.setListCount(500); // 먼저 500개를 받아온 후, 필터링을 거쳐 50개만 반환.
         movieRequestVo.setSort("prodYear,1"); // 최신 영화의 제작 연도를 기준으로 설정
 
         String movieResponse = movieService.getMovieLatestList(movieRequestVo);
@@ -295,20 +295,22 @@ public class MovieController {
 
                     // "에로" 장르의 영화를 필터링하고, 제작 연도가 '2025'가 아닌 영화만 추가
                     if (!movie.getGenre().contains("에로") && !movie.getProdYear().equals("2025")) {
-                        // 포스터 이미지 URL을 리스트로 변환하여 할당합니다.
+                        // 포스터가 빈 문자열이 아닌 경우에만 추가
                         if (movie.getPosters() != null && !movie.getPosters().isEmpty()) {
                             List<String> postersList = Arrays.asList(movie.getPosters().split("\\|"));
                             movie.setPostersList(postersList);
+
+                            // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
+                            if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
+                                List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
+                                movie.setStillsList(stillsList);
+                            }
+
+                            filteredMovies.add(movie);
+                            log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
                         }
-                        // 스틸 이미지 URL을 리스트로 변환하여 할당합니다.
-                        if (movie.getStlls() != null && !movie.getStlls().isEmpty()) {
-                            List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
-                            movie.setStillsList(stillsList);
-                        }
-                        filteredMovies.add(movie);
-                        log.info("Title: " + movie.getTitle() + ", ProdYear: " + movie.getProdYear());
                     }
-                    // 10개의 영화만 가져오기
+                    // 50개의 영화만 가져오기
                     if (filteredMovies.size() >= 50) {
                         break;
                     }
@@ -326,6 +328,8 @@ public class MovieController {
             return ResponseEntity.ok(response.getData().get(0).getResult());
         }
     }
+
+
 
 /**
  * 무비 ａｐｉ 받아오기
