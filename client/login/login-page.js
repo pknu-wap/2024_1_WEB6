@@ -37,7 +37,7 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
         const data = await response.json();
         console.log(data);
 
-        if (data.success) {
+        if (data.success) {  // 로그인 성공
             function getCookie(name) {
                 let cookieString = document.cookie;
                 // let cookies = cookieString.split(';');
@@ -51,14 +51,11 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
             // 예시: 세션 쿠키 확인
             var sessionId = getCookie('JSESSIONID');
             console.log('Session ID:', sessionId);
-
-
-
-
-            window.location.href = '/main_page/index.html';
-        } else {
+            window.location.href = '../main_page/index.html';
+        } else {  // 로그인 실패
             let messageElement = document.getElementById("messageElement");
-            messageElement.textContent = data.message;
+            // messageElement.textContent = data.message;
+            alert(data.message + '! 다시 시도해주세요.');
         }
     } catch (error) {
         console.error('Error:', error);
