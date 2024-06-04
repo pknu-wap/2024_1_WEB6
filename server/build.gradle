@@ -33,7 +33,6 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis' //휘발성 DB
 	testImplementation("org.assertj:assertj-core:3.22.0")
 	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -49,6 +48,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+	implementation 'org.springframework.session:spring-session-core' //세션
 }
 
 tasks.named('test') {

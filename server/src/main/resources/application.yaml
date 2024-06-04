@@ -54,6 +54,9 @@ spring:
 server:
   servlet:
     session:
+      cookie:
+        same-site: none
+        secure: true
       timeout: 90m
     encoding:
       charset: UTF-8
