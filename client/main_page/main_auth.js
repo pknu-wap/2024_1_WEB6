@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             method: 'GET',
             credentials: 'include' // 쿠키를 포함하여 요청
         });
-        
+
 
         const data = await response.json();
         console.log('Session Data:', data);
@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 응답 처리
         if (data.success) {  // 로그인된 상태
             // UI 업데이트
-            welcomeMessage.innerHTML = `<a href="/myreviews/${encodeURIComponent(data.message)}">${data.message}</a>! 환영합니다.`;
+            welcomeMessage.innerHTML = `<a>${data.message}</a> 환영합니다!`;
             loginSection.style.display = 'none';
-            userInfoSection.style.display = 'block';
 
             document.querySelector('#welcome-message a').addEventListener('click', (event) => {
                 event.preventDefault();
-                window.location.href = `/myreview/${encodeURIComponent(data.message)}`;
+                // window.location.href = `/myreview/${encodeURIComponent(data.message)}`;  // 리뷰고나리ㄴ
+                window.location.href = '../mypage/mypage.html'  // 회원정보수정
             });
 
             // 로그아웃 버튼 동작 설정
@@ -36,8 +36,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                         credentials: 'include' // 쿠키를 포함하여 요청
                     });
 
-                    if (logoutResponse.success) {
-                        window.location.href = '/main_page/index.html';
+                    console.log('로그아웃 응답:', logoutResponse);
+                    const logoutData = await logoutResponse.json();
+                    console.log('로그아웃 데이터:', logoutData);
+
+                    if (logoutResponse.ok && !logoutData.success) {
+                        window.location.href = '../main_page/index.html';
                     } else {
                         alert('로그아웃에 실패했습니다. 다시 시도해 주세요.');
                     }
@@ -50,7 +54,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             // 로그인되지 않은 상태
             console.log(data.message);  // 로그인을 해주세요.
-            // loginSection.style.display = 'block';
             userInfoSection.style.display = 'none';
         }
 

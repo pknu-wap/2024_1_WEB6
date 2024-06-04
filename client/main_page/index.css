@@ -94,25 +94,23 @@ body {
 }
 
 
-/* 로그아웃 버튼 */
+/* 로그아웃 버튼, 환영 메세지 */
 .user-info-section {
-    display: flex;
-    /* display: none; */
+    /* display: flex; */
+
 }
 
 .logout-button {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
-    border: 1px solid #b2b2b2;
-    border-radius: 5px;
     background: none;
-
-    height: 35px;
-    width: 80px;
     color: rgb(55, 55, 55);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
+    border: 0.5px solid #b2b2b2;
+    padding: 3px;
+    border-radius: 3px;
 }
 
 .logout-button:hover {
@@ -122,11 +120,26 @@ body {
 }
 
 .welcome-message {
+    justify-content: center;
+    align-items: center;
     font-size: 14px;
     text-align: right;
     font-weight: 500;
     margin: 10px;
-    text-align: center;
+    color: rgb(55, 55, 55);
+    margin-right: 10px;
+    position: relative;
+
+}
+
+/* 유저 닉네임 */
+#welcome-message a {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+#welcome-message a:hover {
+    cursor: pointer;
     color: #E50914;
 }
 
@@ -136,7 +149,7 @@ body {
 .search-container {
     display: flex;
     justify-content: center;
-    margin: 5em 30% 50px 30%;
+    margin: 6em 30% 50px 30%;
 }
 
 .search-option {
@@ -171,7 +184,6 @@ body {
 
     background: none;
     color: rgb(143, 143, 143);
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -186,27 +198,26 @@ body {
     outline: none;
 }
 
-.search-button:hover {
+.search-button i:hover {
     color: #E50914;
 }
 
 .search-button i {
     font-size: 17px;
+    cursor: pointer;
 }
 
 
 /* 리뷰 정렬 버튼 */
 .sort-reviews-container {
     position: absolute;
-    top: 20%;
-    /* 위에서 50px */
+    top: 23%;
     right: 10%;
-    /* 왼쪽에서 100px */
 }
 
 .sort-option {
-    padding: 6px 3px;
-    border-radius: 5px;
+    padding: 5px;
+    border-radius: 3px;
     color: rgb(55, 55, 55);
     font-size: 13px;
     border-color: rgb(137, 137, 137);
@@ -223,22 +234,23 @@ body {
     font-size: 13px;
 }
 
+/* 페이지네이션 */
 #prevPage,
 #nextPage {
-    padding: 5px;
+    padding: 1px;
+    margin: 5px;
     background-color: white;
-    border-radius: 5px;
-    border: 1px solid #b2b2b2
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 #prevPage:hover,
 #nextPage:hover {
     cursor: pointer;
-    background-color: #e8e8e8;
+    color: #5c5c5c;
+    transition: 0.3s;
 }
-
-
-
 
 
 /* 작성한 리뷰 */
@@ -256,30 +268,36 @@ body {
 
 .movies-grid {
     display: grid;
-    grid-template-columns: repeat(5, 0.5fr);
-    /* 각 영화 카드의 너비를 줄임 */
-    gap: 20px;
-    padding: 20px 10%;
+    grid-template-columns: repeat(5, 0.9fr);
+    gap: 1px;
+    padding: 10px 10%;
 }
 
 .movie-card {
-    /* border: 1px solid #ccc; */
     padding: 10px;
-    text-align: center;
+    margin: 10px;
+    text-align: left;
 }
 
-.movie-card img {
-    width: 100%;
-    height: auto;
+.movie-card>img {
+    border-radius: 4px;
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .movie-title {
-    font-size: 16px;
-    margin: 10px 0;
+    font-size: 15px;
+    margin: 5px;
+    margin-bottom: 10px;
 }
 
-.movie-rating {
-    color: gold;
+.movie-genre {
+    color: rgb(90, 90, 90);
+    font-size: 13px;
+    margin-top: -10px;
+    margin-left: 5px;
 }
 
 .pagination {
@@ -290,4 +308,41 @@ body {
 .movies-grid img,
 .movie-title:hover {
     cursor: pointer;
+}
+
+/* 슬라이드 */
+.slider {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.slide-container {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.nav-buttons button {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 50%;
 }
