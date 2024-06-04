@@ -46,7 +46,6 @@ public class MovieController {
         // ApiResponse 객체 생성
         ApiResponse<List<MovieDetailResponseVo.DataInfo.ResultInfo>> apiResponse;
 
-
         // 검색 옵션이나 검색어가 없으면 실패 응답 반환
         if (option == null || query == null || option.isEmpty() || query.isEmpty()) {
             apiResponse = new ApiResponse<>(false, "검색 옵션과 검색어를 모두 제공해주세요.", null);
@@ -116,6 +115,25 @@ public class MovieController {
                             List<String> stillsList = Arrays.asList(movie.getStlls().split("\\|"));
                             movie.setStillsList(stillsList);
                         }
+
+
+                        // 제목, 장르, 배우, 감독, 국가 필드 필터링
+                        movie.setTitle(cleanString(movie.getTitle()));
+                        movie.setGenre(cleanString(movie.getGenre()));
+                        // 배우 정보 필터링
+                        if (movie.getActors() != null && movie.getActors().getActor() != null) {
+                            for (MovieDetailResponseVo.DataInfo.ResultInfo.Actors.Actor actor : movie.getActors().getActor()) {
+                                actor.setActorNm(cleanString(actor.getActorNm()));
+                            }
+                        }
+                        // 감독 정보 필터링
+                        if (movie.getDirectors() != null && movie.getDirectors().getDirector() != null) {
+                            for (MovieDetailResponseVo.DataInfo.ResultInfo.Directors.Director director : movie.getDirectors().getDirector()) {
+                                director.setDirectorNm(cleanString(director.getDirectorNm()));
+                            }
+                        }
+                        movie.setNation(cleanString(movie.getNation()));
+
                         filteredMovies.add(movie);
                     }
                 }
@@ -129,6 +147,17 @@ public class MovieController {
         apiResponse = new ApiResponse<>(true, "검색 결과가 없습니다.", Collections.emptyList());
         return ResponseEntity.ok(apiResponse);
     }
+
+    // 문자열 정리 함수
+    private String cleanString(String str) {
+        // 정규 표현식을 사용하여 문자열 정리
+        str = str.replaceAll("!HS|!HE", "");
+        str = str.trim();
+        str = str.replaceAll("\\s+", " ");
+        return str;
+    }
+
+
 
 
     // 영화 상세 페이지
