@@ -12,18 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = '../join_page/join_page2.html';
     };
 
+
+
     // 게시글 클릭
-    function handleClick(movieSeq) {
-        const apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/${movieSeq}/${movieId}`;
-        fetch(apiUrl)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Movie detail response:", data);
-            })
-            .catch((error) => {
-                console.error("Error fetching movie detail:", error);
-            });
-    }
+    // function handleClick(movieSeq) {
+    //     const apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/${movieSeq}/${movieId}`;
+    //     fetch(apiUrl)
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             console.log("Movie detail response:", data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching movie detail:", error);
+    //         });
+    // }
+
+
 
     // 메인페이지 영화 목록 표시
     const sortOption = document.getElementById('sort-option');
@@ -96,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const startIndex = (currentPage - 1) * moviesPerPage;
         const endIndex = startIndex + moviesPerPage;
         const moviesToDisplay = allMovies.slice(startIndex, endIndex);
-
         const dummyImageUrl = 'https://via.placeholder.com/200x300'; // 더미 이미지 URL
 
         moviesToDisplay.forEach(movie => {
@@ -160,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
             moviesGrid.appendChild(movieCard);
         });
 
+        // 이게 무슨 코드엿지
         const movieElements = document.querySelectorAll('.movie-poster, .movie-title');
         movieElements.forEach(element => {
             element.addEventListener('click', () => {

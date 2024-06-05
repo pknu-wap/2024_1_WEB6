@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 응답 처리
         if (data.success) {  // 로그인된 상태
             // UI 업데이트
-            welcomeMessage.innerHTML = `<a>${data.message}</a> 환영합니다!`;
+            welcomeMessage.innerHTML = `<a class="user-nickname">${data.message}<span class="tooltip-text">마이페이지</span></a> 환영합니다!`;
             loginSection.style.display = 'none';
 
             document.querySelector('#welcome-message a').addEventListener('click', (event) => {
