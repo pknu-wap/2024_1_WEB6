@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/search/json?option=${option}&query=${encodeURIComponent(query)}`;
         } else {
             // 검색어가 공백인 경우: 빈 페이지로 이동
-            window.location.href = '';
+            window.location.href = '빈페이지';
         }
         
     });

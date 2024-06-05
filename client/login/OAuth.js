@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Kakao 로그인 버튼 클릭 이벤트
     document.getElementById('kakaoLoginBtn').addEventListener('click', function () {
-        window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=7df825c06a3162cabc499582d021d248&redirect_uri=http://localhost:5500/login/oauth2/code/kakao&response_type=code';
+        window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=7df825c06a3162cabc499582d021d248&redirect_uri=http://localhost:5500/login/oauth2/code/kakao.html&response_type=code';
     });
 
     // 현재 페이지의 쿼리스트링에서 인가 코드 가져오기

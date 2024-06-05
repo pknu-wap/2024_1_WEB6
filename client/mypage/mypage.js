@@ -128,7 +128,7 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
     const isNicknameChecked = document.getElementById('nicknameChecked').value === 'true';
 
     try {
-        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/mypage', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
