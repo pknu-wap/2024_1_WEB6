@@ -133,14 +133,42 @@ body {
 }
 
 /* 유저 닉네임 */
-#welcome-message a {
+.user-nickname {
     font-weight: 700;
     text-decoration: underline;
+
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
 }
 
-#welcome-message a:hover {
+.user-nickname:hover {
     cursor: pointer;
     color: #E50914;
+}
+
+.user-nickname .tooltip-text {
+    visibility: hidden;
+    width: 70px;
+    background-color: rgba(255, 255, 255, 0.759);
+    border: 0.3px solid #4c4c4c;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 3px;
+    position: absolute;
+    z-index: 1;
+    bottom: -140%;
+    left: 190%;
+    margin-left: -50px;
+    opacity: 0;
+    transition: opacity 0.9s;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.user-nickname:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }
 
 
@@ -253,6 +281,8 @@ body {
 }
 
 
+
+
 /* 작성한 리뷰 */
 body {
     font-family: Arial, sans-serif;
@@ -285,6 +315,7 @@ body {
     height: 300px;
     object-fit: cover;
     object-position: center;
+    border: 0.3px solid #dbdbdb;
 }
 
 .movie-title {
