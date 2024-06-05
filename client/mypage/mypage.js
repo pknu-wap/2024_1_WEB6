@@ -34,8 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage', {
             method: 'GET',
+            credentials : 'include', // 쿠키를 포함하여 요청
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             }
         });
 
@@ -67,7 +68,7 @@ document.getElementById('check-nickname').addEventListener('click', async () => 
     const confirmPassword = "";
 
     try {
-        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/mypage/duplicate', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage/duplicate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -109,9 +110,9 @@ document.getElementById('check-nickname').addEventListener('click', async () => 
             console.error('Response not ok:', response.statusText);
             alert('중복 확인 실패. 다시 시도해주세요.');
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error:', error);
+    } catch (errors) {
+        console.error('Error:', errors);
+        alert('Error:', errors);
     }
 });
 
@@ -167,7 +168,7 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
             alert('오류가 발생했습니다. 다시 시도해주세요.');
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error:', errors);
         alert('오류가 발생했습니다. 다시 시도해주세요.');
     }
 });
@@ -188,7 +189,7 @@ function submitPassword() {
     })
         .then(response => response.json())
         .then(data => {
-            if (!data.success) {
+            if (data.success) {
                 console.log(data.success)
                 alert('정삭적으로 탈퇴 처리 되었습니다');
                 window.location.href = '/main_page/index.html'; // 메인 페이지로 이동
@@ -197,8 +198,8 @@ function submitPassword() {
                 document.getElementById('passwordModal').style.display = 'block'; // 비밀번호 입력 받는 창으로
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
+        .catch(errors => {
+            console.error('Error:', errors);
             alert('요청 오류입니다.');
         });
 }

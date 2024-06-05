@@ -163,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
             moviesGrid.appendChild(movieCard);
         });
 
-        // 이게 무슨 코드엿지
         const movieElements = document.querySelectorAll('.movie-poster, .movie-title');
         movieElements.forEach(element => {
             element.addEventListener('click', () => {

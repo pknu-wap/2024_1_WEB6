@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function searchMovies(option, query) {
-    return fetch(`/movie/search?option=${option}&query=${encodeURIComponent(query)}`, {
+    return fetch(`https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movie/search/json?option=${option}&query=${encodeURIComponent(query)}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

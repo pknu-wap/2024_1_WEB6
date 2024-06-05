@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             document.querySelector('#welcome-message a').addEventListener('click', (event) => {
                 event.preventDefault();
-                // window.location.href = `/myreview/${encodeURIComponent(data.message)}`;  // 리뷰고나리ㄴ
                 window.location.href = '../mypage/mypage.html'  // 회원정보수정
             });
 
@@ -57,8 +56,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             userInfoSection.style.display = 'none';
         }
 
-    } catch (error) {
-        console.error('서버 에러:', error);
+    } catch (errors) {
+        console.error('서버 에러:', errors);
     }
 });
 
