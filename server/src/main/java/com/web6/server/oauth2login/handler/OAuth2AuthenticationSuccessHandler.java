@@ -61,6 +61,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
 
+
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
         String mode = CookieUtils.getCookie(request, MODE_PARAM_COOKIE_NAME)
@@ -84,15 +85,20 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 memberRepository.save(existingMember);
                 existingMember.setAccessToken(principal.getUserInfo().getAccessToken()); //액세스 토큰을 받아옴
                 existingMember.setRefreshToken(tokenProvider.createToken(authentication)); //리프레쉬 토큰을 생성함
-                return UriComponentsBuilder.fromUriString(targetUrl)
-                        .build().toUriString();
+
+                // 응답 헤더에 토큰 설정
+                response.setHeader("Access-Token", existingMember.getAccessToken());
+                response.setHeader("Refresh-Token", existingMember.getRefreshToken());
+
+                return targetUrl;
+
             } else {
                 // 기존 member 테이블의 LOGIN_ID와 email이 불일치하는 경우 -> 새로 회원가입 해야 함 (일반 회원가입으로 이동?)
                 return UriComponentsBuilder.fromUriString("http://localhost:8080/sign-up")
                         .build().toUriString();
             }
 
-        } else if ("unlink".equalsIgnoreCase(mode)) {
+        } else if ("logout".equalsIgnoreCase(mode)) {
         // 로그아웃 처리
         String accessToken = principal.getUserInfo().getAccessToken();
         OAuth2Provider provider = principal.getUserInfo().getProvider();
@@ -105,7 +111,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // 사용자를 로그아웃 후 리다이렉트할 주소 설정
         // 예: 로그인 페이지 또는 홈페이지 등
-        String logoutRedirectUrl = "/login-page"; // 이 부분은 실제 요구에 맞게 수정 필요.
+        String logoutRedirectUrl = "/index.html"; // 이 부분은 실제 요구에 맞게 수정 필요.
 
         // 쿠키에서 refreshToken 제거
         clearRefreshTokenCookie(response);
