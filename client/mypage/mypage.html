@@ -75,7 +75,8 @@
             <div id="passwordModal" style="display:none;">
                 <span>비밀번호 입력</span>
                 <input type="password" id="delete-password" placeholder="비밀번호를 입력하세요">
-                <button onclick="submitPassword()">확인</button>
+                <div class="error-message" id="confirm-password-error"></div>
+                <button type="button" id="submit-password">확인</button>
             </div>
         </form>
     </div>

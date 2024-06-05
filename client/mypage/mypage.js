@@ -194,31 +194,38 @@ document.getElementById('remove-account').addEventListener('click', () => {
     document.getElementById('passwordModal').style.display = 'block';
 });
 
-function submitPassword() {
-    const password = document.getElementById('password').value;
+document.getElementById('submit-password').addEventListener('click', async () => {
+    const password = document.getElementById('delete-password').value;
 
-    fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/withdraw', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (!data.success) {
-                console.log(data.success)
-                alert('정삭적으로 탈퇴 처리 되었습니다');
-                window.location.href = '/main_page/index.html'; // 메인 페이지로 이동
-            } else {
-                alert('비밀번호가 틀렸습니다');
-                document.getElementById('passwordModal').style.display = 'block'; // 비밀번호 입력 받는 창으로
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('요청 오류입니다.');
+    try {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/withdraw', {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ confirmPassword: password })
         });
-}
+
+        const data = await response.json();
+
+        if (response.ok) {
+            if (data.success) {
+                alert(data.message);
+                window.location.href = '../main_page/index.html';
+            } else {
+                console.log(data.message);
+                document.getElementById('confirm-password-error').textContent = data.message;
+            }
+        } else {
+            alert('회원탈퇴에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('회원탈퇴 요청 중 오류가 발생했습니다.');
+    }
+});
+
 
 
 
