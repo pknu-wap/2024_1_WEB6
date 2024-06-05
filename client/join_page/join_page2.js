@@ -1,7 +1,3 @@
-document.querySelector('.web-title').onclick = () => {
-    window.location.href = '/main_page/index.html';
-};
-
 function validatePassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
     return regex.test(password);
@@ -19,8 +15,6 @@ function validateForm(event) {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     const nickname = document.getElementById('nickname').value;
-    const name = document.querySelector('input[name="name"]').value;
-    const birthdate = document.querySelector('input[type="date"]').value;
     const passwordMessageElement = document.getElementById('passwordMessage');
     const nicknameMessageElement = document.getElementById('nicknameMessage');
 
@@ -53,19 +47,20 @@ function validateForm(event) {
     // 유효성 검사가 모두 통과되었을 때 폼 제출 및 리다이렉트
     if (isValid) {
         const formData = {
-            email: email,
+            loginId: email,
             nickname: nickname,
             password: password,
-            name: name,
-            birthdate: birthdate
+            confirmPassword: password
+            
         };
 
-        fetch('/api/members/sign-up', {
+        fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/sign-up', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
+            redirect: 'manual'  // 리다이렉트 방지
         })
             .then(response => {
                 if (response.ok) {
