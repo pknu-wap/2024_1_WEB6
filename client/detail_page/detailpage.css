@@ -133,3 +133,16 @@ hr {
 .spoiler-button {
     margin-left: 10px;
 }
+
+.user-text2{
+    position: absolute;
+    top: 70%;
+    left: 10%;
+    width: 100%;
+    transform: translate(-50%, 20%);
+font-size: 23px;
+color:white;
+font-weight: bold;
+font-family: 'ypseo';
+text-align:center;
+}

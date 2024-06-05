@@ -30,3 +30,16 @@ document.getElementById("summary").textContent = "줄거리: 이 영화는...";
 document.getElementById("runtime").textContent = "런타임: 120분";
 document.getElementById("rating").textContent = "관람가: 12세 이상";
 document.getElementById("genre").textContent = "장르: 드라마";
+
+document.getElementById("submitComment").addEventListener("click", function () {
+    const commentText = document.getElementById("commentInput").value;
+    if (commentText.trim() !== "") {
+        const newCommentDiv = document.createElement("div");
+        newCommentDiv.classList.add("comment");
+        newCommentDiv.textContent = commentText;
+        document.getElementById("comments").appendChild(newCommentDiv);
+        document.getElementById("commentInput").value = ""; // 댓글 입력란 초기화
+    } else {
+        alert("댓글을 작성해주세요.");
+    }
+});

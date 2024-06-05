@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="join_page2.css">
+    <title>Join</title>
+    <style>
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="sing-up-container">
+        <a href="http://localhost:5500/main_page/index.html?code=3Z4lYlXMVC6KvE3zcO-ceGjxAFMvk3ghQUK5hFC_Cs1alSCWb53YhwAAAAQKPXWbAAABj9J4bE_7Ewsnpgvovw">
+            <h1 class="web-title">
+                <span class="title-text">NET <span>VIEW</span></span>
+            </h1>
+        </a>
+        <form name="SignUpForm" onsubmit="validateForm(event)">
+            <table>
+                <tr>
+                    <td>
+                        <h2>회원가입</h2>
+                    </td>
+                <tr>
+                    <td>이메일</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="email" class="email"> @
+                        <select id="emailDomain">
+                            <option>naver.com</option>
+                            <option>gmail.com</option>
+                            <option>daum.net</option>
+                            <option>nate.com</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>닉네임</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="nickname" name="nickname" class="text">
+                        <div id="nicknameMessage"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>비밀번호</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="password" id="password" class="text">
+                        <div id="passwordMessage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>비밀번호 확인</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="password" id="confirmPassword" class="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="가입하기" class="btn"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <script src="join_page2.js"></script>
+</body>
+
+</html>
