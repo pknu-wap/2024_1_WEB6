@@ -79,6 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
           alert(data.message);
         } else {
           allMovies = data;
+          console.log(
+            `Fetched ${allMovies.length} movies for order: ${orderBy}`
+          ); // 디버깅 로그 추가
           displayMovies(orderBy); // 변경된 부분: orderBy를 displayMovies 함수로 전달
         }
       })
@@ -90,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 영화 데이터를 화면에 표시
   function displayMovies(orderBy) {
-    // 변경된 부분: orderBy 매개변수 추가
     const moviesGrid = document.getElementById("moviesGrid");
     moviesGrid.innerHTML = "";
 
@@ -98,16 +100,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (orderBy === "latest") {
         return movie.postersList && movie.postersList.length > 0;
       } else if (orderBy === "comments") {
-        return movie.poster;
+        return movie.poster && movie.poster.trim() !== "";
       }
       return false;
     });
 
+    console.log(`Filtered ${filteredMovies.length} movies for display`); // 디버깅 로그 추가
+
     const startIndex = (currentPage - 1) * moviesPerPage;
-    const moviesToDisplay = filteredMovies.slice(
-      startIndex,
-      startIndex + moviesPerPage
-    );
+    const endIndex = startIndex + moviesPerPage;
+    const moviesToDisplay = filteredMovies.slice(startIndex, endIndex);
+
     const dummyImageUrl = "https://via.placeholder.com/200x300"; // 더미 이미지 URL
 
     moviesToDisplay.forEach((movie) => {
@@ -115,33 +118,25 @@ document.addEventListener("DOMContentLoaded", () => {
       movieCard.classList.add("movie-card");
 
       if (orderBy === "latest") {
-        // 변경된 부분: orderBy에 따라 조건문 추가
         const posterUrl =
           movie.postersList && movie.postersList.length > 0
             ? movie.postersList[0]
             : dummyImageUrl;
         movieCard.innerHTML = `
-              <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-              <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
-              <div class="movie-genre">${movie.genre}</div>
-            `;
+                  <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
+                  <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+                  <div class="movie-genre">${movie.genre}</div>
+                `;
       } else if (orderBy === "comments") {
-        // 변경된 부분: orderBy에 따라 조건문 추가
         const posterUrl = movie.poster ? movie.poster : null;
-        if (posterUrl) {
-          // 포스터가 있는 경우에만 영화 카드 생성
-          movieCard.innerHTML = `
+        movieCard.innerHTML = `
                   <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
                   <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
                   <div class="movie-genre">${movie.gradeCount} Reviews</div>
                 `;
-        }
       }
 
-      if (movieCard.innerHTML) {
-        // 영화 카드가 생성된 경우에만 추가
-        moviesGrid.appendChild(movieCard);
-      }
+      moviesGrid.appendChild(movieCard);
     });
 
     const movieElements = document.querySelectorAll(
