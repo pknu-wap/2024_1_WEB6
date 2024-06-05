@@ -47,7 +47,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/main", "/api/loginSuccess").permitAll()
+                        .requestMatchers("/api/main", "/api/loginSuccess", "/oauth2/**").permitAll()
                         .requestMatchers("/login-page", "/api/members/login-page", "/api/loginError", "/sign-up", "/api/members/sign-up").anonymous()
                         .requestMatchers(("/movies/findAll")).permitAll() //movies/findAll 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("/movies/search")).permitAll()  //movies/search 경로에 대해 모든 사용자 접근 허용
