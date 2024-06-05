@@ -5,98 +5,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NET VIEW - 영화 리뷰</title>
 
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>NET VIEW: Movie Review</title>
 </head>
 
 <body>
-    <!-- 상단바 -->
-    <header class="header-bar">
-        <h1 class="web-title">
-            <span class="title-text">NET <span>VIEW</span></span>
-        </h1>
+    <header>
+        <h1 class="web-title">NET VIEW</h1>
         <div class="login-section">
             <button class="login-button">로그인</button>
             <button class="signup-button">회원가입</button>
         </div>
     </header>
-
-    <!-- 랭킹 -->
+    <hr>
+    
+    <!-- 검색창 -->
+    <form class="search-box" action="" method="GET">
+        <input class="search-text" type="text" placeholder="검색어를 입력하세요.">
+        <div class="search-icon">
+            <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+        </div>
+    </form>
     <div class="movie-ranking">
         <ul>
             <li>
                 <p>랭킹 1</p>
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="" class="poster-img" data-detail-url="detailpage.html">
+                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
             </li>
 
             <li>
-                <p>랭킹 1</p>
+                <p>랭킹 2</p>
                 <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="" class="poster-img" data-detail-url="detailpage.html">
             </li>
 
             <li>
-                <p>랭킹 1</p>
+                <p>랭킹 3</p>
                 <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="" class="poster-img" data-detail-url="detailpage.html">
             </li>
 
             <li>
-                <p>랭킹 1</p>
+                <p>랭킹 4</p>
                 <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="" class="poster-img" data-detail-url="detailpage.html">
             </li>
 
             <li>
-                <p>랭킹 1</p>
+                <p>랭킹 5</p>
                 <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="">
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" alt="" class="poster-img" data-detail-url="detailpage.html">
             </li>
         </ul>
     </div>
 
-    <!-- 검색창 -->
-    <form class="search-box" id="search-form" action="/search-results/search-results.html" method="GET">
-        <div class="search-container">
-            <select id="search-option" class="search-option">
-                <option value="title">제목</option>
-                <option value="genre">장르</option>
-                <option value="actor">배우</option>
-                <option value="director">감독</option>
-                <option value="nation">국가</option>
-            </select>
-            <input type="text" class="search-input" id="search-input" name="query" placeholder="검색어를 입력하세요.">
-            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
-        </div>
-    </form>
 
-    <div class="sort-reviews-container">
-        <select id="sort-reviews">
-            <option value="">별점순</option>
-            <option value="">누적관객순</option>
-            <option value="">댓글순</option>
-        </select>
-    </div>
-
-
-
-
-    <!-- 게시글 -->
     <div class="review-container">
         <div class="img-wrap">
             <div class="">
-                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg" class="poster-img" data-detail-url="detailpage.html">
+                <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg">
                 <div class="review-title">
                     <p>Movie Title</p>
                     <p>★4.5</p>
@@ -105,7 +70,7 @@
 
             <div class="">
                 <img
-                    src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/c29bba8bec43a8139e0ccdee738bcbd0.jpg" class="poster-img" data-detail-url="detailpage.html">
+                    src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/c29bba8bec43a8139e0ccdee738bcbd0.jpg">
                 <div class="review-title">
                     <p>Movie Title</p>
                     <p>★4.5</p>
@@ -114,7 +79,7 @@
 
             <div class="">
                 <img
-                    src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/ae1d466087a6dfb562eb187f79d27fb7.jpg" class="poster-img" data-detail-url="detailpage.html">
+                    src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/ae1d466087a6dfb562eb187f79d27fb7.jpg">
                 <div class="review-title">
                     <p>Movie Title</p>
                     <p>★4.5</p>
@@ -122,7 +87,7 @@
             </div>
 
             <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jt1GlLLvkWL2m83VX8I1qsDR187.jpg" class="poster-img" data-detail-url="detailpage.html">
+                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jt1GlLLvkWL2m83VX8I1qsDR187.jpg">
                 <div class="review-title">
                     <p>Movie Title</p>
                     <p>★4.5</p>
@@ -130,7 +95,7 @@
             </div>
 
             <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jpD6z9fgNe7OqsHoDeAWQWoULde.jpg" class="poster-img" data-detail-url="detailpage.html">
+                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jpD6z9fgNe7OqsHoDeAWQWoULde.jpg">
                 <div class="review-title">
                     <p>Movie Title</p>
                     <p>★4.5</p>
@@ -138,7 +103,7 @@
             </div>
 
             <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bzpAD4rd40zZYoh6Lqzrz1O1xh4.jpg" class="poster-img" data-detail-url="detailpage.html">
+                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bzpAD4rd40zZYoh6Lqzrz1O1xh4.jpg">
                 <div class="review-title">
                     <p>Movie Title</p>
                     <p>★4.5</p>
@@ -146,7 +111,7 @@
             </div>
 
             <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg" class="poster-img" data-detail-url="detailpage.html">
+                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg">
                 <div class="review-title">
                     <p>Movie Title</p>
                     <p>★4.5</p>
@@ -154,7 +119,7 @@
             </div>
 
             <div class="">
-                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wrCwH6WOvXQvVuqcKNUrLDCDxdw.jpg" class="poster-img" data-detail-url="detailpage.html">
+                <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wrCwH6WOvXQvVuqcKNUrLDCDxdw.jpg">
                 <div class="review-title">
                     <p>Movie Title</p>
                     <p>★4.5</p>
@@ -164,8 +129,7 @@
     </div>
 
 
-
-    <script src="index.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

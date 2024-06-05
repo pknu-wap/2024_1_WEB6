@@ -9,6 +9,28 @@
 <body>
 main page
 <hr>
-{{loginId}}
+{{loginMessage}}
+<hr>
+<p>social login</p>
+<div>
+    <a href="http://localhost:8080/sign-up">
+        <button>sign-up</button>
+    </a>
+
+    <a href="http://localhost:8080/movies/findAll">
+        <button>movie findAll</button>
+    </a>
+
+    <a href="http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:8080&mode=login">
+        <button>Kakao Login</button>
+    </a>
+
+<!--    <a href="http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:8080&mode=logout">-->
+    <a href="http://localhost:8080/logout">
+        <button>Kakao Logout</button>
+    </a>
+
+</div>
+
 </body>
 </html>

@@ -24,14 +24,26 @@ public class Member {
     @Column(name = "PASSWORD", nullable = false, length = 1000)
     private String password;
 
+    @Column(name = "kakao_id")
+    private String kakaoId;
+
+    @Column(name = "access_token")
+    private String accessToken;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
     // Constructors, getters and setters
     public Member() {
     }
 
-    public Member(String nickname, String loginId, String password) {
+    public Member(String nickname, String loginId, String password, String kakaoId, String accessToken, String refreshToken) {
         this.nickname = nickname;
         this.loginId = loginId;
         this.password = password;
+        this.kakaoId = kakaoId;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 
     public Long getId() {
@@ -64,5 +76,29 @@ public class Member {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getKakaoId() {
+        return kakaoId;
+    }
+
+    public void setKakaoId(String kakaoId) {
+        this.kakaoId = kakaoId;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
