@@ -50,8 +50,7 @@ function validateForm(event) {
             loginId: email,
             nickname: nickname,
             password: password,
-            confirmPassword: password
-            
+            confirmPassword: confirmPassword
         };
 
         fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/sign-up', {
@@ -63,13 +62,19 @@ function validateForm(event) {
             redirect: 'manual'  // 리다이렉트 방지
         })
             .then(response => {
-                if (response.ok) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                console.log("ok");
+                return response.json(); // JSON 응답을 JavaScript 객체로 변환
+            })
+            .then(data => {
+                console.log(data);
+                if (data.success) {
                     alert('가입 성공!');
-                    window.location.href = 'login-page (4).html'; // 업로드된 파일로 리다이렉트
+                    window.location.href = '../login/login-page.html'; // 업로드된 파일로 리다이렉트
                 } else {
-                    response.json().then(data => {
-                        alert('가입에 실패했습니다: ' + data.message);
-                    });
+                    alert('가입에 실패했습니다: ' + data.message);
                 }
             })
             .catch(error => {
