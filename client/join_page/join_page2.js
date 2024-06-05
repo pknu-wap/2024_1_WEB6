@@ -1,7 +1,3 @@
-document.querySelector('.web-title').onclick = () => {
-    window.location.href = '/main_page/index.html';
-};
-
 function validatePassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
     return regex.test(password);
@@ -19,8 +15,6 @@ function validateForm(event) {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     const nickname = document.getElementById('nickname').value;
-    const name = document.querySelector('input[name="name"]').value;
-    const birthdate = document.querySelector('input[type="date"]').value;
     const passwordMessageElement = document.getElementById('passwordMessage');
     const nicknameMessageElement = document.getElementById('nicknameMessage');
 
@@ -53,28 +47,34 @@ function validateForm(event) {
     // 유효성 검사가 모두 통과되었을 때 폼 제출 및 리다이렉트
     if (isValid) {
         const formData = {
-            email: email,
+            loginId: email,
             nickname: nickname,
             password: password,
-            name: name,
-            birthdate: birthdate
+            confirmPassword: confirmPassword
         };
 
-        fetch('/api/members/sign-up', {
+        fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/sign-up', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
+            redirect: 'manual'  // 리다이렉트 방지
         })
             .then(response => {
-                if (response.ok) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                console.log("ok");
+                return response.json(); // JSON 응답을 JavaScript 객체로 변환
+            })
+            .then(data => {
+                console.log(data);
+                if (data.success) {
                     alert('가입 성공!');
-                    window.location.href = 'login-page (4).html'; // 업로드된 파일로 리다이렉트
+                    window.location.href = '../login/login-page.html'; // 업로드된 파일로 리다이렉트
                 } else {
-                    response.json().then(data => {
-                        alert('가입에 실패했습니다: ' + data.message);
-                    });
+                    alert('가입에 실패했습니다: ' + data.message);
                 }
             })
             .catch(error => {
