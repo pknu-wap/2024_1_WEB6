@@ -22,8 +22,10 @@
         <h1 class="web-title">
             <span class="title-text" id="title-text">NET <span>VIEW</span></span>
         </h1>
-        <div class="welcome-message" id="welcome-message"></div>
-        <button class="logout-button">로그아웃</button>
+        <div class="user-info-section" id="user-info-section">
+            <!-- <span class="welcome-message" id="welcome-message"></span> -->
+            <button class="logout-button" id="logout-button">로그아웃</button>
+        </div>
     </header>
 
     <!-- 회원정보 수정 -->
@@ -66,9 +68,11 @@
                 <button type="submit" id="save-button">수정하기</button>
                 <button class="remove-account" id="remove-account" type="button">회원탈퇴</button>    
             </div>
+
+            <!-- 회원탈퇴 -->
             <div id="passwordModal" style="display:none;">
-                <h2>비밀번호 입력</h2>
-                <input type="password" id="password" placeholder="비밀번호를 입력하세요">
+                <sapn>비밀번호 입력</span>
+                <input type="delete-password" id="delete-password" placeholder="비밀번호를 입력하세요">
                 <button onclick="submitPassword()">확인</button>
             </div>
         </form>

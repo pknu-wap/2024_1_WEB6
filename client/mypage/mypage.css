@@ -49,18 +49,16 @@ body {
 
 /* 로그아웃 버튼 */
 .logout-button {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
-    border: 1px solid #b2b2b2;
-    border-radius: 5px;
     background: none;
-
-    height: 35px;
-    width: 80px;
     color: rgb(55, 55, 55);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
+    border: 0.5px solid #b2b2b2;
+    padding: 3px;
+    border-radius: 3px;
 }
 
 .logout-button:hover {
@@ -70,10 +68,18 @@ body {
 }
 
 .welcome-message {
+    justify-content: center;
+    align-items: center;
     font-size: 14px;
     text-align: right;
     font-weight: 500;
+    margin: 10px;
+    color: rgb(55, 55, 55);
+    margin-right: 10px;
+    position: relative;
+
 }
+
 
 
 /* 정보 수정 */

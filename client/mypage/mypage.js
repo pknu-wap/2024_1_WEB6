@@ -5,6 +5,7 @@ if (mainPageButton) {
     });
 }
 
+// 로그아웃
 document.getElementById('logout-button').addEventListener('click', async () => {
     try {
         const logoutResponse = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/logout-page', {
@@ -12,8 +13,12 @@ document.getElementById('logout-button').addEventListener('click', async () => {
             credentials: 'include' // 쿠키를 포함하여 요청
         });
 
-        if (logoutResponse.ok) {
-            window.location.href = '/main_page/index.html';
+        console.log('로그아웃 응답:', logoutResponse);
+        const logoutData = await logoutResponse.json();
+        console.log('로그아웃 데이터:', logoutData);
+
+        if (logoutResponse.ok && !logoutData.success) {
+            window.location.href = '../main_page/index.html';
         } else {
             alert('로그아웃에 실패했습니다. 다시 시도해 주세요.');
         }
@@ -24,29 +29,34 @@ document.getElementById('logout-button').addEventListener('click', async () => {
 });
 
 
-// 마이페이지 정보 로드
+// 회원 정보 조회
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/mypage', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
 
-        if (response.success) {
+        if (response.ok) {
             const data = await response.json();
-            document.getElementById('user-id').value = data.loginId;
-            document.getElementById('nickname').value = data.nickname;
-            console.log(data.message)
-            // 다른 필요한 필드들도 여기에 추가
+            if (data.success) {
+                document.getElementById('user-id').value = data.data.loginId;
+                document.getElementById('nickname').value = data.data.nickname;
+                console.log(data.message);
+            } else {
+                console.log('정보를 로드하는 데 실패했습니다.');
+            }
         } else {
-            console.error('Failed to load user information');
+            console.log('정보를 로드하는 데 실패했습니다.');
         }
-    } catch (error) {
-        console.error('서버 오류입니다.', error);
+    } catch (errors) {
+        console.error('서버 오류입니다.', errors);
     }
 });
+
+
 
 // 닉네임 중복 검사
 document.getElementById('check-nickname').addEventListener('click', async () => {
@@ -57,7 +67,7 @@ document.getElementById('check-nickname').addEventListener('click', async () => 
     const confirmPassword = "";
 
     try {
-        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app//mypage/duplicate', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/mypage/duplicate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -163,26 +173,25 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
 });
 
 // 회원탈퇴
-document.getElementById('deleteAccountBtn').addEventListener('click', () => {
+document.getElementById('remove-account').addEventListener('click', () => {
     document.getElementById('passwordModal').style.display = 'block';
 });
 
 function submitPassword() {
     const password = document.getElementById('password').value;
 
-    // 비밀번호 검증을 서버로 요청
     fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/withdraw', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ password: password })
     })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (!data.success) {
+                console.log(data.success)
                 alert('정삭적으로 탈퇴 처리 되었습니다');
-                window.location.href = 'https://example.com/main_page'; // 메인 페이지로 이동
+                window.location.href = '/main_page/index.html'; // 메인 페이지로 이동
             } else {
                 alert('비밀번호가 틀렸습니다');
                 document.getElementById('passwordModal').style.display = 'block'; // 비밀번호 입력 받는 창으로
