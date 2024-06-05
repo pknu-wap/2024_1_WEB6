@@ -124,9 +124,13 @@ public class MypageController {
 
     //회원 탈퇴
     @DeleteMapping("/api/members/withdraw")
-    public ApiResponse<Void> memberWithdraw(WithdrawDTO password) {
+    public ApiResponse<Void> memberWithdraw(@RequestBody WithdrawDTO password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String writerId = authentication.getName();
+
+        if(!memberService.checkPassword(writerId, password.getConfirmPassword())) {
+            return new ApiResponse<>(false, "비밀번호가 일치하지 않습니다.", null);
+        }
 
         if(memberService.withdraw(writerId)){
             return new ApiResponse<>(true, "회원탈퇴 성공", null);
