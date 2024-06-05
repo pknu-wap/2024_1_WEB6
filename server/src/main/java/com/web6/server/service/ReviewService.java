@@ -34,8 +34,8 @@ public class ReviewService {
         this.commentRepository = commentRepository;
     }
 
-    public boolean existReview(String movieSeq, String writerId) {
-        MovieArticle article = movieArticleRepository.findByMovieSeq(movieSeq);
+    public boolean existReview(String movieId, String movieSeq, String writerId) {
+        MovieArticle article = movieArticleRepository.findByMovieIdAndMovieSeq(movieId, movieSeq);
         Member writer = memberRepository.findByLoginId(writerId);
 
         boolean exist = reviewArticleRepository.existsByArticleAndReview_Writer(article, writer);
@@ -73,9 +73,9 @@ public class ReviewService {
     }
 
     @Transactional
-    public void addReview(String movieSeq, String writerId, ReviewRequestDTO reviewRequestDTO) {
+    public void addReview(String movieId, String movieSeq, String writerId, ReviewRequestDTO reviewRequestDTO) {
         Member writer = memberRepository.findByLoginId(writerId);
-        MovieArticle article = movieArticleRepository.findByMovieSeq(movieSeq);
+        MovieArticle article = movieArticleRepository.findByMovieIdAndMovieSeq(movieId, movieSeq);
 
         //영화 게시글의 별점 추가
         article.addGrade(reviewRequestDTO.getGrade());
@@ -95,22 +95,22 @@ public class ReviewService {
         reviewArticleRepository.save(review_article);
     }
 
-    public List<ReviewResponseDTO> getReviewsOrderByCommentCount(String movieSeq) {
+    public List<ReviewResponseDTO> getReviewsOrderByCommentCount(String movieId, String movieSeq) {
         //movieSeq로 movieArticle의 Id 가져오기
-        Long movieId = movieArticleRepository.findByMovieSeq(movieSeq).getId();
+        Long articleId = movieArticleRepository.findByMovieIdAndMovieSeq(movieId, movieSeq).getId();
         //Id를 movieReview Repository에 넘겨서 review 리스트 가져오기
-        List<Review_Article> reviewArticles = reviewArticleRepository.findByArticleIdOrderByReviewCommentsCountDesc(movieId);
+        List<Review_Article> reviewArticles = reviewArticleRepository.findByArticleIdOrderByReviewCommentsCountDesc(articleId);
         //review 리스트를 reviewResponseDTO로 변환하기
         return reviewArticles.stream()
                 .map(reviewArticle -> convertToResponseDTO(reviewArticle.getReview()))
                 .collect(Collectors.toList());
     }
 
-    public List<ReviewResponseDTO> getReviewsOrderByLatest(String movieSeq) {
+    public List<ReviewResponseDTO> getReviewsOrderByLatest(String movieId, String movieSeq) {
         //movieSeq로 movieArticle의 Id 가져오기
-        Long movieId = movieArticleRepository.findByMovieSeq(movieSeq).getId();
+        Long articleId = movieArticleRepository.findByMovieIdAndMovieSeq(movieId, movieSeq).getId();
         //Id를 movieReview Repository에 넘겨서 review 리스트 가져오기
-        List<Review_Article> reviewArticles = reviewArticleRepository.findByArticleIdOrderByReviewCreateDateDesc(movieId);
+        List<Review_Article> reviewArticles = reviewArticleRepository.findByArticleIdOrderByReviewCreateDateDesc(articleId);
         //review 리스트를 reviewResponseDTO로 변환하기
         return reviewArticles.stream()
                 .map(reviewArticle -> convertToResponseDTO(reviewArticle.getReview()))

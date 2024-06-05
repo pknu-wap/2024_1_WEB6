@@ -8,7 +8,6 @@ import com.web6.server.service.ReviewService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
@@ -29,23 +28,23 @@ public class ReviewController {
 
     //Create
     //리뷰 쓰기 페이지로 이동할 수 있는지
-    @GetMapping("/api/movies/{movieSeq}/reviews")
-    public ApiResponse<Void> reviewP(@PathVariable("movieSeq") String movieSeq) {
+    @GetMapping("/api/movies/{movieId}/{movieSeq}/reviews")
+    public ApiResponse<Void> reviewP(@PathVariable("movieId") String movieId, @PathVariable("movieSeq") String movieSeq) {
 
         //review writer 불러오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String writerId = authentication.getName();
 
         //한 유저가 한 영화게시글에 쓸 수 있는 리뷰 개수는 1개로 제한
-        if (reviewService.existReview(movieSeq, writerId)) {
+        if (reviewService.existReview(movieId, movieSeq, writerId)) {
             return new ApiResponse<>(false, "리뷰 작성 개수 제한을 초과하였습니다.", null); //
         }
 
         return new ApiResponse<>(true, "리뷰 작성 페이지로 이동합니다.", null);
     }
 
-    @PostMapping("/api/movies/{movieSeq}/reviews")
-    public ApiResponse<ReviewRequestDTO> createReview(@PathVariable("movieSeq") String movieSeq, @RequestBody @Valid ReviewRequestDTO reviewRequestDTO, Errors errors) {
+    @PostMapping("/api/movies/{movieId}/{movieSeq}/reviews")
+    public ApiResponse<ReviewRequestDTO> createReview(@PathVariable("movieId") String movieId, @PathVariable("movieSeq") String movieSeq, @RequestBody @Valid ReviewRequestDTO reviewRequestDTO, Errors errors) {
 
         //review writer 불러오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,16 +56,16 @@ public class ReviewController {
         }
 
         //DB에 저장
-        reviewService.addReview(movieSeq, writerId, reviewRequestDTO);
+        reviewService.addReview(movieId, movieSeq, writerId, reviewRequestDTO);
         
         return new ApiResponse<>(true, "리뷰 작성 성공", reviewRequestDTO);
     }
 
     //Read
     //리뷰를 대댓글 순으로 정렬
-    @GetMapping("/api/movies/{movieSeq}/reviewsCommentCnt")
-    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByCommentsCount(@PathVariable("movieSeq") String movieSeq) {
-        List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByCommentCount(movieSeq);
+    @GetMapping("/api/movies/{movieId}/{movieSeq}/reviewsCommentCnt")
+    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByCommentsCount(@PathVariable("movieId") String movieId, @PathVariable("movieSeq") String movieSeq) {
+        List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByCommentCount(movieId, movieSeq);
         
         //리스트가 empty
         if(reviewList.isEmpty()) {
@@ -77,9 +76,9 @@ public class ReviewController {
     }
 
     //리뷰들 최신 순으로 정렬
-    @GetMapping("/api/movies/{movieSeq}/reviewsLatest")
-    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByLatest(@PathVariable("movieSeq") String movieSeq) {
-        List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByLatest(movieSeq);
+    @GetMapping("/api/movies/{movieId}/{movieSeq}/reviewsLatest")
+    public ApiResponse<List<ReviewResponseDTO>> getReviewsOrderByLatest(@PathVariable("movieId") String movieId, @PathVariable("movieSeq") String movieSeq) {
+        List<ReviewResponseDTO> reviewList = reviewService.getReviewsOrderByLatest(movieId, movieSeq);
 
         //리스트가 empty
         if(reviewList.isEmpty()) {
