@@ -3,108 +3,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="mypage.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <title>마이페이지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
+        rel="stylesheet">
+
+    <title>NET VIEW - 회원 정보 수정</title>
 </head>
 
 <body>
-    <h1 class="web-title">NET VIEW</h1>
-    <hr>
-
-    <div class="mypage-main">
-        <div class="profile-card">
-            <div class="user-profile-image">
-                <img class="profile-image" src="https://www.studiopeople.kr/common/img/default_profile.png"
-                    alt="Profile Picture">
-                <img class="edit-profile-image" src="https://i.ibb.co/yy0V1Zr/gear.png" alt="Edit Profile"
-                    onclick="editProfile()">
-            </div>
-
-
-            <div class="profile-info">
-                <span class="username">사용자 닉네임</span>
-                <br><span class="user-email">user@example.com</span>
-                <div class="user-stats">
-                    <p><span class="post-count">리뷰 수 <span class="count_review">8</span></span></p>
-                    <p><span class="comment-count">댓글 수 <span class="count_comment">10</span></span></p>
-                </div>
-            </div>
+    <!-- 상단바 -->
+    <header class="header-bar">
+        <h1 class="web-title">
+            <span class="title-text" id="title-text">NET <span>VIEW</span></span>
+        </h1>
+        <div class="user-info-section" id="user-info-section">
+            <!-- <span class="welcome-message" id="welcome-message"></span> -->
+            <button class="logout-button" id="logout-button">로그아웃</button>
         </div>
-        <hr>
-        
+    </header>
 
-
-        <div class="review-container">
-            <div class="img-wrap">
-                <div class="">
-                    <img src="https://joyposter.cafe24.com//NEW-posters/FMV/FMV-308.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/c29bba8bec43a8139e0ccdee738bcbd0.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-                
-                <div class="">
-                    <img src="https://image.fmkorea.com/files/attach/new/20181212/486616/1154413605/1443001013/ae1d466087a6dfb562eb187f79d27fb7.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jt1GlLLvkWL2m83VX8I1qsDR187.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jpD6z9fgNe7OqsHoDeAWQWoULde.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bzpAD4rd40zZYoh6Lqzrz1O1xh4.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
-
-                <div class="">
-                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wrCwH6WOvXQvVuqcKNUrLDCDxdw.jpg">
-                    <div class="review-title">
-                        <p>Movie Title</p>
-                        <p>★4.5</p>
-                    </div>
-                </div>
+    <!-- 회원정보 수정 -->
+    <div class="update-user-info">
+        <h2>회원정보 수정</h2>
+        <form id="update-form">
+            <div class="form-group">
+                <label for="user-id">아이디</label>
+                <input type="text" id="user-id" readonly>
             </div>
 
-        </div>
+            <div class="form-group">
+                <label for="nickname">닉네임</label>
+                <div class="nickname-container">
+                    <input type="text" id="nickname" name="nickname">
+                    <button type="button" id="check-nickname">중복확인</button>
+                </div>
+                <div class="error-message" id="nickname-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="current-password">현재 비밀번호</label>
+                <input type="password" id="current-password" name="current-password">
+                <div class="error-message" id="current-password-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="new-password">새 비밀번호</label>
+                <input type="password" id="new-password" name="new-password">
+                <div class="error-message" id="new-password-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-new-password">새 비밀번호 확인</label>
+                <input type="password" id="confirm-new-password" name="confirm-new-password">
+                <div class="error-message" id="confirm-new-password-error"></div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" id="save-button">수정하기</button>
+                <button class="remove-account" id="remove-account" type="button">회원탈퇴</button>    
+            </div>
+
+            <!-- 회원탈퇴 -->
+            <div id="passwordModal" style="display:none;">
+                <sapn>비밀번호 입력</span>
+                <input type="password" id="delete-password" placeholder="비밀번호를 입력하세요">
+                <button onclick="submitPassword()">확인</button>
+            </div>
+        </form>
     </div>
 
     <script src="mypage.js"></script>

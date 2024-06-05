@@ -1,0 +1,379 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+/* 상단바 */
+.header-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 4em;
+    z-index: 100;
+    background-color: #ffffff;
+    border-bottom: 0.3px solid #dbdbdb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px;
+    box-sizing: border-box;
+}
+
+.login-section button {
+    font-weight: 500;
+}
+
+body {
+    padding-top: 40px;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* 타이틀 */
+.web-title {
+    font-size: 35px;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "GRAD" 0;
+}
+
+.title-text {
+    cursor: pointer;
+    font-family: "Signika", sans-serif;
+}
+
+.title-text span {
+    color: #E50914;
+    font-family: "Signika", sans-serif;
+}
+
+/* 로그인, 회원가입 버튼 */
+.login-section {
+    display: flex;
+    gap: 10px;
+}
+
+.login-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+
+    height: 35px;
+    width: 60px;
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+}
+
+.signup-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+    background: none;
+
+    height: 35px;
+    width: 80px;
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+}
+
+.login-button:hover {
+    cursor: pointer;
+    color: #E50914;
+}
+
+.signup-button:hover {
+    cursor: pointer;
+    color: #E50914;
+    border-color: #E50914;
+}
+
+
+/* 로그아웃 버튼, 환영 메세지 */
+.user-info-section {
+    /* display: flex; */
+
+}
+
+.logout-button {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    background: none;
+    color: rgb(55, 55, 55);
+    font-size: 13px;
+    font-weight: 500;
+    border: 0.5px solid #b2b2b2;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.logout-button:hover {
+    cursor: pointer;
+    color: #E50914;
+    border-color: #E50914;
+}
+
+.welcome-message {
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    text-align: right;
+    font-weight: 500;
+    margin: 10px;
+    color: rgb(55, 55, 55);
+    margin-right: 10px;
+    position: relative;
+
+}
+
+/* 유저 닉네임 */
+.user-nickname {
+    font-weight: 700;
+    text-decoration: underline;
+
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.user-nickname:hover {
+    cursor: pointer;
+    color: #E50914;
+}
+
+.user-nickname .tooltip-text {
+    visibility: hidden;
+    width: 70px;
+    background-color: rgba(255, 255, 255, 0.759);
+    border: 0.3px solid #4c4c4c;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 3px;
+    position: absolute;
+    z-index: 1;
+    bottom: -140%;
+    left: 190%;
+    margin-left: -50px;
+    opacity: 0;
+    transition: opacity 0.9s;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.user-nickname:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+/* 검색창 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 6em 30% 50px 30%;
+}
+
+.search-option {
+    color: rgb(55, 55, 55);
+    padding: 10px 5px 10px 10px;
+    font-size: 16px;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: rgb(137, 137, 137);
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.search-input {
+    width: 300px;
+    padding: 13px;
+    font-size: 16px;
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+    border-color: rgb(137, 137, 137);
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+
+    border-left: none;
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: rgb(137, 137, 137);
+    border-radius: 0 5px 5px 0;
+
+    background: none;
+    color: rgb(143, 143, 143);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-option:hover {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-button i:hover {
+    color: #E50914;
+}
+
+.search-button i {
+    font-size: 17px;
+    cursor: pointer;
+}
+
+
+/* 리뷰 정렬 버튼 */
+.sort-reviews-container {
+    position: absolute;
+    top: 23%;
+    right: 10%;
+}
+
+.sort-option {
+    padding: 5px;
+    border-radius: 3px;
+    color: rgb(55, 55, 55);
+    font-size: 13px;
+    border-color: rgb(137, 137, 137);
+    outline: none;
+}
+
+.sort-option:hover {
+    cursor: pointer;
+    font-weight: 500;
+
+}
+
+.sort-option option {
+    font-size: 13px;
+}
+
+/* 페이지네이션 */
+#prevPage,
+#nextPage {
+    padding: 1px;
+    margin: 5px;
+    background-color: white;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#prevPage:hover,
+#nextPage:hover {
+    cursor: pointer;
+    color: #5c5c5c;
+    transition: 0.3s;
+}
+
+
+
+
+/* 작성한 리뷰 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.sort-reviews-container,
+#search-form {
+    margin: 20px;
+    text-align: center;
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 0.9fr);
+    gap: 1px;
+    padding: 10px 10%;
+}
+
+.movie-card {
+    padding: 10px;
+    margin: 10px;
+    text-align: left;
+}
+
+.movie-card>img {
+    border-radius: 4px;
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+    border: 0.3px solid #dbdbdb;
+}
+
+.movie-title {
+    font-size: 15px;
+    margin: 5px;
+    margin-bottom: 10px;
+}
+
+.movie-genre {
+    color: rgb(90, 90, 90);
+    font-size: 13px;
+    margin-top: -10px;
+    margin-left: 5px;
+}
+
+.pagination {
+    text-align: center;
+    margin: 20px;
+}
+
+.movies-grid img,
+.movie-title:hover {
+    cursor: pointer;
+}
+
+/* 슬라이드 */
+.slider {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.slide-container {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.nav-buttons button {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 50%;
+}

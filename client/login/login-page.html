@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login-page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
+        rel="stylesheet">
+    
+
+</head>
+
+<body>
+
+    <!-- 상단바 -->
+    <div class="login-wrapper">
+        <h1 class="web-title">
+            <span class="title-text">NET <span>VIEW</span></span>
+        </h1>
+
+        <form name="loginForm" id="login-form">
+            <input class="user-id" id="username" type="text" name="username" placeholder="Email">
+            <input class="user-pw" id="password" type="password" name="password" placeholder="Password">
+
+            <!-- 로그인 버튼 -->
+            <input class="login-button" type="submit" value="로그인">
+
+            <!-- 에러 메세지 -->
+            <div id="messageElement"></div>
+
+            <div class="line">또는</div>
+            <!-- 카카오 로그인 버튼 -->
+            <div class="kakao-login-img-container">
+                <img src="kakao_login_large_wide.png" class="kakao-login-img" id="kakaoLoginBtn">
+            </div>
+
+            <!-- 회원가입 버튼 -->
+            <div class="signup-container">
+                <span>계정이 없으신가요? </span>
+                <button class="signup-button" type="button">회원가입</button>
+            </div>
+        </form>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>  <!-- 카카오 sdk 로드 -->
+    <script type="module" src="login-page.js"></script>
+    <script src="OAuth.js"></script>
+    
+</body>
+
+</html>
