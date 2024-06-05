@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 게시글 클릭
     // function handleClick(movieSeq) {
-        const apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/${movieSeq}/${movieId}`;
+    //    const apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/${movieId}/${movieSeq}`;
     //     fetch(apiUrl)
     //         .then((response) => response.json())
     //         .then((data) => {
