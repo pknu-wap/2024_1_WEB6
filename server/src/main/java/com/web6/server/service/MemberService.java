@@ -1,8 +1,8 @@
 package com.web6.server.service;
 
 
-import com.web6.server.domain.Member;
-import com.web6.server.repository.MemberRepository;
+import com.web6.server.domain.*;
+import com.web6.server.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
@@ -19,11 +20,21 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ReviewRepository reviewRepository;
+    private final ReviewArticleRepository reviewArticleRepository;
+    private final CommentReviewRepository commentReviewRepository;
+    private final CommentRepository commentRepository;
+    private final ReviewService reviewService;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public MemberService(MemberRepository memberRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ReviewRepository reviewRepository, ReviewArticleRepository reviewArticleRepository, CommentReviewRepository commentReviewRepository, CommentRepository commentRepository, ReviewService reviewService) {
         this.memberRepository = memberRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.reviewRepository = reviewRepository;
+        this.reviewArticleRepository = reviewArticleRepository;
+        this.commentReviewRepository = commentReviewRepository;
+        this.commentRepository = commentRepository;
+        this.reviewService = reviewService;
     }
 
 
@@ -73,6 +84,32 @@ public class MemberService {
 
         /*Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(member.getNickname(), member.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);*/
+    }
+
+    //회원 탈퇴
+    @Transactional
+    public boolean withdraw(String writerId) {
+        Member member = memberRepository.findByLoginId(writerId);
+
+        //대댓글 삭제
+        List<Comment_Review> commentReviews = commentReviewRepository.findByCommentWriter(member);
+        for(Comment_Review commentReview : commentReviews) {
+            Comment comment = commentReview.getComment();
+            commentReviewRepository.delete(commentReview);
+            commentRepository.delete(comment);
+        }
+
+        //리뷰 삭제
+        List<Review_Article> reviewArticles = reviewArticleRepository.findByReviewWriterOrderByReviewCreateDateDesc(member);
+        for(Review_Article reviewArticle : reviewArticles) {
+            Review review = reviewArticle.getReview();
+            reviewService.deleteReview(review.getId());
+        }
+
+        //회원 삭제
+        memberRepository.delete(member);
+
+        return true;
     }
 
 }
