@@ -1,0 +1,148 @@
+/* 기존 CSS 내용 그대로 유지 */
+h1 {
+    text-align: center;
+    cursor: pointer;
+    width: 200px;
+    padding: 20px;
+    margin: 0px auto;
+}
+
+hr {
+    height: 1px;
+    border: none;
+    background-color: #b3b3b3;
+}
+
+.movie-detail {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.poster img {
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+.info {
+    margin-left: 20px;
+    font-family: 'Roboto', sans-serif; /* 폰트 변경 */
+}
+
+.info h2 {
+    margin-top: 0;
+    font-size: 2em;
+    font-weight: bold; /* '영화 제목:' 진하게 */
+}
+
+.info p {
+    margin: 5px 0;
+    font-weight: normal; /* 글자 일반 */
+}
+
+.info #title,
+.info #title + span {
+    font-weight: bold; /* '영화 제목:' 옆의 내용 진하게 */
+}
+
+.comment-section {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#commentInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif; /* 폰트 변경 */
+}
+
+#submitComment {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-left: 20px; /* 계층 구조를 더 잘 보이게 하기 위해 추가 */
+}
+
+.reply-button,
+.edit-button,
+.delete-button,
+.spoiler-button {
+    display: inline-block;
+    margin-top: 5px;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 0.9em; /* 버튼 크기 줄임 */
+    padding: 3px 5px; /* 버튼 내부 여백 줄임 */
+}
+
+.reply-section {
+    margin-top: 10px;
+}
+
+.reply-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif; /* 폰트 변경 */
+}
+
+.reply-section button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.timestamp {
+    font-size: 0.8em; /* 글자 크기를 줄임 */
+    color: #888; /* 글자 색을 약간 흐리게 설정 */
+}
+
+.reply-count {
+    font-size: 0.8em;
+    color: #888;
+    margin-left: 10px;
+}
+
+.spoiler {
+    filter: blur(10px);
+    cursor: pointer;
+}
+
+.spoiler-button {
+    margin-left: 10px;
+}
+
+.user-text2{
+    position: absolute;
+    top: 70%;
+    left: 10%;
+    width: 100%;
+    transform: translate(-50%, 20%);
+font-size: 23px;
+color:white;
+font-weight: bold;
+font-family: 'ypseo';
+text-align:center;
+}
