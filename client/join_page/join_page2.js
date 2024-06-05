@@ -74,7 +74,7 @@ function validateForm(event) {
                     alert('가입 성공!');
                     window.location.href = '../login/login-page.html'; // 업로드된 파일로 리다이렉트
                 } else {
-                    alert('가입에 실패했습니다: ' + data.message);
+                    alert('가입에 실패했습니다: ' + data.errors.duplicate);
                 }
             })
             .catch(error => {
