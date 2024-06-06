@@ -161,7 +161,7 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
         if (response.ok) {   // 수정 성공
             if (data.success) {
                 alert(data.message);
-                window.location.href = '/main_page/index.html';
+                window.location.href = '../main_page/index.html';
             } else {   // 수정 실패 
                 if (!data.nicknameChecked && data.errors && data.errors.nickname) {  // 닉네임 수정 실패
                     alert(data.message);
