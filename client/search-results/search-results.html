@@ -25,9 +25,13 @@
         <h1 class="web-title">
             <span class="title-text">NET <span>VIEW</span></span>
         </h1>
-        <div class="login-section">
+        <div class="login-section" id="login-section">
             <button class="login-button">로그인</button>
             <button class="signup-button">회원가입</button>
+        </div>
+        <div class="user-info-section" id="user-info-section">
+            <span class="welcome-message" id="welcome-message"></span>
+            <button class="logout-button" id="logout-button">로그아웃</button>
         </div>
     </header>
 
@@ -35,7 +39,7 @@
     <div class="search-result-heading" id="search-result-heading"></div>
 
     <!-- 검색창 -->
-    <form class="search-box" id="search-form" action="/search-results/search-results.html" method="GET">
+    <form class="search-box" id="search-form">
         <div class="search-container">
             <select id="search-option" class="search-option">
                 <option value="title">제목</option>
@@ -51,10 +55,12 @@
 
     <!-- 검색 결과 컨테이너 -->
     <div id="results-container" class="results-container"></div>
+    <div id="no-result-message" class="no-result-message"></div>
     <!-- 페이지 네비게이션 -->
     <div id="pagination" class="pagination"></div>
 
     <script src="search-results.js"></script>
+    <script src="main_auth.js"></script>
 </body>
 
 </html>

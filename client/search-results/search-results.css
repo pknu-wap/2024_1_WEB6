@@ -18,12 +18,7 @@
     box-sizing: border-box;
 }
 
-.title-text {
-    cursor: pointer;
-}
-
 .login-section button {
-    font-family: "Noto Sans KR", sans-serif;
     font-weight: 500;
 }
 
@@ -37,7 +32,6 @@ body {
 /* 타이틀 */
 .web-title {
     font-size: 35px;
-    font-family: "Signika", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
@@ -45,9 +39,137 @@ body {
         "GRAD" 0;
 }
 
+.title-text {
+    cursor: pointer;
+    font-family: "Signika", sans-serif;
+}
+
 .title-text span {
     color: #E50914;
+    font-family: "Signika", sans-serif;
 }
+
+/* 로그인, 회원가입 버튼 */
+.login-section {
+    display: flex;
+    gap: 10px;
+}
+
+.login-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+
+    height: 35px;
+    width: 60px;
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+}
+
+.signup-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+    background: none;
+
+    height: 35px;
+    width: 80px;
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+}
+
+.login-button:hover {
+    cursor: pointer;
+    color: #E50914;
+}
+
+.signup-button:hover {
+    cursor: pointer;
+    color: #E50914;
+    border-color: #E50914;
+}
+
+/* 로그아웃 버튼, 환영 메세지 */
+.user-info-section {
+    /* display: flex; */
+
+}
+
+.logout-button {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    background: none;
+    color: rgb(55, 55, 55);
+    font-size: 13px;
+    font-weight: 500;
+    border: 0.5px solid #b2b2b2;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.logout-button:hover {
+    cursor: pointer;
+    color: #E50914;
+    border-color: #E50914;
+}
+
+.welcome-message {
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    text-align: right;
+    font-weight: 500;
+    margin: 10px;
+    color: rgb(55, 55, 55);
+    margin-right: 10px;
+    position: relative;
+
+}
+
+/* 유저 닉네임 */
+.user-nickname {
+    font-weight: 700;
+    text-decoration: underline;
+
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.user-nickname:hover {
+    cursor: pointer;
+    color: #E50914;
+}
+
+.user-nickname .tooltip-text {
+    visibility: hidden;
+    width: 70px;
+    background-color: rgba(255, 255, 255, 0.759);
+    border: 0.3px solid #4c4c4c;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 3px;
+    position: absolute;
+    z-index: 1;
+    bottom: -140%;
+    left: 190%;
+    margin-left: -50px;
+    opacity: 0;
+    transition: opacity 0.9s;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.user-nickname:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
 
 /* 검색창 */
 .search-container {
@@ -180,6 +302,12 @@ body {
 
 .search-result-heading span {
     margin-left: 100px;
+}
+
+.no-result-message {
+    text-align: center;
+    color: rgb(55, 55, 55);
+    margin-top: 100px;
 }
 
 /* 검색 결과 컨테이너 스타일링 */

@@ -1,64 +1,41 @@
 // 웹 페이지 이동
-var webTitle = document.getElementsByClassName('web-title');
-if (webTitle.length > 0) {
-    webTitle[0].onclick = function () {
-        window.location.href = '/main_page/index.html';
-    };
-}
+document.querySelector('.web-title').onclick = () => {
+    window.location.href = '../main_page/index.html';
+};
 
-var loginButton = document.getElementsByClassName('login-button');
-if (loginButton.length > 0) {
-    loginButton[0].onclick = function () {
-        window.location.href = '/login-page/login-page.html';
-    };
-}
+document.querySelector('.login-button').onclick = () => {
+    window.location.href = '../login-page/login-page.html';
+};
 
-var signupButton = document.getElementsByClassName('signup-button');
-if (signupButton.length > 0) {
-    signupButton[0].onclick = function () {
-        window.location.href = '/join_page/sign-up.html';
-    };
-}
-
+document.querySelector('.signup-button').onclick = () => {
+    window.location.href = '../join_page/join_page2.html';
+};
 
 // 검색 결과
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get('query') || '';
     const option = urlParams.get('option') || 'title';
-
     const headingElement = document.getElementById('search-result-heading');
+    const noResultsMessage = document.getElementById('no-result-message');
+
 
     if (query) {
         headingElement.innerHTML = `<span>"${query}"의 검색 결과</span>`;
-    } else {
-        headingElement.innerHTML = `<span>모든 검색 결과</span>`;
     }
 
     if (!query) {
-        // 검색어가 없는 경우 -> 빈 페이지 띄우기
-        fetch('', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                displayResults(data, 1); // 첫 페이지 표시, data는 서버에서 받은 게시글 데이터
-                setupPagination(data);
-            })
-            .catch(error => {
-                console.error('Error fetching all movies:', error);
-            });
-        // query 값이 있는 경우
+        // 검색어가 없는 경우
+        noResultsMessage.innerHTML = `<span>검색 결과가 없습니다. 다시 입력해주세요.</span>`;
     } else if (['nation', 'genre', 'actor', 'director'].includes(option)) {
         searchByTag(option, query).then(data => {
+            console.log('Data fetched by tag:', data); // 콘솔 로그 추가
             displayResults(data, 1); // 첫 페이지 표시
             setupPagination(data);
         });
     } else {
         searchMovies(option, query).then(data => {
+            console.log('Data fetched by search:', data); // 콘솔 로그 추가
             displayResults(data, 1); // 첫 페이지 표시
             setupPagination(data);
         });
@@ -66,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function searchMovies(option, query) {
-    return fetch(`https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movie/search/json?option=${option}&query=${encodeURIComponent(query)}`, {
+    return fetch(`https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/search/json?option=${option}&query=${encodeURIComponent(query)}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -74,7 +51,8 @@ function searchMovies(option, query) {
     })
         .then(response => response.json())
         .then(data => {
-            return data;
+            console.log('Fetched data:', data); // 콘솔 로그 추가
+            return data; // 데이터를 반환하여 이후에 처리
         })
         .catch(error => {
             console.error('Error fetching movie data:', error);
