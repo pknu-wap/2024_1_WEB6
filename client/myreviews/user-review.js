@@ -1,3 +1,7 @@
+document.querySelector(".web-title").onclick = () => {
+    window.location.href = "../main_page/index.html";
+  };
+
 // 닉네임을 URL 인코딩하는 함수
 function encodeNickname(nickname) {
     return encodeURIComponent(nickname);

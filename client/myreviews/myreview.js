@@ -1,3 +1,6 @@
+document.querySelector(".web-title").onclick = () => {
+    window.location.href = "../main_page/index.html";
+  };
 
 // 프로필 수정 페이지로 이동
 function editProfile() {
