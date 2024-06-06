@@ -43,6 +43,7 @@ hr {
     border: 0.2px solid #cbcbcb;
     border-radius: 50%;
     cursor: pointer;
+    background-size: cover;
 }
 
 .edit-profile-image:hover {
@@ -91,26 +92,42 @@ hr {
     justify-content: center;
 }
 
-.img-wrap {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    max-width: 800px;
-    padding-bottom: 10%;
-    padding-top: 40px;
+.review-list {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
 }
 
-.img-wrap img {
-    max-width: 100%;
-    height: auto;
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-title a {
+    font-size: 18px;
+    color: #007BFF;
+    text-decoration: none;
     cursor: pointer;
 }
 
-.review-title {
-    display: flex;
-    align-items: center;
+.review-title a:hover {
+    text-decoration: underline;
 }
 
-.review-title p {
-    margin-right: 10px;
+.review-details {
+    font-size: 14px;
+    color: #555;
+}
+
+.review-content {
+    margin-top: 10px;
+    font-size: 16px;
 }

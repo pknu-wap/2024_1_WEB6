@@ -72,7 +72,7 @@ function displayReviews(reviews) {
 // 로그인 상태 확인 및 리뷰 데이터 가져오기
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/main', {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage', {
             method: 'GET',
             credentials: 'include' // 쿠키를 포함하여 요청
         });
@@ -80,14 +80,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await response.json();
         console.log('Response Data:', data);
 
-        if (data.success) {  // 로그인된 상태
-            const responseNickname = data.message;
-            const cleanedNickname = responseNickname.slice(0, -1);
-            fetchReviews(cleanedNickname);
+        if(response.ok) {
+            if(data.success){
+                let nickname = data.data.nickname;
+                document.querySelector(".username").textContent = nickname;
+                document.querySelector(".user-email").textContent = data.data.loginId;
+                fetchReviews(nickname);
+            }
+            else {
+                console.log('정보를 로드하는 데 실패했습니다.');
+            }   
         } else {
-            console.log(data.message);  // 로그인을 해주세요.
+            console.log('정보를 로드하는 데 실패했습니다.');
         }
-
     } catch (errors) {
         console.error('서버 에러:', errors);
     }
