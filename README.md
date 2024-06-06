@@ -5,9 +5,12 @@
 [Netview Web 💡](URL)
 <br>
 [Netview Notion 📓](https://www.notion.so/WEB-6-328d84216a9b4e3396c3408f5abea9f4?pvs=4)
+<br>
+[API 명세서 📄](https://www.notion.so/API-3b85360e51464b879446b087cc6fbc74?pvs=4)
 
 
-<div align=center><h1>📽 화면 구성/API 주소 </h1></div>
+<div align=center><h1>📽 화면 구성 </h1></div>
+
 <div align=center>
 <table><thead>
   <tr>
