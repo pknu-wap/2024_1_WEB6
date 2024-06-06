@@ -41,6 +41,8 @@ function displayReviews(response) {
     var reviewList = document.getElementById("review-list");
     reviewList.innerHTML = ''; // 기존 내용을 지움
 
+    document.getElementById("count_review").textContent = response.data.length;
+
     if (response.data.length === 0) {
         reviewList.innerHTML = '<p class="no-reviews">작성한 리뷰가 없습니다! 첫 리뷰를 작성해보세요!</p>';
         return;
