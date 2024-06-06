@@ -1,5 +1,6 @@
 package com.web6.server.controller;
 
+import com.web6.server.domain.Member;
 import com.web6.server.dto.ApiResponse;
 import com.web6.server.dto.MemberDetails;
 import com.web6.server.dto.MemberEditDTO;
@@ -20,13 +21,28 @@ import java.util.Map;
 public class MypageController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
-    public MypageController(MemberService memberService) {
+    public MypageController(MemberService memberService,  MemberRepository memberRepository) {
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
     @GetMapping("/api/mypage")
     public ApiResponse<MemberEditDTO> MypageP(@AuthenticationPrincipal MemberDetails currentMember) {
+        // 소셜 로그인 유저인지 확인
+        if (currentMember.getAccessToken() != null && !currentMember.getAccessToken().isEmpty()) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String id = authentication.getName();
+
+            Member member = memberRepository.findByLoginId(id);
+
+            MemberEditDTO editDTO = new MemberEditDTO();
+            editDTO.setNickname(member.getNickname());
+            editDTO.setLoginId(member.getLoginId());
+
+            return new ApiResponse<>(true, "마이페이지 이동 성공", editDTO);
+        }
 
         //마이페이지로 이동하면, 현재 로그인한 유저의 닉네임과 아이디 필드가 빈값이 아니도록
         MemberEditDTO editDTO = new MemberEditDTO();
