@@ -50,40 +50,52 @@ function displayReviews(response) {
         var reviewItem = document.createElement("div");
         reviewItem.className = "review-item";
 
+        var movieContainer = document.createElement("div");
+        movieContainer.className = "movie-container";
+        
         var reviewTitle = document.createElement("div");
         reviewTitle.className = "review-title";
-        var titleLink = document.createElement("a");
-        //titleLink.href = `movie_detail_page.html?movie=${encodeURIComponent(review.movieTitle)}`;
-        titleLink.textContent = article.title;
-        reviewTitle.appendChild(titleLink);
+        reviewTitle.textContent = article.title;
+        
+        var reviewRating = document.createElement("div");
+        reviewRating.className = "review-rating";
+        reviewRating.textContent = `★${article.grade}`;
+        
+        movieContainer.appendChild(reviewTitle);
+        movieContainer.appendChild(reviewRating);
 
         var reviewDetails = document.createElement("div");
         reviewDetails.className = "review-details";
         reviewDetails.innerHTML = `
-            <p>총 별점: ${article.grade}</p>
-            <p>작성자: ${article.review.nickname}</p>
-            <p>작성일시: ${article.review.createDate}</p>
-            <p>수정여부: ${article.review.edit ? '수정됨' : ''}</p>
-            <p>스포일러 여부: ${article.review.spoiler ? '있음' : '없음'}</p>
+            <p style="color: black;">작성자: ${article.review.nickname}</p>
+            <p>★ ${article.review.grade}</p>
+            ${article.review.edit ? '<p class="additional-information">수정됨</p>' : ''}
+            ${article.review.spoiler ? '<p class="additional-information">스포주의</p>' : ''}
             <p>대댓글 개수: ${article.review.commentsCount}</p>
         `;
+
+        var reviewDate = document.createElement("p");
+        reviewDate.className = "review-date";
+        reviewDate.textContent = `작성일시: ${new Date(article.review.createDate).toLocaleString()}`;
+
+        var reviewContentContainer = document.createElement("div");
+        reviewContentContainer.className = "review-content-container";
 
         var reviewContent = document.createElement("div");
         reviewContent.className = "review-content";
         reviewContent.textContent = article.review.content;
-        
-        var reviewRating = document.createElement("div");
-        reviewRating.className = "review-rating";
-        reviewRating.textContent = `리뷰 별점: ★${article.review.grade}`;
 
-        reviewItem.appendChild(reviewTitle);
+        reviewContentContainer.appendChild(reviewContent);
+
+        reviewItem.appendChild(movieContainer);
+        reviewItem.appendChild(reviewDate);
         reviewItem.appendChild(reviewDetails);
-        reviewItem.appendChild(reviewContent);
-        reviewItem.appendChild(reviewRating);
+        reviewItem.appendChild(reviewContentContainer);
 
         reviewList.appendChild(reviewItem);
     });
 }
+
 
 // 로그인 상태 확인 및 리뷰 데이터 가져오기
 document.addEventListener('DOMContentLoaded', async () => {

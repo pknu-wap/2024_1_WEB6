@@ -89,7 +89,9 @@ hr {
 
 .review-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
 }
 
 .review-list {
@@ -99,12 +101,22 @@ hr {
     border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #f9f9f9;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+}
+
+.review-details p {
+    color: #000; /* 검은색 글씨 */
+}
+
+.review-details .additional-information {
+    color: #888; /* 회색 글씨 */
 }
 
 .review-item {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
     margin: 10px 0;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
 }
 
 .review-item:last-child {
@@ -116,6 +128,7 @@ hr {
     color: #007BFF;
     text-decoration: none;
     cursor: pointer;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
 }
 
 .review-title a:hover {
@@ -130,4 +143,17 @@ hr {
 .review-content {
     margin-top: 10px;
     font-size: 16px;
+}
+
+.review-rating {
+    color: #FFD700;
+    font-size: 18px;
+    margin-top: 5px;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+}
+
+.no-reviews {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
 }
