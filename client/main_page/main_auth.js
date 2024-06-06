@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     if (logoutResponse.ok && !logoutData.success) {
                         window.location.href = '../main_page/index.html';
+                        // 'accessToken' 및 'refreshToken' 항목 제거
+                        localStorage.removeItem('accessToken');
+                        localStorage.removeItem('refreshToken');
                     } else {
                         alert('로그아웃에 실패했습니다. 다시 시도해 주세요.');
                     }
