@@ -144,6 +144,59 @@ document.addEventListener("DOMContentLoaded", () => {
       moviesGrid.appendChild(movieCard);
     });
 
+
+    // 영화 데이터를 화면에 표시
+    function displayMovies(orderBy) {
+        // 변경된 부분: orderBy 매개변수 추가
+        const moviesGrid = document.getElementById("moviesGrid");
+        moviesGrid.innerHTML = "";
+
+        const startIndex = (currentPage - 1) * moviesPerPage;
+        const endIndex = startIndex + moviesPerPage;
+        const moviesToDisplay = allMovies.slice(startIndex, endIndex);
+        const dummyImageUrl = "https://via.placeholder.com/200x300"; // 더미 이미지 URL
+
+        moviesToDisplay.forEach((movie) => {
+            const movieCard = document.createElement("div");
+            movieCard.classList.add("movie-card");
+
+            if (orderBy === "latest") {
+                // 변경된 부분: orderBy에 따라 조건문 추가
+                const posterUrl =
+                    movie.postersList && movie.postersList.length > 0
+                        ? movie.postersList[0]
+                        : dummyImageUrl;
+                movieCard.innerHTML = `
+              <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
+              <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+              <div class="movie-genre">${movie.genre}</div>
+            `;
+            } else if (orderBy === "comments") {
+                // 변경된 부분: orderBy에 따라 조건문 추가
+                const posterUrl = movie.poster ? movie.poster : dummyImageUrl;
+                movieCard.innerHTML = `
+              <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
+              <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+              <div class="movie-genre">${movie.gradeCount} Reviews</div>
+            `;
+            }
+
+            moviesGrid.appendChild(movieCard);
+        });
+
+        const movieElements = document.querySelectorAll(
+            ".movie-poster, .movie-title"
+        );
+        movieElements.forEach((element) => {
+            element.addEventListener("click", () => {
+                const movieId = element.getAttribute("data-movie-id");
+                handleClick(movieId);
+            });
+        });
+
+        updatePageInfo(currentPage, Math.ceil(allMovies.length / moviesPerPage));
+    }
+
     const movieElements = document.querySelectorAll(
       ".movie-poster, .movie-title"
     );
