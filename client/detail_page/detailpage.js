@@ -1,8 +1,10 @@
+
 // 제목 클릭 시 메인 페이지로 이동
 var elements = document.getElementsByClassName('web-title');
 elements[0].onclick = function () {
     window.location.href = 'https://www.google.com';
 };
+
 
 // 댓글 작성 버튼 클릭 이벤트 핸들러
 document.getElementById("submitComment").addEventListener("click", function () {

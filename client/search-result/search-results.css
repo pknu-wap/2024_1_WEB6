@@ -1,0 +1,249 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+/* 상단바 */
+.header-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 4em;
+    z-index: 100;
+    background-color: #ffffff;
+    border-bottom: 0.3px solid #dbdbdb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px;
+    box-sizing: border-box;
+}
+
+.title-text {
+    cursor: pointer;
+}
+
+.login-section button {
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 500;
+}
+
+body {
+    padding-top: 40px;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* 타이틀 */
+.web-title {
+    font-size: 35px;
+    font-family: "Signika", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "GRAD" 0;
+}
+
+.title-text span {
+    color: #E50914;
+}
+
+/* 검색창 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 4em 30% 50px 30%;
+}
+
+.search-option {
+    color: rgb(55, 55, 55);
+    padding: 10px;
+    font-size: 16px;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: rgb(137, 137, 137);
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.search-option::-ms-expand {
+    display: none;
+}
+
+
+.search-input {
+    width: 300px;
+    padding: 13px;
+    font-size: 16px;
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+    border-color: rgb(137, 137, 137);
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+
+    border-left: none;
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: rgb(137, 137, 137);
+    border-radius: 0 5px 5px 0;
+
+    background: none;
+    color: rgb(143, 143, 143);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-option:hover {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-button:hover {
+    color: #E50914;
+}
+
+.search-button i {
+    font-size: 17px;
+}
+
+
+/* 로그인, 회원가입 버튼 */
+.login-section {
+    display: flex;
+    gap: 10px;
+}
+
+.login-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+
+    height: 35px;
+    width: 60px;
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+}
+
+.signup-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+    background: none;
+
+    height: 35px;
+    width: 80px;
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+}
+
+.login-button:hover {
+    cursor: pointer;
+    color: #E50914;
+}
+
+.signup-button:hover {
+    cursor: pointer;
+    color: #E50914;
+    border-color: #E50914;
+}
+
+
+/* 검색 결과 */
+.search-result-heading {
+    position: fixed;
+    top: 10;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 15px;
+    color: rgb(100, 100, 100);
+    font-weight: 600;
+    background-color: #f1f1f1f9;
+}
+
+.search-result-heading span {
+    margin-left: 100px;
+}
+
+/* 검색 결과 컨테이너 스타일링 */
+.results-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px auto;
+    width: 80%;
+}
+
+.result-item {
+    width: 15%;
+    /* 가로 너비 조정 */
+    margin: 10px 0;
+    text-align: left;
+}
+
+.result-item:hover {
+    cursor: pointer;
+    color: #E50914
+}
+
+.result-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+}
+
+/* 제목 스타일링 */
+.result-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 10px 0 5px 0;
+}
+
+/* 국가와 장르 스타일링 */
+.result-details {
+    font-size: 12px;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* 장르와 국가 사이의 간격 */
+.result-genre .result-nation {
+    margin-left: 5px;
+}
+
+/* 페이지 네비게이션 스타일링 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #555;
+}

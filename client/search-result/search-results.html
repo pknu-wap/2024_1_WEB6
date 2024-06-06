@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="search-results.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <!-- 아이콘 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -17,7 +16,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Signika:wght@300..700&display=swap"
         rel="stylesheet">
-    <title>NET VIEW - 영화 리뷰 게시판</title>
+    <title>NET VIEW - 영화 리뷰</title>
 </head>
 
 <body>
@@ -26,17 +25,14 @@
         <h1 class="web-title">
             <span class="title-text">NET <span>VIEW</span></span>
         </h1>
-        <div class="login-section" id="login-section">
+        <div class="login-section">
             <button class="login-button">로그인</button>
             <button class="signup-button">회원가입</button>
         </div>
-        <div class="user-info-section" id="user-info-section">
-            <span class="welcome-message" id="welcome-message"></span>
-            <button class="logout-button" id="logout-button">로그아웃</button>
-        </div>
     </header>
 
-
+    <!-- 검색 결과 제목 -->
+    <div class="search-result-heading" id="search-result-heading"></div>
 
     <!-- 검색창 -->
     <form class="search-box" id="search-form" action="/search-results/search-results.html" method="GET">
@@ -53,28 +49,12 @@
         </div>
     </form>
 
-    <!-- 정렬 -->
-    <div class="sort-reviews-container">
-        <select class="sort-option" id="sort-option">
-            <option value="latest" id="sort-latest">최신순</option>
-            <option value="comments" id="sort-comments">댓글순</option>
-        </select>
-    </div>
+    <!-- 검색 결과 컨테이너 -->
+    <div id="results-container" class="results-container"></div>
+    <!-- 페이지 네비게이션 -->
+    <div id="pagination" class="pagination"></div>
 
-
-    <!-- 게시글 -->
-    <div id="moviesGrid" class="movies-grid" onclick="handleClick(movieSeq)"></div>
-    <div class="pagination">
-        <button id="prevPage">이전</button>
-        <span id="pageInfo"></span>
-        <button id="nextPage">다음</button>
-    </div>
-
-
-    <script src="index.js"></script>
-    <script src="main_auth.js"></script>
-    <script src="main_search.js"></script>
-
+    <script src="search-results.js"></script>
 </body>
 
 </html>
