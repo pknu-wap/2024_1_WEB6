@@ -16,7 +16,7 @@ async function fetchReviews(nickname) {
     var apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/writer/${encodedNickname}/reviews`;
 
     try {
-        const myRevieResponse = await fetch(`https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/writer/${encodedNickname}/reviews`, {
+        const response = await fetch(`https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/writer/${encodedNickname}/reviews`, {
              method: 'GET',
              credentials: 'include',
              headers: {
@@ -37,35 +37,51 @@ async function fetchReviews(nickname) {
 }
 
 // 리뷰 데이터를 화면에 표시하는 함수
-function displayReviews(reviews) {
-    var imageWrap = document.querySelector(".img-wrap");
-    imageWrap.innerHTML = ''; // 기존 내용을 지움
+function displayReviews(response) {
+    var reviewList = document.getElementById("review-list");
+    reviewList.innerHTML = ''; // 기존 내용을 지움
 
-    reviews.forEach(review => {
-        var article = document.createElement("article");
-        var img = document.createElement("img");
-        img.src = review.imageUrl; // 리뷰 이미지 URL
-        article.appendChild(img);
+    if (response.data.length === 0) {
+        reviewList.innerHTML = '<p class="no-reviews">작성한 리뷰가 없습니다! 첫 리뷰를 작성해보세요!</p>';
+        return;
+    }
+
+    response.data.forEach(article => {
+        var reviewItem = document.createElement("div");
+        reviewItem.className = "review-item";
 
         var reviewTitle = document.createElement("div");
         reviewTitle.className = "review-title";
-        var title = document.createElement("p");
-        title.textContent = review.title; // 영화 제목
-        var grade = document.createElement("p");
-        grade.textContent = `★${review.grade}`; // 영화 평점
-        reviewTitle.appendChild(title);
-        reviewTitle.appendChild(rating);
-        article.appendChild(reviewTitle);
+        var titleLink = document.createElement("a");
+        //titleLink.href = `movie_detail_page.html?movie=${encodeURIComponent(review.movieTitle)}`;
+        titleLink.textContent = article.title;
+        reviewTitle.appendChild(titleLink);
 
-        imageWrap.appendChild(article);
+        var reviewDetails = document.createElement("div");
+        reviewDetails.className = "review-details";
+        reviewDetails.innerHTML = `
+            <p>총 별점: ${article.grade}</p>
+            <p>작성자: ${article.review.nickname}</p>
+            <p>작성일시: ${article.review.createDate}</p>
+            <p>수정여부: ${article.review.edit ? '수정됨' : ''}</p>
+            <p>스포일러 여부: ${article.review.spoiler ? '있음' : '없음'}</p>
+            <p>대댓글 개수: ${article.review.commentsCount}</p>
+        `;
 
-        // 클릭 이벤트 추가
-        img.addEventListener("click", function () {
-            // 클릭된 이미지의 URL을 가져옴
-            var imageUrl = this.src;
-            // 새로운 페이지로 이동 (리뷰 본문)
-            window.location.href = '새로운페이지 URL';
-        });
+        var reviewContent = document.createElement("div");
+        reviewContent.className = "review-content";
+        reviewContent.textContent = article.review.content;
+        
+        var reviewRating = document.createElement("div");
+        reviewRating.className = "review-rating";
+        reviewRating.textContent = `리뷰 별점: ★${article.review.grade}`;
+
+        reviewItem.appendChild(reviewTitle);
+        reviewItem.appendChild(reviewDetails);
+        reviewItem.appendChild(reviewContent);
+        reviewItem.appendChild(reviewRating);
+
+        reviewList.appendChild(reviewItem);
     });
 }
 
