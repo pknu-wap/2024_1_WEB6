@@ -314,16 +314,15 @@ body {
 .results-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     margin: 20px auto;
-    width: 80%;
+    width: 90%;
 }
 
 .result-item {
-    width: 15%;
-    /* 가로 너비 조정 */
-    margin: 10px 0;
-    text-align: left;
+    width: 18%;; /* 5개씩 배치하고 간격을 고려한 너비 설정 */
+    margin: 10px auto;
+    box-sizing: border-box;
 }
 
 .result-item:hover {
@@ -335,12 +334,13 @@ body {
     width: 100%;
     height: auto;
     border-radius: 3px;
+    border: 0.5px solid #dbdbdb;
 }
 
 /* 제목 스타일링 */
 .result-title {
     font-size: 15px;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin: 10px 0 5px 0;
 }
 
@@ -365,7 +365,7 @@ body {
 
 .pagination button {
     margin: 0 5px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     background-color: #333;
     color: white;
     border: none;

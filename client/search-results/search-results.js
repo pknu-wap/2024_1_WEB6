@@ -103,9 +103,14 @@ function displayResults(data, page) {
   const resultsContainer = document.getElementById("results-container");
   resultsContainer.innerHTML = "";
 
-  const startIndex = (page - 1) * 12;
-  const endIndex = startIndex + 12;
-  const pageData = data.slice(startIndex, endIndex);
+  const filteredData = data.filter(
+    (item) => item.postersList && item.postersList.length > 0
+  );
+
+  const itemsPerPage = 10; // 한 페이지에 10개의 결과를 표시
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const pageData = filteredData.slice(startIndex, endIndex);
 
   pageData.forEach((item) => {
     const title = item.title || "제목 없음";
@@ -116,19 +121,18 @@ function displayResults(data, page) {
         ? item.postersList[0]
         : null;
 
-    // 포스터 이미지가 없으면 결과에 포함하지 않음
     if (posterUrl) {
       const itemElement = document.createElement("div");
       itemElement.classList.add("result-item");
 
       itemElement.innerHTML = `
-                <img src="${posterUrl}" alt="${title} 포스터">
-                <h3 class="result-title">${title}</h3>
-                <p class="result-details">
-                    <span class="result-genre">${genre}</span>
-                    <span class="result-nation">· ${nation}</span>
-                </p>
-            `;
+                  <img src="${posterUrl}" alt="${title} 포스터">
+                  <h3 class="result-title">${title}</h3>
+                  <p class="result-details">
+                      <span class="result-genre">${genre}</span>
+                      <span class="result-nation">· ${nation}</span>
+                  </p>
+              `;
       itemElement.addEventListener("click", () => {
         window.location.href = `/detail_page/detail_page.html?id=${item.movieId}`;
       });
@@ -139,7 +143,14 @@ function displayResults(data, page) {
 
 function setupPagination(data) {
   const pagination = document.getElementById("pagination");
-  const totalPages = Math.ceil(data.length / 12);
+
+  // 포스터 이미지가 있는 데이터만 필터링 (수정된 부분)
+  const filteredData = data.filter(
+    (item) => item.postersList && item.postersList.length > 0
+  );
+
+  const itemsPerPage = 10; // 한 페이지에 10개의 결과를 표시 (수정된 부분)
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   pagination.innerHTML = "";
 
@@ -147,7 +158,7 @@ function setupPagination(data) {
     const button = document.createElement("button");
     button.textContent = i;
     button.addEventListener("click", () => {
-      displayResults(data, i);
+      displayResults(filteredData, i); // 필터된 데이터를 사용 (수정된 부분)
     });
     pagination.appendChild(button);
   }
