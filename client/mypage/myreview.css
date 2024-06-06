@@ -1,0 +1,159 @@
+h1 {
+    text-align: center;
+    cursor: pointer;
+    padding: 20px;
+    margin: 0px 40%;
+}
+
+hr {
+    height: 1px;
+    border: none;
+    background-color: #b3b3b3;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 30px auto 50px;
+}
+
+.user-profile-image {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 40px;
+    border: 0.2px solid #cbcbcb;
+}
+
+.edit-profile-image {
+    position: absolute;
+    top: 100px;
+    right: 41px;
+    width: 40px;
+    height: 40px;
+    border: 0.2px solid #cbcbcb;
+    border-radius: 50%;
+    cursor: pointer;
+    background-size: cover;
+}
+
+.edit-profile-image:hover {
+    filter: brightness(95%);
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.username {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.user-email {
+    font-size: 16px;
+    color: #888;
+    margin-top: 5px;
+}
+
+.user-stats p {
+    display: inline-block;
+    margin-right: 4px;
+    margin-top: 10px;
+}
+
+.post-count, .comment-count {
+    margin-right: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+.count_review {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.count_comment {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.review-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+}
+
+.review-list {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+}
+
+.review-details p {
+    color: #000; /* 검은색 글씨 */
+}
+
+.review-details .additional-information {
+    color: #888; /* 회색 글씨 */
+}
+
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    margin: 10px 0;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-title a {
+    font-size: 18px;
+    color: #007BFF;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+}
+
+.review-title a:hover {
+    text-decoration: underline;
+}
+
+.review-details {
+    font-size: 14px;
+    color: #555;
+}
+
+.review-content {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.review-rating {
+    color: #FFD700;
+    font-size: 18px;
+    margin-top: 5px;
+    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+}
+
+.no-reviews {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+}

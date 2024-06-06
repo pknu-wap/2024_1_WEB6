@@ -34,10 +34,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage', {
             method: 'GET',
-            credentials : 'include', // 쿠키를 포함하여 요청
+            credentials: 'include',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             }
+        
         });
 
         if (response.ok) {
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-
+let clickCheckNickname = '';
 
 // 닉네임 중복 검사
 document.getElementById('check-nickname').addEventListener('click', async () => {
@@ -66,10 +67,11 @@ document.getElementById('check-nickname').addEventListener('click', async () => 
     const currentPassword = "";
     const newPassword = "";
     const confirmPassword = "";
-
+    
     try {
         const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage/duplicate', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -82,14 +84,15 @@ document.getElementById('check-nickname').addEventListener('click', async () => 
             })
         });
 
-        if (response.success) {
+        if (response.ok) {
             const data = await response.json();
 
             if (data.success) {  // 중복 확인 성공
                 document.getElementById('nicknameChecked').value = 'true';
                 document.getElementById('nickname-error').textContent = data.message;
+                clickCheckNickname = nickname;
             } else {  // 중복 확인 실패
-                document.getElementById('nicknameChecked').value = 'false';
+                document.getElementById('nicknameChecked').value = 'false'
                 console.log(data.message);
 
                 if (data.errors) {
@@ -110,9 +113,9 @@ document.getElementById('check-nickname').addEventListener('click', async () => 
             console.error('Response not ok:', response.statusText);
             alert('중복 확인 실패. 다시 시도해주세요.');
         }
-    } catch (errors) {
-        console.error('Error:', errors);
-        alert('Error:', errors);
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error:', error);
     }
 });
 
@@ -125,11 +128,17 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
     const currentPassword = document.getElementById('current-password').value || '';
     const newPassword = document.getElementById('new-password').value || '';
     const confirmPassword = document.getElementById('confirm-new-password').value || '';
-    const isNicknameChecked = document.getElementById('nicknameChecked').value === 'true';
+    const nicknameChecked = document.getElementById('nicknameChecked').value;
+
+    if ( clickCheckNickname !== '' && (nickname !== clickCheckNickname) && nicknameChecked) {
+        document.getElementById('nickname-error').textContent = '닉네임이 중복되는지 중복확인을 클릭하여 확인해주세요.';
+        return;
+    }
 
     try {
         const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -139,16 +148,20 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
                 currentPassword,
                 newPassword,
                 confirmPassword,
-                isNicknameChecked
+                nicknameChecked
             }),
         });
 
         const data = await response.json();
 
-        if (response.success) {   // 수정 성공
+        document.getElementById('current-password-error').textContent = '';
+        document.getElementById('new-password-error').textContent = '';
+        document.getElementById('confirm-new-password-error').textContent = '';
+
+        if (response.ok) {   // 수정 성공
             if (data.success) {
                 alert(data.message);
-                window.location.href = '/main_page/index.html';
+                window.location.href = '../main_page/index.html';
             } else {   // 수정 실패 
                 if (!data.nicknameChecked && data.errors && data.errors.nickname) {  // 닉네임 수정 실패
                     alert(data.message);
@@ -161,6 +174,9 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
                 } else if (data.errors && data.errors.confirm_password) {  // 비밀번호 확인 불일치
                     console.log(data.message);
                     document.getElementById('confirm-new-password-error').textContent = data.errors.confirm_password;
+                }else if (data.errors && data.errors.error) {  // 소셜로그인 유저는 비밀번호 변경 불가
+                    console.log(data.message);
+                    document.getElementById('new-password-error').textContent = data.errors.error;
                 }
             }
         } else {
@@ -168,7 +184,7 @@ document.getElementById('update-form').addEventListener('submit', async (event) 
             alert('오류가 발생했습니다. 다시 시도해주세요.');
         }
     } catch (error) {
-        console.error('Error:', errors);
+        console.error('Error:', error);
         alert('오류가 발생했습니다. 다시 시도해주세요.');
     }
 });
@@ -178,31 +194,36 @@ document.getElementById('remove-account').addEventListener('click', () => {
     document.getElementById('passwordModal').style.display = 'block';
 });
 
-function submitPassword() {
-    const password = document.getElementById('password').value;
+document.getElementById('submit-password').addEventListener('click', async () => {
+    const password = document.getElementById('delete-password').value;
 
-    fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/withdraw', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log(data.success)
-                alert('정삭적으로 탈퇴 처리 되었습니다');
-                window.location.href = '/main_page/index.html'; // 메인 페이지로 이동
-            } else {
-                alert('비밀번호가 틀렸습니다');
-                document.getElementById('passwordModal').style.display = 'block'; // 비밀번호 입력 받는 창으로
-            }
-        })
-        .catch(errors => {
-            console.error('Error:', errors);
-            alert('요청 오류입니다.');
+    try {
+        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/members/withdraw', {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ confirmPassword: password })
         });
-}
 
+        const data = await response.json();
+
+        if (response.ok) {
+            if (data.success) {
+                alert(data.message);
+                window.location.href = '../main_page/index.html';
+            } else {
+                console.log(data.message);
+                document.getElementById('confirm-password-error').textContent = data.message;
+            }
+        } else {
+            alert('회원탈퇴에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('회원탈퇴 요청 중 오류가 발생했습니다.');
+    }
+});
 
 

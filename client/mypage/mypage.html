@@ -45,6 +45,8 @@
                 </div>
                 <div class="error-message" id="nickname-error"></div>
             </div>
+            
+            <input type="hidden" id="nicknameChecked" name="nicknameChecked" value="false">
 
             <div class="form-group">
                 <label for="current-password">현재 비밀번호</label>
@@ -71,9 +73,10 @@
 
             <!-- 회원탈퇴 -->
             <div id="passwordModal" style="display:none;">
-                <sapn>비밀번호 입력</span>
+                <span>비밀번호 입력</span>
                 <input type="password" id="delete-password" placeholder="비밀번호를 입력하세요">
-                <button onclick="submitPassword()">확인</button>
+                <div class="error-message" id="confirm-password-error"></div>
+                <button type="button" id="submit-password">확인</button>
             </div>
         </form>
     </div>

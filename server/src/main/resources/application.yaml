@@ -39,7 +39,7 @@ spring:
               - profile_nickname
               - profile_image
               - account_email
-            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            redirect-uri: "https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/login/oauth2/code/kakao"
             #            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
             client-name: Kakao
 

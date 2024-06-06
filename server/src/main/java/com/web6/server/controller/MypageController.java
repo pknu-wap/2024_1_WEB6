@@ -1,19 +1,18 @@
 package com.web6.server.controller;
 
+import com.web6.server.domain.Member;
 import com.web6.server.dto.ApiResponse;
 import com.web6.server.dto.MemberDetails;
 import com.web6.server.dto.MemberEditDTO;
+import com.web6.server.dto.WithdrawDTO;
+import com.web6.server.repository.MemberRepository;
 import com.web6.server.service.MemberService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,13 +21,29 @@ import java.util.Map;
 public class MypageController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
-    public MypageController(MemberService memberService) {
+    public MypageController(MemberService memberService,  MemberRepository memberRepository) {
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
     @GetMapping("/api/mypage")
     public ApiResponse<MemberEditDTO> MypageP(@AuthenticationPrincipal MemberDetails currentMember) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+        Member member = memberRepository.findByLoginId(id);
+
+        // 소셜 로그인 유저인지 확인
+        if (member.getAccessToken() != null && !member.getAccessToken().isEmpty()) {
+
+            MemberEditDTO editDTO = new MemberEditDTO();
+            editDTO.setNickname(member.getNickname());
+            editDTO.setLoginId(member.getLoginId());
+
+            return new ApiResponse<>(true, "마이페이지 이동 성공", editDTO);
+        }
 
         //마이페이지로 이동하면, 현재 로그인한 유저의 닉네임과 아이디 필드가 빈값이 아니도록
         MemberEditDTO editDTO = new MemberEditDTO();
@@ -77,10 +92,7 @@ public class MypageController {
         }
         //닉네임 변경 로직
         if(!currentMember.getNickname().equals(editDTO.getNickname()) && !editDTO.isNicknameChecked()){
-            //닉네임에 변경 사항        return true;
-            //    }
-            //}
-            //3이 있는데, 중복확인 버튼을 누르지 않은 경우
+            //닉네임에 변경 사항이 있는데, 중복확인 버튼을 누르지 않은 경우
             return new ApiResponse<>(false, "닉네임이 중복되는지 '중복확인'을 클릭하여 확인해주세요.", editDTO);
         }
 
@@ -125,6 +137,22 @@ public class MypageController {
 
         return new ApiResponse<>(true, "회원정보 수정 완료", null);
         //성공하면, 새로운 세션을 받아오기 위해, 강제로 로그아웃 시켜야 함
+    }
+
+    //회원 탈퇴
+    @DeleteMapping("/api/members/withdraw")
+    public ApiResponse<Void> memberWithdraw(@RequestBody WithdrawDTO password) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String writerId = authentication.getName();
+
+        if(!memberService.checkPassword(writerId, password.getConfirmPassword())) {
+            return new ApiResponse<>(false, "비밀번호가 일치하지 않습니다.", null);
+        }
+
+        if(memberService.withdraw(writerId)){
+            return new ApiResponse<>(true, "회원탈퇴 성공", null);
+        }
+        return new ApiResponse<>(false, "회원탈퇴 실패", null);
     }
 
 

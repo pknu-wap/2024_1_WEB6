@@ -15,9 +15,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.session.web.http.CookieSerializer;
+import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
@@ -47,7 +50,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/main", "/api/loginSuccess").permitAll()
+                        .requestMatchers("/api/main", "/api/loginSuccess", "/oauth2/**").permitAll()
                         .requestMatchers("/login-page", "/api/members/login-page", "/api/loginError", "/sign-up", "/api/members/sign-up").anonymous()
                         .requestMatchers(("/movies/findAll")).permitAll() //movies/findAll 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("/movies/search")).permitAll()  //movies/search 경로에 대해 모든 사용자 접근 허용
@@ -109,7 +112,12 @@ public class SecurityConfig {
     @Bean
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
+<<<<<<< HEAD
         serializer.setSameSite("Lax"); // SameSite 설정을 Lax로 설정
+=======
+        serializer.setSameSite("None"); // SameSite 설정을 None으로 설정
+        serializer.setUseSecureCookie(true); // Secure 속성을 설정 (HTTPS에서만 작동)
+>>>>>>> 5c1c193fcf747b9093a767d7ac0899f7ccc20518
         return serializer;
     }
 }

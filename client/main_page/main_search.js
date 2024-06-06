@@ -13,11 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (query) {
             // 검색어가 있는 경우
-            window.location.href = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/search/json?option=${option}&query=${encodeURIComponent(query)}`;
+            console.log(`쿼리: ${query}, 옵션: ${option}`)
+            window.location.href = `http://localhost:5500/search-results/search-results.html?option=${option}&query=${encodeURIComponent(query)}`;
         } else {
             // 검색어가 공백인 경우: 빈 페이지로 이동
-            window.location.href = '빈페이지';
+            console.log('빈 페이지로 이동합니다.')
+            window.location.href = '../search-results/search-results.html';
         }
-        
+
     });
 });
