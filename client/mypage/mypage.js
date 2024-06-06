@@ -227,5 +227,3 @@ document.getElementById('submit-password').addEventListener('click', async () =>
 });
 
 
-
-
