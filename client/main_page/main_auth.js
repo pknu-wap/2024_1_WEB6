@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             document.querySelector('#welcome-message a').addEventListener('click', (event) => {
                 event.preventDefault();
-                window.location.href = '../mypage/mypage.html'  // 회원정보수정
+                window.location.href = '../myreviews/myreview.html'  // 회원정보수정
             });
 
             // 로그아웃 버튼 동작 설정
