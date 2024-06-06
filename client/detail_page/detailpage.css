@@ -51,10 +51,6 @@ hr {
 
 .comment-section {
     max-width: 600px;
-<<<<<<< HEAD
-
-=======
->>>>>>> 5c1c193fcf747b9093a767d7ac0899f7ccc20518
     margin: 20px auto;
 }
 
@@ -137,19 +133,3 @@ hr {
 .spoiler-button {
     margin-left: 10px;
 }
-<<<<<<< HEAD
-=======
-
-.user-text2{
-    position: absolute;
-    top: 70%;
-    left: 10%;
-    width: 100%;
-    transform: translate(-50%, 20%);
-font-size: 23px;
-color:white;
-font-weight: bold;
-font-family: 'ypseo';
-text-align:center;
-}
->>>>>>> 5c1c193fcf747b9093a767d7ac0899f7ccc20518

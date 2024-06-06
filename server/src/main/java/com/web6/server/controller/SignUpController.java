@@ -131,20 +131,8 @@ public class SignUpController {
         return new ApiResponse<>(true, "로그아웃 페이지", null);
     }
 
-<<<<<<< HEAD
-    @GetMapping("/api/loginSuccess")
-    public ApiResponse<Map<String,String>> loginSuccess(HttpServletRequest request){
-        String sessionId = request.getSession().getId();
-        Map<String, String> data = new HashMap<>();
-        data.put("sessionId", sessionId);
-
-        return new ApiResponse<>(true, "로그인 성공", data);
-    }
-=======
     /*@GetMapping("/api/loginSuccess")
     public ApiResponse<Void> loginSuccess(){
         return new ApiResponse<>(true, "로그인 성공", null);
     }*/
->>>>>>> 5c1c193fcf747b9093a767d7ac0899f7ccc20518
-
 }

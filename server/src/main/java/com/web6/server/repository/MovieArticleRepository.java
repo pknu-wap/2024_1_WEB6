@@ -11,12 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovieArticleRepository extends JpaRepository<MovieArticle, Long> {
     boolean existsByMovieSeq(String movieSeq);
-<<<<<<< HEAD
-    MovieArticle findByMovieSeq(String movieSeq);
-    boolean existsByid(Long id);
-=======
     boolean existsById(Long id);
->>>>>>> 5c1c193fcf747b9093a767d7ac0899f7ccc20518
     boolean existsByMovieIdAndMovieSeq(String movieId, String movieSeq); // 추가
     MovieArticle findByMovieIdAndMovieSeq(String movieId, String movieSeq);
 
