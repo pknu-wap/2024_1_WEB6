@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentPage = 1; // 현재 페이지
   const moviesPerPage = 10; // 한 페이지에 표시할 영화 개수
   let allMovies = []; // 모든 영화 데이터를 저장할 배열
+  const maxPages = 5; // 최대 페이지 수 추가
 
   // 페이지 로드 시 최신순으로 영화 가져오기
   fetchMovies("latest");
@@ -49,14 +50,18 @@ document.addEventListener("DOMContentLoaded", () => {
   prevPageButton.addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
-      displayMovies(sortOption.value); // 변경된 부분: orderBy 값을 전달
+      displayMovies(sortOption.value); // orderBy 값을 전달
     }
   });
 
   nextPageButton.addEventListener("click", () => {
-    if (currentPage < Math.ceil(allMovies.length / moviesPerPage)) {
+    if (
+      currentPage <
+      Math.min(Math.ceil(allMovies.length / moviesPerPage), maxPages)
+    ) {
+      // 수정된 부분: 최대 페이지 수 체크
       currentPage++;
-      displayMovies(sortOption.value); // 변경된 부분: orderBy 값을 전달
+      displayMovies(sortOption.value); // orderBy 값을 전달
     }
   });
 
@@ -123,17 +128,17 @@ document.addEventListener("DOMContentLoaded", () => {
             ? movie.postersList[0]
             : dummyImageUrl;
         movieCard.innerHTML = `
-                  <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-                  <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
-                  <div class="movie-genre">${movie.genre}</div>
-                `;
+                <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
+                <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+                <div class="movie-genre">${movie.genre}</div>
+              `;
       } else if (orderBy === "comments") {
         const posterUrl = movie.poster ? movie.poster : null;
         movieCard.innerHTML = `
-                  <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-                  <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
-                  <div class="movie-genre">${movie.gradeCount} Reviews</div>
-                `;
+                <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
+                <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+                <div class="movie-genre">${movie.gradeCount} Reviews</div>
+              `;
       }
 
       moviesGrid.appendChild(movieCard);
@@ -151,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updatePageInfo(
       currentPage,
-      Math.ceil(filteredMovies.length / moviesPerPage)
+      Math.min(Math.ceil(filteredMovies.length / moviesPerPage), maxPages) // 수정된 부분: 최대 페이지 수 체크
     );
   }
 
