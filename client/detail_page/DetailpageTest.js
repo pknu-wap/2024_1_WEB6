@@ -78,11 +78,9 @@ async function submitComment(movieid, movieseq) {
 
     canWrite = await getCanWrite(url);
 
-    console.log();
     if(!canWrite){return;}
     else if(commentText.trim() === ""){alert("댓글을 작성해 주세요.")}
     else {
-
         const data = {
             content: commentText,
             grade : 5,
@@ -128,28 +126,30 @@ async function submitComment(movieid, movieseq) {
     }
 }
 
-async function getCanWrite(url){
-    await fetch(url, {
-        method: 'GET',
-        credentials : 'include'
-    })
-    .then(response => {
+async function getCanWrite(url){ //중요
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'include'
+        });
+
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
-        return response.json();
-    })
-    .then(data => {
-        if(!data.success){
+
+        const data = await response.json();
+
+        if (!data.success) {
             alert(data.message);
             return false;
+        } else {
+            return true;
         }
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
-        alert('Failed to submit comment');
-    });
-    return true;
+        alert('Failed to check if can write comment');
+        return false; // 에러가 발생했을 때 false를 반환
+    }
 }
 
 
