@@ -30,12 +30,13 @@ public class MypageController {
 
     @GetMapping("/api/mypage")
     public ApiResponse<MemberEditDTO> MypageP(@AuthenticationPrincipal MemberDetails currentMember) {
-        // 소셜 로그인 유저인지 확인
-        if (currentMember.getAccessToken() != null && !currentMember.getAccessToken().isEmpty()) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String id = authentication.getName();
 
-            Member member = memberRepository.findByLoginId(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+        Member member = memberRepository.findByLoginId(id);
+
+        // 소셜 로그인 유저인지 확인
+        if (member.getAccessToken() != null && !member.getAccessToken().isEmpty()) {
 
             MemberEditDTO editDTO = new MemberEditDTO();
             editDTO.setNickname(member.getNickname());
