@@ -71,8 +71,23 @@ hr {
     margin-top: 10px;
 }
 
+.comment-count {
+    color: black; /* 검은색 글씨 */
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc; /* 사각박스 */
+    border-radius: 5px; /* 둥근 모서리 */
+    display: inline-block;
+    background-color: #f9f9f9; /* 버튼 배경색 */
+    margin-top: 10px;
+    position: absolute; /* 위치를 절대값으로 설정 */
+    bottom: 10px; /* 아래쪽에서 10px */
+    right: 10px; /* 오른쪽에서 10px */
+}
+
 .post-count, .comment-count {
     margin-right: 10px;
+    margin-top: 10px;
     font-size: 16px;
     color: #555;
 }
@@ -91,16 +106,31 @@ hr {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+    text-align: center;
+}
+
+.movie-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.review-content-container {
+    border-top: 1px solid #ddd;
+    border: 1px solid #c6c6c6;
+    border-radius: 10px;
+    margin: 30px auto 50px;
+    padding: 100px;
 }
 
 .review-list {
-    width: 80%;
+    width: 50%;
     margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
+    padding: 100px;
+    border: 1px solid hsl(0, 0%, 26%);
     border-radius: 10px;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
 }
 
@@ -117,22 +147,26 @@ hr {
     padding: 10px 0;
     margin: 10px 0;
     text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+    position: relative; /* comment-count 위치를 위한 상대값 */
+    padding-bottom: 50px; /* comment-count 공간 확보 */
 }
 
 .review-item:last-child {
     border-bottom: none;
 }
 
-.review-title a {
-    font-size: 18px;
-    color: #007BFF;
-    text-decoration: none;
-    cursor: pointer;
-    text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
+
+.review-title {
+    color: black; /* 검은색으로 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 10px; /* 제목과 별점 사이에 간격을 추가 */
 }
 
 .review-title a:hover {
-    text-decoration: underline;
+    color: black; /* 호버 시에도 검은색 유지 */
+    font-size: 1.2em; /* 호버 시 폰트 크기 증가 */
 }
 
 .review-details {
@@ -143,12 +177,13 @@ hr {
 .review-content {
     margin-top: 10px;
     font-size: 16px;
+    
 }
 
 .review-rating {
     color: #FFD700;
-    font-size: 18px;
-    margin-top: 5px;
+    font-size: 20px;
+    margin-top: 3px;
     text-align: center; /* 중앙 정렬을 위한 스타일 추가 */
 }
 

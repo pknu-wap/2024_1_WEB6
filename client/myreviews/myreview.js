@@ -41,6 +41,8 @@ function displayReviews(response) {
     var reviewList = document.getElementById("review-list");
     reviewList.innerHTML = ''; // 기존 내용을 지움
 
+    document.getElementById("count_review").textContent = response.data.length;
+
     if (response.data.length === 0) {
         reviewList.innerHTML = '<p class="no-reviews">작성한 리뷰가 없습니다! 첫 리뷰를 작성해보세요!</p>';
         return;
@@ -53,10 +55,10 @@ function displayReviews(response) {
         var movieContainer = document.createElement("div");
         movieContainer.className = "movie-container";
         
-        var reviewTitle = document.createElement("div");
+        var reviewTitle = document.createElement("a");
         reviewTitle.className = "review-title";
         reviewTitle.textContent = article.title;
-        
+        reviewTitle.href = `../detail_page/detailpage.html?movieId=${article.movieId}&movieSeq=${article.movieSeq}`;
         var reviewRating = document.createElement("div");
         reviewRating.className = "review-rating";
         reviewRating.textContent = `★${article.grade}`;
@@ -71,7 +73,7 @@ function displayReviews(response) {
             <p>★ ${article.review.grade}</p>
             ${article.review.edit ? '<p class="additional-information">수정됨</p>' : ''}
             ${article.review.spoiler ? '<p class="additional-information">스포주의</p>' : ''}
-            <p>대댓글 개수: ${article.review.commentsCount}</p>
+            <p class="comment-count" data-review-id="${article.review.id}" style="cursor:pointer; color:blue;">대댓글 ${article.review.commentsCount}</p> <!-- 대댓글 클릭 이벤트 추가 -->
         `;
 
         var reviewDate = document.createElement("p");
@@ -80,12 +82,14 @@ function displayReviews(response) {
 
         var reviewContentContainer = document.createElement("div");
         reviewContentContainer.className = "review-content-container";
+        
 
         var reviewContent = document.createElement("div");
         reviewContent.className = "review-content";
         reviewContent.textContent = article.review.content;
 
         reviewContentContainer.appendChild(reviewContent);
+        reviewContentContainer.appendChild(reviewDetails.querySelector('.comment-count')); // 대댓글 개수를 review-content-container로 이동
 
         reviewItem.appendChild(movieContainer);
         reviewItem.appendChild(reviewDate);
@@ -94,7 +98,15 @@ function displayReviews(response) {
 
         reviewList.appendChild(reviewItem);
     });
+
+document.querySelectorAll('.comment-count').forEach(element => {
+    element.addEventListener('click', function () {
+        var reviewId = this.getAttribute('data-review-id');
+        window.location.href = `../detail_page/comment.html?review-id=${reviewId}`;
+    });
+});
 }
+
 
 
 // 로그인 상태 확인 및 리뷰 데이터 가져오기
