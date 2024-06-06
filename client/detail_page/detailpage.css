@@ -13,6 +13,12 @@ hr {
     background-color: #b3b3b3;
 }
 
+.container{
+    display: flex;
+      align-items: center;
+      gap: 30px; 
+}
+
 .movie-detail {
     display: flex;
     max-width: 1200px;
@@ -70,6 +76,11 @@ hr {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}  
+
+#grade {
+    width: 80px;
+    height: 20px;
 }
 
 .comment {
@@ -94,6 +105,11 @@ hr {
 
 .reply-section {
     margin-top: 10px;
+}
+
+.review-textarea{
+  width : 560px;
+  height : 100px;  
 }
 
 .reply-section textarea {
@@ -126,10 +142,19 @@ hr {
 }
 
 .spoiler {
-    filter: blur(10px);
-    cursor: pointer;
+    text-shadow: 0px 0px 10px rgb(134, 132, 132);
+    color: transparent;
 }
 
 .spoiler-button {
     margin-left: 10px;
+}
+
+.edit-process-button{
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

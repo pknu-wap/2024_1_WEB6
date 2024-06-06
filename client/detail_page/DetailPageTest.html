@@ -32,8 +32,12 @@
     
     <div class="comment-section">
         <textarea id="commentInput" placeholder="댓글을 작성해주세요"></textarea>
+        <div class="container">
+        <p style="display:flex;">별점 <textarea id="grade" placeholder="5.0" style="text-align: center; align-items: center; "></textarea></p>    
+        <p><label for="spoiler">스포방지</label> <input id="spoiler" type="checkbox"  name="스포 방지"></p> 
+        </div>
+
         <button id="submitComment">댓글 작성</button>
-        
         <select id="sortOptions">
             <option value="latest">최신순</option>
             <option value="replies">대댓글 많은 순</option>

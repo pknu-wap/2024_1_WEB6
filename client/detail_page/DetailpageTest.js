@@ -72,7 +72,10 @@ function getMovieDetail(movieid, movieseq){
 // 댓글 작성 버튼 클릭 이벤트 핸들러
 async function submitComment(movieid, movieseq) {
     const commentText = document.getElementById("commentInput").value;
-    const username = "사용자";
+    const grade = document.getElementById('grade').value;
+    const checkbox = document.getElementById('spoiler').value;
+    if(checkbox=='on') spoiler = true;
+    else spoiler = false; 
 
     const url = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/movies/' + movieid + '/' + movieseq + '/reviews';
 
@@ -83,8 +86,8 @@ async function submitComment(movieid, movieseq) {
     else {
         const data = {
             content: commentText,
-            grade : 5,
-            spoiler : false
+            grade : grade,
+            spoiler : spoiler
         };
 
         fetch(url, {
@@ -105,19 +108,8 @@ async function submitComment(movieid, movieseq) {
             if(!data.success){
                 alert(data.message);
             }
-            else{
-                console.log('Success:', data);
-                const newCommentDiv = document.createElement("div");
-                newCommentDiv.classList.add("comment");
-                newCommentDiv.innerHTML = `
-                    <p><strong>${username}</strong> (방금)</p>
-                    <p>${commentText}</p>
-                `;
-                document.getElementById("comments").appendChild(newCommentDiv);
-                document.getElementById("commentInput").value = ""; // 댓글 입력란 초기화
-                alert('Comment submitted successfully!');
-                window.location.reload();
-            }
+            alert(data.message);
+            window.location.reload();
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
@@ -178,10 +170,15 @@ function getMovieReviews(movieid, movieseq) {
             else {
                 data.data.forEach(review => {
                 const reviewElement = document.createElement("div");
+                reviewElement.id=review.id;
                 reviewElement.classList.add("comment");
                 reviewElement.innerHTML = `
-                    <p><strong>${review.user}</strong> (${review.date})</p>
-                    <p>${review.content}</p>
+                    <p>
+                        <strong>${review.nickname}</strong> (${review.createDate}) ★${review.grade}
+                        <div class="edit-button" data-reviewid=${review.id} onclick="editReview(event)" >수정</div>
+                        <div class="delete-button" data-reviewid=${review.id} onclick="deleteReview(event)">삭제</div>
+                    </p>
+                    <p id="reviewContent${review.id}" class="spoiler">${review.content}</p>
                 `;
                 commentsDiv.appendChild(reviewElement);
                 });
@@ -228,4 +225,86 @@ function getMovieReviewsByCommentCnt(movieid, movieseq) {
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
         });
+}
+
+
+async function deleteReview(event){
+    const tag = event.target;
+    const reviewid = tag.getAttribute('data-reviewid');
+
+    const url = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/reviewDelete/'+reviewid;
+
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert(data.message);
+            window.location.reload();
+        } else{
+            alert('리뷰 삭제에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        return false; // 에러가 발생했을 때 false를 반환
+    }
+}
+
+async function editReview(event){
+    const tag = event.target;
+    const reviewid = tag.getAttribute('data-reviewid');
+    const reviewField = document.getElementById(reviewid);
+
+    currentText =  document.getElementById('reviewContent'+reviewid).innerHTML;
+    reviewField.innerHTML = `
+        <textarea id="reviewEditTextarea" class="review-textarea" placeholder=${currentText}></textarea>
+        <button class="edit-process-button" onclick="editProcessReview(${reviewid})">수정 완료</button>
+    `;
+}
+
+async function editProcessReview(reviewid){
+
+    var textarea = document.getElementById('reviewEditTextarea');
+    var text = textarea.value;
+    const url = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/reviewEdit/'+reviewid;
+
+    const data = {
+        content: text,
+        grade : 5,
+        spoiler : false
+    };
+
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        credentials : 'include'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if(!data.success){
+            alert(data.message);
+        }
+        console.log(data);
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('Failed to submit comment');
+    });
 }
