@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const data = await response.json();
         console.log('Session Data:', data);
+        localStorage.setItem("nickname",data.message);
 
         // UI 요소 참조
         const loginSection = document.getElementById('login-section');
