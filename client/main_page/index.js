@@ -129,14 +129,14 @@ document.addEventListener("DOMContentLoaded", () => {
             : dummyImageUrl;
         movieCard.innerHTML = `
                 <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-                <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+                <div class="movie-title" data-movie-seq="${movie.movieSeq}">${movie.title}</div>
                 <div class="movie-genre">${movie.genre}</div>
               `;
       } else if (orderBy === "comments") {
         const posterUrl = movie.poster ? movie.poster : null;
         movieCard.innerHTML = `
                 <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-                <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+                <div class="movie-title" data-movie-seq="${movie.movieSeq}">${movie.title}</div>
                 <div class="movie-genre">${movie.gradeCount} Reviews</div>
               `;
       }

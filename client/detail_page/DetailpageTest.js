@@ -78,8 +78,9 @@ async function submitComment(movieid, movieseq) {
 
     canWrite = await getCanWrite(url);
 
+    console.log();
     if(!canWrite){return;}
-    else if(commentText.trim() !== ""){alert("댓글을 작성해 주세요.")}
+    else if(commentText.trim() === ""){alert("댓글을 작성해 주세요.")}
     else {
 
         const data = {
@@ -103,17 +104,22 @@ async function submitComment(movieid, movieseq) {
             return response.json();
         })
         .then(data => {
-            console.log('Success:', data);
-            const newCommentDiv = document.createElement("div");
-            newCommentDiv.classList.add("comment");
-            newCommentDiv.innerHTML = `
-                <p><strong>${username}</strong> (방금)</p>
-                <p>${commentText}</p>
-            `;
-            document.getElementById("comments").appendChild(newCommentDiv);
-            document.getElementById("commentInput").value = ""; // 댓글 입력란 초기화
-            alert('Comment submitted successfully!');
-            window.location.reload();
+            if(!data.success){
+                alert(data.message);
+            }
+            else{
+                console.log('Success:', data);
+                const newCommentDiv = document.createElement("div");
+                newCommentDiv.classList.add("comment");
+                newCommentDiv.innerHTML = `
+                    <p><strong>${username}</strong> (방금)</p>
+                    <p>${commentText}</p>
+                `;
+                document.getElementById("comments").appendChild(newCommentDiv);
+                document.getElementById("commentInput").value = ""; // 댓글 입력란 초기화
+                alert('Comment submitted successfully!');
+                window.location.reload();
+            }
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
@@ -136,14 +142,14 @@ async function getCanWrite(url){
     .then(data => {
         if(!data.success){
             alert(data.message);
-            return;
+            return false;
         }
-        canWrite=true;
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
         alert('Failed to submit comment');
     });
+    return true;
 }
 
 
