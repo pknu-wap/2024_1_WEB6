@@ -6,6 +6,7 @@ import com.web6.server.repository.MemberRepository;
 import com.web6.server.oauth2login.user.KakaoOAuth2UserUnlink;
 import com.web6.server.dto.MemberDTO;
 import com.web6.server.service.SignUpService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,9 +37,13 @@ public class SignUpController {
     private KakaoOAuth2UserUnlink kakaoOAuth2UserUnlink;
 
     @GetMapping("/api/main")
-    public ApiResponse<Void> MainP() {
+    public ApiResponse<Map<String,String>> MainP(HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
+
+        String sessionId = request.getSession().getId();
+        Map<String, String> data = new HashMap<>();
+        data.put("sessionId", sessionId);
 
         String message;
         if (!id.equals("anonymousUser")) {
@@ -60,7 +65,7 @@ public class SignUpController {
 
             if (nickname != null) {
                 message = nickname + "님";
-                return new ApiResponse<>(true, message, null);
+                return new ApiResponse<>(true, message, data);
             }
             else {
                 message = "로그인을 해주세요.";
@@ -70,7 +75,7 @@ public class SignUpController {
             message = "로그인을 해주세요.";
         }
 
-        return new ApiResponse<>(false, message, null);
+        return new ApiResponse<>(false, message, data);
     }
 
     /*
@@ -126,9 +131,13 @@ public class SignUpController {
         return new ApiResponse<>(true, "로그아웃 페이지", null);
     }
 
-    /*@GetMapping("/api/loginSuccess")
-    public ApiResponse<Void> loginSuccess(){
-        return new ApiResponse<>(true, "로그인 성공", null);
-    }*/
+    @GetMapping("/api/loginSuccess")
+    public ApiResponse<Map<String,String>> loginSuccess(HttpServletRequest request){
+        String sessionId = request.getSession().getId();
+        Map<String, String> data = new HashMap<>();
+        data.put("sessionId", sessionId);
+
+        return new ApiResponse<>(true, "로그인 성공", data);
+    }
 
 }

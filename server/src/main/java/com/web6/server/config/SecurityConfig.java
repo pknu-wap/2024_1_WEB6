@@ -109,8 +109,7 @@ public class SecurityConfig {
     @Bean
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-        serializer.setSameSite("None"); // SameSite 설정을 None으로 설정
-        serializer.setUseSecureCookie(true); // Secure 속성을 설정 (HTTPS에서만 작동)
+        serializer.setSameSite("Lax"); // SameSite 설정을 Lax로 설정
         return serializer;
     }
 }
