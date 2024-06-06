@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main Page</title>
+</head>
+<body>
+main page
+<hr>
+{{loginMessage}}
+<hr>
+<p>social login</p>
+<div>
+    <a href="http://localhost:8080/sign-up">
+        <button>sign-up</button>
+    </a>
+
+    <a href="http://localhost:8080/movies/findAll">
+        <button>movie findAll</button>
+    </a>
+
+    <a href="http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:8080&mode=login">
+        <button>Kakao Login</button>
+    </a>
+
+<!--    <a href="http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:8080&mode=logout">-->
+    <a href="http://localhost:8080/logout">
+        <button>Kakao Logout</button>
+    </a>
+
+</div>
+
+</body>
+</html>

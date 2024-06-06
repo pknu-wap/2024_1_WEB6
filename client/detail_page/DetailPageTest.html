@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="detailpage.css">
+    <title>상세페이지</title>
+</head>
+
+<body>
+    <h1 class="web-title">NET VIEW</h1>
+    <hr>
+    
+    <div class="movie-detail">
+        <div class="poster">
+            <img id="posterImage" src="" alt="영화 포스터">
+        </div>
+        <div class="info">
+            <h2 id="title"><strong>영화 제목 : </strong></h2>
+            <p id="year"><strong>제작년도 : </strong></p>
+            <p id="actors"><strong>배우 : </strong></p>
+            <p id="country"><strong>국가 : </strong></p>
+            <p id="runtime"><strong>런타임 : </strong></p>
+            <p id="rating"><strong>관람가 : </strong></p>
+            <p id="genre"><strong>장르 : </strong></p>
+            <br>
+            <p id="summary"></p>
+        </div>
+    </div>
+
+    <div class="comment-section">
+        <textarea id="commentInput" placeholder="댓글을 작성해주세요"></textarea>
+        <button id="submitComment">댓글 작성</button>
+
+        <select id="sortOptions">
+            <option value="latest">최신순</option>
+            <option value="replies">대댓글 많은 순</option>
+        </select>
+        <div id="comments"></div>
+    </div>
+
+    <script src="DetailpageTest.js"></script>
+    <script src="GetQueryParam.js"></script>
+</body>
+
+</html>

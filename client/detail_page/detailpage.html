@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="detailpage.css">
+    <title>상세페이지</title>
+</head>
+
+<body>
+    <h1 class="web-title">NET VIEW</h1>
+    <hr>
+
+    <div class="movie-detail">
+        <div class="poster">
+            <img src="poster.jpg" alt="영화 포스터">
+        </div>
+        <div class="info">
+            <h2 id="title">영화 제목</h2>
+            <p id="year">제작년도: 2024</p>
+            <p id="actors">배우: 배우1, 배우2</p>
+            <p id="country">국가: 한국</p>
+            <p id="summary">줄거리: 이 영화는...</p>
+            <p id="runtime">런타임: 120분</p>
+            <p id="rating">관람가: 12세 이상</p>
+            <p id="genre">장르: 드라마</p>
+        </div>
+    </div>
+
+    <div class="comment-section">
+        <textarea id="commentInput" placeholder="댓글을 작성해주세요"></textarea>
+        <button id="submitComment">댓글 작성</button>
+        <div id="comments"></div>
+    </div>
+
+    <script src="detailpage.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Search</title>
+</head>
+<body>
+    <h1>Movie Search</h1>
+    <form id="searchForm" action="/movies/search" method="get">
+        <select id="searchOption" name="option">
+            <option value="title">제목</option>
+            <option value="genre">장르</option>
+            <option value="actor">배우</option>
+            <option value="director">감독</option>
+            <option value="nation">국가</option>
+        </select>
+        <input type="text" id="searchQuery" name="query" placeholder="검색어를 입력하세요">
+        <button type="submit">검색</button>
+    </form>
+    {{#movies}}
+        <div>
+            <h2>{{title}}</h2>
+            {{#directors}}
+                {{#director}}
+                    <p>감독: {{directorNm}}</p>
+                {{/director}}
+            {{/directors}}
+            {{#actors}}
+                {{#actor}}
+                    <p>배우: {{actorNm}}</p>
+                {{/actor}}
+            {{/actors}}
+            <p>장르: {{genre}}</p>
+            <p>국가: {{nation}}</p>
+            {{#plots}}
+                {{#plot}}
+                    <p>줄거리: {{plotText}}</p>
+                {{/plot}}
+            {{/plots}}
+            <!-- 포스터 이미지 -->
+            <h4>포스터 이미지</h4>
+            {{#postersList}}
+                {{#.}}
+                    <img src="{{.}}" alt="{{title}} 포스터" style="width:200px;">
+                {{/.}}
+            {{/postersList}}
+
+            <!-- 스틸 이미지 -->
+            <h4>스틸 이미지</h4>
+            {{#stillsList}}
+                {{#.}}
+                    <img src="{{.}}" alt="{{title}} 스틸 이미지" style="width:200px;">
+                {{/.}}
+            {{/stillsList}}
+            </div>
+            <p><a href="{{kmdbUrl}}">KMDb에서 더보기</a></p>
+        </div>
+    {{/movies}}
+</body>
+</html>

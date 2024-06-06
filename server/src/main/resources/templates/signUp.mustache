@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign-Up Page</title>
+    <style>
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Sign-Up</h2>
+    <form action="/api/members/sign-up" method="post" name="SignUpForm" modelAttribute="memberDTO">
+        <div>
+            <label for="nickname">Nickname:</label>
+            <input type="text" name="nickname" value="{{#memberDTO}}{{memberDTO.nickname}}{{/memberDTO}}" placeholder="Nickname"/>
+            {{#valid_nickname}} <span class="error-message">{{valid_nickname}}</span> {{/valid_nickname}}
+        </div>
+        <div>
+            <label for="loginId">Email:</label>
+            <input type="email" name="loginId" value="{{#memberDTO}}{{memberDTO.loginId}}{{/memberDTO}}" placeholder="Email"/>
+            {{#valid_loginId}} <span class="error-message">{{valid_loginId}}</span> {{/valid_loginId}}
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" value="{{#memberDTO}}{{memberDTO.password}}{{/memberDTO}}" placeholder="Password"/>
+            {{#valid_password}} <span class="error-message">{{valid_password}}</span> {{/valid_password}}
+        </div>
+        {{#duplicate}} <div><span class="error-message">{{duplicate}}</span></div> {{/duplicate}}
+        <input type="submit" value="Join"/>
+    </form>
+</div>
+
+</body>
+</html>
