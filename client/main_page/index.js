@@ -196,15 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updatePageInfo(currentPage, Math.ceil(allMovies.length / moviesPerPage));
     }
-
-<<<<<<< HEAD
-    // 페이지 정보를 업데이트하는 함수
-    function updatePageInfo(currentPage, totalPages) {
-        pageInfo.textContent = `${currentPage} / ${totalPages}`;
-        prevPageButton.disabled = currentPage === 1;
-        nextPageButton.disabled = currentPage === totalPages;
-    }
-=======
     const movieElements = document.querySelectorAll(
       ".movie-poster, .movie-title"
     );
@@ -227,5 +218,4 @@ document.addEventListener("DOMContentLoaded", () => {
     prevPageButton.disabled = currentPage === 1;
     nextPageButton.disabled = currentPage === totalPages;
   }
->>>>>>> 5c1c193fcf747b9093a767d7ac0899f7ccc20518
 });
