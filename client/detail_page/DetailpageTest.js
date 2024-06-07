@@ -169,19 +169,21 @@ function getMovieReviews(movieid, movieseq) {
             }
             else {
                 data.data.forEach(review => {
-                const reviewElement = document.createElement("div");
-                reviewElement.id=review.id;
-                reviewElement.classList.add("comment");
-                reviewElement.innerHTML = `
-                    <p>
-                        <strong>${review.nickname}</strong> (${review.createDate}) ★${review.grade}
-                        <div class="edit-button" data-reviewid=${review.id} onclick="editReview(event)" >수정</div>
-                        <div class="delete-button" data-reviewid=${review.id} onclick="deleteReview(event)">삭제</div>
-                    </p>
-                    <p id="reviewContent${review.id}" class="spoiler">${review.content}</p>
-                `;
-                commentsDiv.appendChild(reviewElement);
-                });
+                    if(review.spoiler){isSpoiler = 'spoiler';}
+                    else{isSpoiler='';}
+                    const reviewElement = document.createElement("div");
+                    reviewElement.id=review.id;
+                    reviewElement.classList.add("comment");
+                    reviewElement.innerHTML = `
+                        <p>
+                            <strong>${review.nickname}</strong> (${review.createDate}) ★${review.grade}
+                            <div class="edit-button" data-reviewid=${review.id} onclick="editReview(event)" >수정</div>
+                            <div class="delete-button" data-reviewid=${review.id} onclick="deleteReview(event)">삭제</div>
+                        </p>
+                        <p id="reviewContent${review.id}" class="${isSpoiler}">${review.content}</p>
+                    `;
+                    commentsDiv.appendChild(reviewElement);
+                    });
             }
         })
         .catch(error => {
