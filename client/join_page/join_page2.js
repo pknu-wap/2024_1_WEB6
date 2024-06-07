@@ -4,12 +4,12 @@ function validatePassword(password) {
 }
 
 function validateNickname(nickname) {
-    const regex = /^[가-힣a-zA-Z0-9]{2,10}$/;
-    return regex.test(nickname);
+  const regex = /^[가-힣a-zA-Z0-9]{2,10}$/;
+  return regex.test(nickname);
 }
 
 function validateForm(event) {
-    event.preventDefault(); // 폼 제출 방지
+  event.preventDefault(); // 폼 제출 방지
 
     const email =
         document.querySelector(".email").value +
@@ -21,7 +21,8 @@ function validateForm(event) {
     const passwordMessageElement = document.getElementById("passwordMessage");
     const nicknameMessageElement = document.getElementById("nicknameMessage");
 
-    let isValid = true;
+
+  let isValid = true;
 
     // 비밀번호 유효성 검사
     if (!validatePassword(password)) {
