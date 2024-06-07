@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.web-title {
+    text-align: center;
+    font-size: 2em;
+    margin: 20px 0;
+}
+
+.comments-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #6b6b6b;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.comment-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-nickname {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-content {
+    border: 1px solid #c6c6c6;
+    margin: 5px 0;
+    padding: 20px 0;
+}
+
+.comment-date {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.comment-delete {
+    color: black; /* 검은색 글씨 */
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc; /* 사각박스 */
+    border-radius: 5px; /* 둥근 모서리 */
+    display: inline-block;
+    background-color: #f9f9f9; /* 버튼 배경색 */
+    margin-left: 700px;
+}
