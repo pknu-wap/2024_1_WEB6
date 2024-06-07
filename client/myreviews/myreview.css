@@ -70,6 +70,19 @@ hr {
     margin-right: 4px;
     margin-top: 10px;
 }
+.review-delete {
+    color: black; /* 검은색 글씨 */
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc; /* 사각박스 */
+    border-radius: 5px; /* 둥근 모서리 */
+    display: inline-block;
+    background-color: #f9f9f9; /* 버튼 배경색 */
+    margin-top: 10px;
+    position: absolute; /* 위치를 절대값으로 설정 */
+    top: 150px; /* 아래쪽에서 10px */
+    right: 10px; /* 오른쪽에서 10px */
+}
 
 .comment-count {
     color: black; /* 검은색 글씨 */

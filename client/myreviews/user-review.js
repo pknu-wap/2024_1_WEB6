@@ -10,7 +10,6 @@ function encodeNickname(nickname) {
 // 사용자 닉네임에 기반한 리뷰 데이터를 가져오는 함수
 async function fetchReviews(nickname) {
     var encodedNickname = encodeNickname(nickname);
-    var apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/writer/${encodedNickname}/reviews`;
 
     try {
         const response = await fetch(`https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/writer/${encodedNickname}/reviews`, {
@@ -99,7 +98,7 @@ function displayReviews(response) {
 document.querySelectorAll('.comment-count').forEach(element => {
     element.addEventListener('click', function () {
         var reviewId = this.getAttribute('data-review-id');
-        window.location.href = `../detail_page/comment.html?review-id=${reviewId}`;
+        window.location.href = `../detail_page/comment/comment.html?review-id=${reviewId}`;
     });
 });
 }

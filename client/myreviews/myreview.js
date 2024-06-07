@@ -76,8 +76,9 @@ function displayReviews(response) {
             <p>★ ${article.review.grade}</p>
             ${article.review.edit ? '<p class="additional-information">수정됨</p>' : ''}
             ${article.review.spoiler ? '<p class="additional-information">스포주의</p>' : ''}
-            <p class="comment-count" data-review-id="${article.review.id}" style="cursor:pointer; color:blue;">대댓글 ${article.review.commentsCount}</p> <!-- 대댓글 클릭 이벤트 추가 -->
-        `;
+            <p class="comment-count" data-review-id="${article.review.id}" style="cursor:pointer; color:black;">대댓글 ${article.review.commentsCount}</p> <!-- 대댓글 클릭 이벤트 추가 -->
+             <p class="review-delete" data-review-id="${article.review.id}" style="cursor:pointer; color:black;">삭제</p> <!-- 삭제 클릭 이벤트 추가 -->
+            `;
 
         var reviewDate = document.createElement("p");
         reviewDate.className = "review-date";
@@ -93,6 +94,7 @@ function displayReviews(response) {
 
         reviewContentContainer.appendChild(reviewContent);
         reviewContentContainer.appendChild(reviewDetails.querySelector('.comment-count')); // 대댓글 개수를 review-content-container로 이동
+        reviewContentContainer.appendChild(reviewDetails.querySelector('.review-delete'));
 
         reviewItem.appendChild(movieContainer);
         reviewItem.appendChild(reviewDate);
@@ -105,9 +107,37 @@ function displayReviews(response) {
 document.querySelectorAll('.comment-count').forEach(element => {
     element.addEventListener('click', function () {
         var reviewId = this.getAttribute('data-review-id');
-        window.location.href = `../detail_page/comment.html?review-id=${reviewId}`;
-    });
+        window.location.href = `../detail_page/comment/comment.html?review-id=${reviewId}`;
+    });    
 });
+
+    // 삭제 클릭 이벤트 설정
+    document.querySelectorAll('.review-delete').forEach(element => {
+        element.addEventListener('click', async function () {
+            var reviewId = this.getAttribute('data-review-id');
+            
+            try {
+                const response = await fetch(`https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/reviewDelete/${reviewId}`, {
+                    method: 'DELETE',
+                    credentials: 'include' // 쿠키를 포함하여 요청
+                });
+        
+                const data = await response.json();
+                console.log('Response Data:', data);
+        
+                if(response.ok && data.success) {
+                    alert('리뷰가 성공적으로 삭제되었습니다.');
+                    location.reload(); // 페이지 새로고침
+                } else {
+                    alert('리뷰 삭제에 실패했습니다.');
+                }
+            } catch (errors) {
+                console.error('서버 에러:', errors);
+                alert('서버에 연결할 수 없습니다.');
+            }
+            
+        });    
+    });
 }
 
 
