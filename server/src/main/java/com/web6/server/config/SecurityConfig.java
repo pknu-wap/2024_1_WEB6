@@ -57,7 +57,7 @@ public class SecurityConfig {
                         .requestMatchers(("/OrderByGradeCountDesc")).permitAll()  //OrderByGradeCountDesc 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("/movies/search/json")).permitAll() //movies/search/json 경로에 대해 모든 사용자 접근 허용
                         .requestMatchers(("/movies/latest")).permitAll()  //movies/latest 경로에 대해 모든 사용자 접근 허용
-                        .requestMatchers("/api/movies/{movieSeq}/reviewsCommentCnt", "/api/movies/{movieSeq}/reviewsLatest").permitAll()
+                        .requestMatchers("/api/movies/{movieId}/{movieSeq}/reviewsCommentCnt", "/api/movies/{movieId}/{movieSeq}/reviewsLatest").permitAll()
                         .requestMatchers(("/movies/detail/{movieId}/{movieSeq}")).permitAll()  ///movies/detail/{movieId}/{movieSeq} 경로에 대해 모든 사용자 접근 허용
                         .anyRequest().authenticated()
                 );
