@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (query) {
             // 검색어가 있는 경우
             console.log(`쿼리: ${query}, 옵션: ${option}`)
-            window.location.href = `http://localhost:5500/search-results/search-results.html?option=${option}&query=${encodeURIComponent(query)}`;
+            window.location.href = `../search-results/search-results.html?option=${option}&query=${encodeURIComponent(query)}`;
         } else {
             // 검색어가 공백인 경우: 빈 페이지로 이동
             console.log('빈 페이지로 이동합니다.')

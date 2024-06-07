@@ -13,17 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // 게시글 클릭
-  // function handleClick(movieSeq) {
-  //    const apiUrl = `https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/${movieId}/${movieSeq}`;
-  //     fetch(apiUrl)
-  //         .then((response) => response.json())
-  //         .then((data) => {
-  //             console.log("Movie detail response:", data);
-  //         })
-  //         .catch((error) => {
-  //             console.error("Error fetching movie detail:", error);
-  //         });
-  // }
+
 
   // 메인페이지 영화 목록 표시
   const sortOption = document.getElementById("sort-option");
@@ -128,15 +118,15 @@ document.addEventListener("DOMContentLoaded", () => {
             ? movie.postersList[0]
             : dummyImageUrl;
         movieCard.innerHTML = `
-                <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-                <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+                <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-seq="${movie.movieSeq}" data-movie-id="${movie.movieId}">
+                <div class="movie-title" data-movie-seq="${movie.movieSeq}" data-movie-id="${movie.movieId}">${movie.title}</div>
                 <div class="movie-genre">${movie.genre}</div>
               `;
       } else if (orderBy === "comments") {
-        const posterUrl = movie.poster ? movie.poster : null;
+        const posterUrl = movie.poster ? movie.poster : dummyImageUrl;
         movieCard.innerHTML = `
-                <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-                <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
+                <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-seq="${movie.movieSeq}" data-movie-id="${movie.movieId}">
+                <div class="movie-title" data-movie-seq="${movie.movieSeq}" data-movie-id="${movie.movieId}">${movie.title}</div>
                 <div class="movie-genre">${movie.gradeCount} Reviews</div>
               `;
       }
@@ -144,66 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
       moviesGrid.appendChild(movieCard);
     });
 
-
-    // 영화 데이터를 화면에 표시
-    function displayMovies(orderBy) {
-        // 변경된 부분: orderBy 매개변수 추가
-        const moviesGrid = document.getElementById("moviesGrid");
-        moviesGrid.innerHTML = "";
-
-        const startIndex = (currentPage - 1) * moviesPerPage;
-        const endIndex = startIndex + moviesPerPage;
-        const moviesToDisplay = allMovies.slice(startIndex, endIndex);
-        const dummyImageUrl = "https://via.placeholder.com/200x300"; // 더미 이미지 URL
-
-        moviesToDisplay.forEach((movie) => {
-            const movieCard = document.createElement("div");
-            movieCard.classList.add("movie-card");
-
-            if (orderBy === "latest") {
-                // 변경된 부분: orderBy에 따라 조건문 추가
-                const posterUrl =
-                    movie.postersList && movie.postersList.length > 0
-                        ? movie.postersList[0]
-                        : dummyImageUrl;
-                movieCard.innerHTML = `
-              <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-              <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
-              <div class="movie-genre">${movie.genre}</div>
-            `;
-            } else if (orderBy === "comments") {
-                // 변경된 부분: orderBy에 따라 조건문 추가
-                const posterUrl = movie.poster ? movie.poster : dummyImageUrl;
-                movieCard.innerHTML = `
-              <img src="${posterUrl}" alt="${movie.title}" class="movie-poster" data-movie-id="${movie.movieSeq}">
-              <div class="movie-title" data-movie-id="${movie.movieSeq}">${movie.title}</div>
-              <div class="movie-genre">${movie.gradeCount} Reviews</div>
-            `;
-            }
-
-            moviesGrid.appendChild(movieCard);
-        });
-
-        const movieElements = document.querySelectorAll(
-            ".movie-poster, .movie-title"
-        );
-        movieElements.forEach((element) => {
-            element.addEventListener("click", () => {
-                const movieId = element.getAttribute("data-movie-id");
-                handleClick(movieId);
-            });
-        });
-
-        updatePageInfo(currentPage, Math.ceil(allMovies.length / moviesPerPage));
-    }
-
-    const movieElements = document.querySelectorAll(
-      ".movie-poster, .movie-title"
-    );
+    // 영화 카드 클릭 이벤트 리스너 추가
+    const movieElements = document.querySelectorAll(".movie-poster, .movie-title");
     movieElements.forEach((element) => {
       element.addEventListener("click", () => {
+        const movieSeq = element.getAttribute("data-movie-seq");
         const movieId = element.getAttribute("data-movie-id");
-        handleClick(movieId);
+        handleClick(movieSeq, movieId);
       });
     });
 
@@ -211,6 +148,13 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPage,
       Math.min(Math.ceil(filteredMovies.length / moviesPerPage), maxPages) // 수정된 부분: 최대 페이지 수 체크
     );
+  }
+
+  // 영화 카드 클릭 시 호출되는 함수
+  function handleClick(movieSeq, movieId) {
+    // movieSeq와 movieId를 URL 파라미터로 전달하며 이동
+    window.location.href = `../detail_page/DetailPageTest.html?movieSeq=${movieSeq}&movieId=${movieId}`;
+    // console.log(`${movieSeq}, ${movieId}`)
   }
 
   // 페이지 정보를 업데이트하는 함수
