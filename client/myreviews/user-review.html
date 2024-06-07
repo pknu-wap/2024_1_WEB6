@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="myreview.css">
+    <title>마이페이지</title>
+</head>
+
+<body>
+    <h1 class="web-title">NET VIEW</h1>
+    <hr>
+    <div class="mypage-main">
+        <div class="profile-card">
+            <div class="user-profile-image">
+                <img class="profile-image" src="https://www.studiopeople.kr/common/img/default_profile.png" alt="Profile Picture">
+            </div>
+            <div class="profile-info">
+                <span class="username" id="username">사용자 닉네임</span>
+                <div class="user-stats">
+                    <p><span class="post-count">작성한 리뷰 <span class="count_review" id="count_review">0</span>개</span></p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="review-container">
+            <div class="review-list" id="review-list">
+                <!-- 리뷰 항목이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+    <script src="user-review.js"></script>
+</body>
+
+</html>

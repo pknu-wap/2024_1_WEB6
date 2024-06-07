@@ -2,12 +2,6 @@ document.querySelector(".web-title").onclick = () => {
     window.location.href = "../main_page/index.html";
   };
 
-// 프로필 수정 페이지로 이동
-function editProfile() {
-    var editProfileUrl = "../mypage/mypage.html";
-    window.open(editProfileUrl, "_blank");
-}
-
 // 닉네임을 URL 인코딩하는 함수
 function encodeNickname(nickname) {
     return encodeURIComponent(nickname);
@@ -111,32 +105,13 @@ document.querySelectorAll('.comment-count').forEach(element => {
 }
 
 
-
-// 로그인 상태 확인 및 리뷰 데이터 가져오기
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const response = await fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/mypage', {
-            method: 'GET',
-            credentials: 'include' // 쿠키를 포함하여 요청
-        });
-
-        const data = await response.json();
-        console.log('Response Data:', data);
-
-        if(response.ok) {
-            if(data.success){
-                let nickname = data.data.nickname;
-                document.querySelector(".username").textContent = nickname;
-                document.querySelector(".user-email").textContent = data.data.loginId;
-                fetchReviews(nickname);
-            }
-            else {
-                console.log('정보를 로드하는 데 실패했습니다.');
-            }   
-        } else {
-            console.log('정보를 로드하는 데 실패했습니다.');
-        }
-    } catch (errors) {
-        console.error('서버 에러:', errors);
+// 페이지가 로드될 때 리뷰 데이터를 가져옴
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const nickname = urlParams.get('nickname');
+    if (nickname) {
+        fetchReviews(nickname);
+    } else {
+        console.error('닉네임을 찾을 수 없습니다.');
     }
 });
