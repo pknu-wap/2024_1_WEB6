@@ -1,7 +1,7 @@
 const mainPageButton = document.querySelector('.web-title');
 if (mainPageButton) {
     mainPageButton.addEventListener('click', () => {
-        window.location.href = '/main_page/index.html';
+        window.location.href = '../main_page/index.html';
     });
 }
 
