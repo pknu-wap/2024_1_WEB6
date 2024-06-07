@@ -1,0 +1,8 @@
+[build]
+  publish = "main_page"
+  # build command is omitted as you mentioned it's not needed
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
