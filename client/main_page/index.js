@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleClick(movieSeq, movieId) {
     // movieSeq와 movieId를 URL 파라미터로 전달하며 이동
     window.location.href = `../detail_page/DetailPageTest.html?movieSeq=${movieSeq}&movieId=${movieId}`;
-    // console.log(`${movieSeq}, ${movieId}`)
+    console.log(`${movieSeq}, ${movieId}`)
   }
 
   // 페이지 정보를 업데이트하는 함수

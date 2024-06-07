@@ -8,14 +8,14 @@ elements[0].onclick = function () {
 const dummy = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fpng.pngtree.com%2Felement_our%2F20190529%2Fourlarge%2Fpngtree-black-movie-field-board-illustration-image_1221631.jpg&type=sc960_832";
 
 document.addEventListener("DOMContentLoaded", function () {
-    const movieseq = getQueryParam('movieseq');
+    const movieSeq = getQueryParam('movieSeq');
     const movieid = getQueryParam('movieid');
 
-    getMovieDetail(movieid, movieseq);
-    getMovieReviews(movieid, movieseq);
+    getMovieDetail(movieid, movieSeq);
+    getMovieReviews(movieid, movieSeq);
 
     document.getElementById("submitComment").addEventListener("click", function () {
-        submitComment(movieid, movieseq);
+        submitComment(movieid, movieSeq);
     });
 });
 
@@ -24,8 +24,8 @@ function getQueryParam(param) {
     return urlParams.get(param);
 }
 
-function getMovieDetail(movieid, movieseq){
-    fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/'+ movieid +'/'+ movieseq, {
+function getMovieDetail(movieid, movieSeq){
+    fetch('https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/movies/detail/'+ movieid +'/'+ movieSeq, {
         credentials: 'include'
     })
         .then(response => {
@@ -192,8 +192,8 @@ function getMovieReviews(movieid, movieseq) {
 }
 
 // 대댓글 순으로 불러오기
-function getMovieReviewsByCommentCnt(movieid, movieseq) {
-    const requestUrl = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/movies/' + movieid + '/' + movieseq + '/reviewsCommentCnt';
+function getMovieReviewsByCommentCnt(movieid, movieSeq) {
+    const requestUrl = 'https://port-0-web6-1pgyr2mlvnqjxex.sel5.cloudtype.app/api/movies/' + movieid + '/' + movieSeq + '/reviewsCommentCnt';
     fetch(requestUrl, {
         credentials: 'include'
     }) 
